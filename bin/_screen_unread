@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+
+# Wed Jul 28 17:32:45 EDT 2010  Jesse Lucas (jlucas@nprim.net)
+# Connects to a remote IMAP server and queries it for unread mail.
+
+# Adapted from a script by Jan-Piet Mens.
+# See: http://blog.fupps.com/2009/04/26/a-bifferent-kind-of-e-mail-notifier/
+
+use strict;
+#use IO::Socket;	# Use this if you don't need SSL.
+use IO::Socket::SSL;
+use Mail::IMAPClient;
+
+my $imap_host = 'mail.0x98.net';
+my $user = 'jl@0x98.com';
+my $password = 'xxxxxxxxxxxxxxxxx';
+my $folder = 'INBOX';
+
+## Try this block, if your IMAP server doesn't require SSL.
+#my $imap  = new Mail::IMAPClient(
+#        'Server' => $imap_host,
+#        'User' => $user,
+#        'Authmechanism' => 'LOGIN',
+#        'Password' => $password  ) or die "Unable to connect to imap server\n";
+	
+my $imap  = Mail::IMAPClient->new
+	(	'User' => $user,
+        'Password' => $password,
+		'Socket' => IO::Socket::SSL->new
+		(	Proto		=> 'tcp',
+			PeerAddr	=> $imap_host,
+			PeerPort	=> 993,
+		),
+	) or die "Unable to connect to imap server: $!\n";
+
+$imap->examine($folder) or die "Could not examine: $@\\n";
+my @unread = $imap->unseen;
+print scalar(@unread) . "\n";
+
+$imap->disconnect() or die "Unable to disconnect\\n";
+
+exit 0;
+

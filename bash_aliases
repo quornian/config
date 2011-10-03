@@ -1,0 +1,104 @@
+#!/bin/bash
+
+# == Colours ==
+
+# The following table matches GNU screen colour codes to
+# colour escape sequence values for use in the prompt:
+#   0:k black         8:K dark grey
+#   1:r red           9:R bright red
+#   2:g green        10:G bright green
+#   3:y yellow       11:Y bright yellow
+#   4:b blue         12:B bright blue
+#   5:m magenta      13:M bright magenta
+#   6:c cyan         14:C bright cyan
+#   7:w light grey   15:W white
+function __color_num() {
+    case $1 in
+        k) n=0 ;; r) n=1 ;; g) n=2 ;; y) n=3 ;;
+        b) n=4 ;; m) n=5 ;; c) n=6 ;; w) n=7 ;;
+        K) n=8 ;; R) n=9 ;; G) n=10;; Y) n=11;;
+        B) n=12;; M) n=13;; C) n=14;; W) n=15;;
+        *) echo "Bad Colour: $1" 1>&2 ;  n=9 ;;
+    esac
+    echo $n
+}
+
+# Turns a colour code (eg. kW) into a colour escape sequence
+function __color() {
+    bgc="${1:0:1}"
+    fgc="${1:1:1}"
+    echo "\e[48;5;$(__color_num $bgc);38;5;$(__color_num $fgc)m"
+}
+
+export GREP_COLORS="ms=01;34"
+export LS_COLORS="\
+fi=38;5;7:\
+di=38;5;3:\
+ow=38;5;3:\
+ln=38;5;8:\
+ex=38;5;15:\
+mi=38;5;9"
+
+# == Prompt ==
+
+# Git indicator
+function __ps1_git() {
+    git rev-parse 2>/dev/null || return
+    b=$(git branch | sed -n 's/^\* \(.*\)/\1/p')
+    [ "$b" != "(no branch)" ] || b=$(git log -1 --pretty=%h)
+    echo "[$b]"
+}
+
+# Function to join the parts together
+function __make_prompt() {
+
+    local ps1_ident="\
+\[$(__color kb)\]\h:"
+
+    local ps1_path="\
+\[$(__color kK)\]\w"
+
+    local ps1_git="\
+\[$(__color ky)\]\$(__ps1_git)"
+
+    local ps1_prompt="\
+\[$(__color kW)\]\\$ \
+\[$(__color kw)\]"
+
+    export PS1="\n${ps1_ident} ${ps1_path} ${ps1_git}\n${ps1_prompt}"
+}
+__make_prompt
+
+# == Keys ==
+
+# History searching
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+
+# == Aliases and Functions ==
+
+# List aliases
+alias ll='ls -lph --group-directories-first'
+alias  l='ll'
+alias la='ll -A'
+
+# Calculator
+alias calc='bc -lq'
+
+# Shortcuts
+vw() { vim "$(which $1)"; }
+
+# == Settings ==
+
+# Delete prior duplicates in history
+export HISTCONTROL=ignorespace:erasedups
+
+# Local bin
+export PATH="$HOME/bin:$HOME/scripts:$HOME/local/bin:$HOME/config/bin:$PATH"
+
+# Trying to execute a directory navigates into it
+shopt -s autocd
+
+# Completion
+complete -o dirnames cd
+
