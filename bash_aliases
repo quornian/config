@@ -1,4 +1,5 @@
 #!/bin/bash
+shopt -u expand_aliases
 
 # == Colours ==
 
@@ -111,4 +112,6 @@ if [ -f ~/.bash_aliases_home ]
 then
     . ~/.bash_aliases_home
 fi
+
+shopt -s expand_aliases
 
