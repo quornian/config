@@ -102,3 +102,13 @@ shopt -s autocd
 # Completion
 complete -o dirnames cd
 
+# Work / home customizations
+if [ -f ~/.bash_aliases_work ]
+then
+    . ~/.bash_aliases_work
+fi
+if [ -f ~/.bash_aliases_home ]
+then
+    . ~/.bash_aliases_home
+fi
+
