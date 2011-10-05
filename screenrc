@@ -25,6 +25,10 @@ defbce "on"
 # Plenty of scrollback
 defscrollback 5000
 
+# Monitor all windows
+defmonitor on
+activity "Activity in %n"
+
 # How long a window waits for silence before alerting you.
 silencewait 15 # default: 30
 
@@ -50,10 +54,10 @@ attrcolor d -d
 hardstatus off
 
 # Set selection colours
-sorendition WK
+sorendition kb
 
 # Show "tabs" in all regions, in the caption bar
-caption always "%{= Kb} %-Lw%{= kb} %n: %{= kW}%t %{= Kb}%+Lw %-="
+caption always "%{= Kb} %-w%{= kb} %n: %{= kW}%t %{= Kb}%+w %-="
 
 # Define backticks to use in the hardstatus line
 # These are scripts in the PATH
