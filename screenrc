@@ -69,3 +69,9 @@ backtick 4 30 30 _screen_sessionname
 # In the last line, show some system information
 hardstatus alwayslastline "%{= kW}%t %-= %{= kb}Session: %u%{= kW}%4` | %{= kb}Host: %{= kW}%H | %{= kb}Mem: %{= kW}%2`MB | %{= kb}Swap: %{= kW}%3`MB | %{= kb}%d %M %{= kW}%c"
 
+# Swtich tabs with Ctrl-Shift-Left/Right
+bindkey ^[[1;6D prev    # Ctrl-Shift-Left
+bindkey ^[[1;6C next    # Ctrl-Shift-Right
+bindkey ^[[1;5A focus   # Ctrl-Up
+bindkey ^[[1;5B focus   # Ctrl-Down
+bindkey ^[[Z focus      # Ctrl-Shift-Tab
