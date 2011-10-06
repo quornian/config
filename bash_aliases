@@ -51,6 +51,7 @@ ln=38;5;8:\
 ex=38;5;15:\
 mi=38;5;9:\
 su=07"
+export LESS="-RFS --shift=4"
 
 # == Prompt ==
 
