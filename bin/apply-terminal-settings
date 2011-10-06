@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Gnome terminal settings
+path=/apps/gnome-terminal/profiles/Default
+case $1 in
+    blue)
+        palette=""
+        palette="$palette#000000000000:#CFCF83838383:"
+        palette="$palette#8484B2B2FFFF:#8484B2B2FFFF:"
+        palette="$palette#8484B2B2FFFF:#8484B2B2FFFF:"
+        palette="$palette#8484B2B2FFFF:#8484B2B2FFFF:"
+        palette="$palette#8484B2B2FFFF:#8484B2B2FFFF:"
+        palette="$palette#8484B2B2FFFF:#8484B2B2FFFF:"
+        palette="$palette#8484B2B2FFFF:#8484B2B2FFFF:"
+        palette="$palette#8484B2B2FFFF:#8484B2B2FFFF:"
+        gconftool-2 --type string --set $path/font "Monospace 10"
+        gconftool-2 --type string --set $path/background_color "#000000000000"
+        gconftool-2 --type string --set $path/foreground_color "#AAAAAAAAAAAA"
+        gconftool-2 --type string --set $path/palette "$palette"
+        ;;
+    presentation)
+        $0
+        gconftool-2 --type string --set $path/font "Monospace 14"
+        ;;
+    *)
+        palette=""
+        palette="$palette#000000000000:#CFCF83838383:"
+        palette="$palette#666689898484:#9B9B7E7E6161:"
+        palette="$palette#8484B2B2FFFF:#8C8C52528C8C:"
+        palette="$palette#7C7CB8B8CECE:#AAAAAAAAAAAA:"
+        palette="$palette#555555555555:#FFFF55555555:"
+        palette="$palette#A6A6DADAC4C4:#E3E3E3E37373:"
+        palette="$palette#5050AEAEFFFF:#D3D37878D3D3:"
+        palette="$palette#3333AFAFDCDC:#FFFFFFFFFFFF"
+        gconftool-2 --type string --set $path/font "Monospace 10"
+        gconftool-2 --type string --set $path/background_color "#000000000000"
+        gconftool-2 --type string --set $path/foreground_color "#AAAAAAAAAAAA"
+        gconftool-2 --type string --set $path/palette "$palette"
+        ;;
+esac
+
