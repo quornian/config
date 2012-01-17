@@ -49,7 +49,8 @@ di=38;5;3:\
 ow=38;5;3:\
 ln=38;5;8:\
 ex=38;5;15:\
-mi=38;5;9"
+mi=38;5;9:\
+su=07"
 
 # == Prompt ==
 
@@ -98,9 +99,14 @@ alias la='ll -A'
 alias calc='bc -lq'
 
 # Shortcuts
-vw() { vim "$(which $1)"; }
+vw() { vim "$(which "$1")"; }
+cw() { cat "$(which "$1")"; }
+view() { vim -MR "$1"; }
 
 # == Settings ==
+
+# Set system default editor
+export EDITOR=vim
 
 # Delete prior duplicates in history
 export HISTCONTROL=ignorespace:erasedups
