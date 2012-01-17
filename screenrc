@@ -27,7 +27,9 @@ defscrollback 5000
 
 # Monitor all windows
 defmonitor on
-activity "Activity in %n"
+activity "Activity in tab [%n: %t]"
+msgminwait 3  # Notify for at least 3 seconds
+msgwait 8     # Notify for 8 seconds if possible
 
 # How long a window waits for silence before alerting you.
 silencewait 15 # default: 30
@@ -61,13 +63,13 @@ caption always "%{= Kb} %-w%{= kb} %n: %{= kW}%t %{= Kb}%+w %-="
 
 # Define backticks to use in the hardstatus line
 # These are scripts in the PATH
-backtick 1 30 30 _screen_uptime
-backtick 2 30 30 _screen_freemem
-backtick 3 30 30 _screen_freeswap
-backtick 4 30 30 _screen_sessionname
+backtick 1  30  30 _screen_uptime
+backtick 2   5   5 _screen_membar
+backtick 3  10  10 _screen_swapbar
+backtick 4 300 300 _screen_sessionname
 
 # In the last line, show some system information
-hardstatus alwayslastline "%{= kW}%t %-= %{= kb}Session: %u%{= kW}%4` | %{= kb}Host: %{= kW}%H | %{= kb}Mem: %{= kW}%2`MB | %{= kb}Swap: %{= kW}%3`MB | %{= kb}%d %M %{= kW}%c"
+hardstatus alwayslastline "%-= %{= kb}Session: %u%{= kW}%4` | %{= kb}Host: %{= kW}%H | %{= kb}Mem: %{= kW}%2`| %{= kb}Swap: %{= kW}%3`| %{= kb}%D %d %M %{= kW}%c"
 
 # Swtich tabs with Ctrl-Shift-Left/Right
 bindkey ^[[1;6D prev    # Ctrl-Shift-Left
@@ -75,3 +77,23 @@ bindkey ^[[1;6C next    # Ctrl-Shift-Right
 bindkey ^[[1;5A focus   # Ctrl-Up
 bindkey ^[[1;5B focus   # Ctrl-Down
 bindkey ^[[Z focus      # Ctrl-Shift-Tab
+
+# Ctrl-Page up enters scrollback
+bindkey -d "^[[5;5~" eval copy "stuff 5\025"
+
+# Scroll up
+bindkey -d "^[[5S" eval copy "stuff 5\025"
+bindkey -m "^[[5S" stuff 5\025
+
+# Scroll down
+bindkey -d "^[[5T" eval copy "stuff 5\004"
+bindkey -m "^[[5T" stuff 5\004
+
+# Scroll up more
+bindkey -d "^[[25S" eval copy "stuff \025"
+bindkey -m "^[[25S" stuff \025
+
+# Scroll down more
+bindkey -d "^[[25T" eval copy "stuff \004"
+bindkey -m "^[[25T" stuff \004
+
