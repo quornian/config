@@ -132,7 +132,22 @@ shopt -s expand_aliases
 if [ -n "$STY" ]
 then
     __set_title() { printf "\033k%s\033\\" "$@"; }
-    preexec() { __set_title "\`$1\`"; }
-    postexec() { __set_title "$(basename $(dirname "$PWD"))/$(basename "$PWD")/"; }
+    preexec() {
+        #__set_title "\`$1\`"
+        [ -z $__cmd_time ] && __cmd_time="$(date '+%s')"
+    }
+    postexec() {
+        # Set title to directory or $TITLE
+        [ -z "$TITLE" ] && __set_title "$(basename $(dirname "$PWD"))/$(basename "$PWD")/" || \
+            __set_title "$TITLE"
+
+        # Report the time the command took if greater than a threshold
+        local t=$[ $(date '+%s') - __cmd_time ]
+        if [ $t -gt 3 ]
+        then
+            echo -e "$(__color kK)[Finished in $t seconds at $(date '+%H:%M:%S')]\033[0m"
+        fi
+        __cmd_time=
+    }
 fi
 
