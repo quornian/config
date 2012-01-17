@@ -103,6 +103,10 @@ vw() { vim "$(which "$1")"; }
 cw() { cat "$(which "$1")"; }
 view() { vim -MR "$1"; }
 
+# Directory management
+source ~/.bash/directory_management
+alias cdg='cd `git rev-parse --show-cdup`'
+
 # == Settings ==
 
 # Set system default editor
@@ -113,12 +117,6 @@ export HISTCONTROL=ignorespace:erasedups
 
 # Local bin
 export PATH="$HOME/bin:$HOME/scripts:$HOME/local/bin:$HOME/config/bin:$PATH"
-
-# Trying to execute a directory navigates into it
-shopt -s autocd
-
-# Completion
-complete -o dirnames cd
 
 # Work / home customizations
 if [ -f ~/.bash_aliases_work ]
