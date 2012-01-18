@@ -142,15 +142,24 @@ then
         [ -z $__cmd_time ] && __cmd_time="$(date '+%s')"
     }
     postexec() {
+        local exitcode=$?
+
         # Set title to directory or $TITLE
         [ -z "$TITLE" ] && __set_title "$(basename $(dirname "$PWD"))/$(basename "$PWD")/" || \
             __set_title "$TITLE"
 
         # Report the time the command took if greater than a threshold
         local t=$[ $(date '+%s') - __cmd_time ]
-        if [ $t -gt 3 ]
+        if [ $t -gt 3 -o $exitcode -ne 0 ]
         then
-            echo -e "$(__color kK)[Finished in $t seconds at $(date '+%H:%M:%S')]\033[0m"
+            if [ $exitcode -ne 0 ]
+            then
+                echo -en " $(__color kr)[Finished in $t seconds "
+                echo -e  "at $(date '+%H:%M:%S') with code $exitcode]\033[0m"
+            else
+                echo -en " $(__color kK)[Finished in $t seconds "
+                echo -e  "at $(date '+%H:%M:%S')]\033[0m"
+            fi
         fi
         __cmd_time=
     }
