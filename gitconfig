@@ -27,13 +27,16 @@
     # Horizontal scrolling that makes sense
     pager = "less -FRSX -#5"
 
+    # Favourite editor
+    editor = vim
+
 [diff]
     # Search for diff sections to allow n/N movement in less
     pager = "less -FRSX -p '^diff.*'"
 
 [gui]
     fontui = -family \"Liberation Sans\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
-    fontdiff = -family \"Lucida Sans Typewriter\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
+    fontdiff = -family \"Liberation Mono\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
 
 [rerere]
     enabled = 1
