@@ -131,6 +131,14 @@ fi
 
 shopt -s expand_aliases
 
+# Allow editing of failed history substitutions
+shopt -s histreedit
+shopt -s histverify
+
+# Save multi-line history properly
+shopt -s cmdhist
+shopt -s lithist
+
 # == Screen ==
 
 # Settings specific to running bash in screen

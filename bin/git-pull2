@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# First attempt was this:
+# git fetch origin && ( git pull --ff-only ||
+#    git rebase -p origin/$(git current-branch) )"
+
+branch=$(git symbolic-ref HEAD 2> /dev/null | sed -e 's#refs/heads/##')
+remote=$(git config branch.$branch.remote)
+gitdir=$(git rev-parse --git-dir)
+
+# Validate git directory
+if [[ -z $gitdir ]]
+then
+    echo "Not in a git work tree."
+    echo "Aborted."
+    exit 1
+fi
+
+# Validate current branch
+if [[ ! -f $gitdir/refs/heads/$branch ]]
+then
+    echo "Not on a branch."
+    echo "Aborted."
+    exit 1
+fi
+
+# Validate remote
+if [[ -z $remote ]]
+then
+    echo "Branch $branch is not tracking a remote branch (eg. origin/$branch)."
+    echo "Aborted."
+    exit 1
+fi
+
+# 
+echo "Fetching first..."
+if ! git fetch origin
+then
+    echo "Aborted."
+    exit 1
+fi
+echo "Done."
+echo
+
+echo "Trying a simple fast-forward pull..."
+if git pull --ff-only
+then
+    echo "Done."
+    exit 0
+else
+    echo "Not aborting, ignore that, we just can't do a simple"
+    echo "fast-forward... but that's okay!"
+    echo
+    echo "Rebasing changes on top of $remote/$branch instead..."
+    cmd="git rebase -p --onto $remote/$branch $(git merge-base $remote/$branch HEAD) HEAD"
+    echo "$cmd"
+    if $cmd
+    then
+        echo "Done."
+        exit 0
+    else
+        if [[ -d $gitdir/rebase-merge || -d $gitdir/rebase-apply ]]
+        then
+            echo 'Rebase failed. Manually resolve conflicts (if any) and'
+            echo 'use git rebase --continue or git rebase --abort'
+        else
+            echo 'Aborted.'
+        fi
+        exit 1
+    fi
+fi
+
