@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# git log --graph --date-order \
+# --date=local \
+# --pretty='format: %C(yellow dim)%h%C(yellow bold)%d%Creset %C(blue '\
+# 'bold)%aN %Creset%C(green dim)%ar %C(green bold)(%ad)%n         '\
+# '%C(white dim)%s%Creset' -25 $* | \
+#     cut -b 1-200 | \
+#     sed -e 's/^/ /;s/ \* /[1;32m • [0m/;s/|/│/g' | \
+#     less -FRXS -5
+
+git log --graph --date-order \
+--date=local \
+--pretty='format: %C(240)%h%C(11)%d %C(12)%aN '\
+'%C(2)%ar %C(10)(%ad)%n         '\
+'%C(245)%s%Creset' -25 $* | \
+    cut -b 1-200 | \
+    sed -e 's/^/ /;s/ \* /[1;32m • [0m/;s/|/│/g' | \
+    less -FRXS -5
+
