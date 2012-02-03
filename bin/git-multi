@@ -1,0 +1,13 @@
+#!/bin/bash
+
+for dir in $(find -L -maxdepth 2 -name ".git")
+do (
+    dir="${dir#\./}"
+    dir="${dir%/\.git}"
+    if [[ $dir != ".git" ]]
+    then
+        cd "$dir"
+        echo -e "\e[38;5;8mRepository: $dir\e[0m"
+    fi
+    git "$@"
+) done
