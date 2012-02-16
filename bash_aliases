@@ -51,6 +51,7 @@ ln=38;5;8:\
 ex=38;5;15:\
 mi=38;5;9:\
 su=07"
+export LESS="-RFS --shift=4"
 
 # == Prompt ==
 
@@ -166,15 +167,24 @@ then
         [ -z $__cmd_time ] && __cmd_time="$(date '+%s')"
     }
     postexec() {
+        local exitcode=$?
+
         # Set title to directory or $TITLE
         [ -z "$TITLE" ] && __set_title "$(substr "$PWD/" -15)" || \
             __set_title "$TITLE"
 
         # Report the time the command took if greater than a threshold
         local t=$[ $(date '+%s') - __cmd_time ]
-        if [ $t -gt 3 ]
+        if [ $t -gt 3 -o $exitcode -ne 0 ]
         then
-            echo -e "$(__color kK)[Finished in $t seconds at $(date '+%H:%M:%S')]\033[0m"
+            if [ $exitcode -ne 0 ]
+            then
+                echo -en " $(__color kr)[Finished in $t seconds "
+                echo -e  "at $(date '+%H:%M:%S') with code $exitcode]\033[0m"
+            else
+                echo -en " $(__color kK)[Finished in $t seconds "
+                echo -e  "at $(date '+%H:%M:%S')]\033[0m"
+            fi
         fi
         __cmd_time=
     }
