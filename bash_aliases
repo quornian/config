@@ -103,6 +103,23 @@ vw() { vim "$(which "$1")"; }
 cw() { cat "$(which "$1")"; }
 view() { vim -MR "$1"; }
 
+# Functions
+substr() { # $1 string, $2 start, $3 end
+    local start=$2
+    local end=$3
+    [[ -z $start ]] && start=0
+    [[ $start -lt 0 ]] && start=$[${#1} + $start]
+    [[ $start -lt 0 ]] && start=0
+    [[ -z $end ]] && end=${#1}
+    [[ $end -lt 0 ]] && end=$[${#1} + $end]
+    [[ $end -lt 0 ]] && end=0
+    len=$[$end - $start]
+    if [[ $len -gt 0 ]]
+    then
+        echo ${1:$start:$len}
+    fi
+}
+
 # Directory management
 source ~/.bash/directory_management
 alias cdg='cd `git rev-parse --show-cdup`'
@@ -143,14 +160,14 @@ shopt -s lithist
 # Settings specific to running bash in screen
 if [ -n "$STY" ]
 then
-    __set_title() { printf "\033k%s\033\\" "$@"; }
+    __set_title() { printf "\033k%s\033\\" "$1"; }
     preexec() {
-        #__set_title "\`$1\`"
+        __set_title "($(substr "$1" 0 7)) $(substr "$PWD/" -5)"
         [ -z $__cmd_time ] && __cmd_time="$(date '+%s')"
     }
     postexec() {
         # Set title to directory or $TITLE
-        [ -z "$TITLE" ] && __set_title "$(basename $(dirname "$PWD"))/$(basename "$PWD")/" || \
+        [ -z "$TITLE" ] && __set_title "$(substr "$PWD/" -15)" || \
             __set_title "$TITLE"
 
         # Report the time the command took if greater than a threshold
