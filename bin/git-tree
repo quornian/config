@@ -1,8 +1,12 @@
 #!/bin/sh
-B=`echo -e "\e[37m"`
-T=`echo -e "\e[33m"`
-X=`echo -e "\e[0m"`
+ex=`echo -e "\e[38;5;15m"`
+fl=`echo -e "\e[38;5;7m"`
+ln=`echo -e "\e[38;5;8m"`
+dr=`echo -e "\e[33m"`
+xx=`echo -e "\e[0m"`
 git ls-tree -rt --long --full-name --abbrev=7 HEAD | \
     sed -r -e 's,\w+/,    ,g' | \
-    sed -r 's,([0-9]+ blob .*[\t ])([A-Za-z0-9_.]+)$,\1'$B'\2'$X',' | \
-    sed -r 's,([0-9]+ tree .*[\t ])([A-Za-z0-9_.]+)$,\1'$T'\2'$X'/,'
+    sed -r 's,(100755 .*[\t ])([-A-Za-z0-9_.]+),\1'$ex'\2'$xx',' | \
+    sed -r 's,(100644 .*[\t ])([-A-Za-z0-9_.]+),\1'$fl'\2'$xx',' | \
+    sed -r 's,(120000 .*[\t ])([-A-Za-z0-9_.]+),\1'$ln'\2 -> ...'$xx',' | \
+    sed -r 's,(040000 .*[\t ])([-A-Za-z0-9_.]+),\1'$dr'\2'$xx'/,'
