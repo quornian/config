@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+
+import sys
+import inspect
+
+def _getClass(className):
+    '''
+    Given a string containing a module and a class in one, such as
+    "pipeFarm.Submission" or similar, this class will import the parent
+    module and then return the class in question. This will work even if the
+    module itself isn't imported yet and without polluting the global
+    namespace, which is rather cool...
+    
+    If anything goes wrong with the import (bad string provided or somesuch)
+    then we make no effort to catch the exception and handle it nicely or
+    return None or somesuch - we allow any exceptions to propagate outwards.
+    '''
+    #Hmm, __import__ seems to behave rather oddly:
+    # __import__('pipeSceneBuilder.assetBuilder') imports 'pipeSceneBuilder'
+    # __import__('pipeSceneBuilder') imports 'pipeSceneBuilder' but not all
+    #                                modules are present... ?!
+    tokens = className.split('.')
+    classObj = __import__( '.'.join(tokens[:-1]) )
+    for name in tokens[1:]:
+        classObj = getattr(classObj, name)
+    return classObj    
+
+def main():
+    if len(sys.argv) < 2:
+        sys.exit(1)
+
+    listing = True
+
+    module = None
+    element = None
+
+    parts = sys.argv[1].split('.')
+    for i in range(len(parts), 0, -1):
+        try:
+            #print 'Importing: %s' % '.'.join(parts[:i])
+            module = __import__('.'.join(parts[:i]), fromlist=parts[i:])
+        except:
+            #print 'Fail'
+            pass
+        else:
+            #print 'Success! %s' % element
+            if i == len(parts):
+                element = module
+            else:
+                element = eval('module.%s' % '.'.join(parts[i:]))
+            #print 'Element: %s' % element
+            break
+
+    if element:
+        try:
+            args, varargs, varkw, defaults = inspect.getargspec(element)
+            print 'Element:\n  \033[34;1m%s\033[33m%s\033[0m\n' % (element.__name__, inspect.formatargspec(args, varargs, varkw, defaults))
+        except:
+            print 'Element:\n  \033[34m%s\033[0m\n' % element.__name__
+        print 'Documentation:\n\033[32m%s\033[0m\n' % inspect.getdoc(element)
+    else:
+        try:
+            element = eval(parts[0])
+            print 'Element:\n  \033[34m%s\033[0m\n' % parts[0]
+            print 'Documentation:\n\033[32m%s\033[0m\n' % inspect.getdoc(element)
+        except:
+            print 'Module not found: %s' % '.'.join(parts)
+        return
+
+    if listing:
+        print 'Member listing:\033[31m'
+        for item in sorted(dir(element or module)):
+            if not item.startswith('_'):
+                print item,
+        print '\033[0m'
+        
+if __name__ == '__main__':
+    main()
