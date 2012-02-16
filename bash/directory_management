@@ -22,6 +22,7 @@ cd() {
         echo "    cd --   (rd)      Navigates to the previous directory and pops it"
         echo "    cdhist            Show the directory history"
         echo "    cd 1-99           Navigates to this entry in the history by number"
+        echo "    cd @part          If $PWD is /aa/party/cc/dd navigates to /aa/party"
         echo ""
         builtin cd -h;;
 
@@ -38,6 +39,10 @@ cd() {
     
     # Use "cd --" to restore the previous directory and pop it
     --) rd;;
+
+    # Use "cd @*" to navigate up to first directory starting *
+    @*)
+        cd $(echo "$PWD" | sed -r "s_(.*/${1#@}[^/]*)/.*_\\1_");;
     
     # Otherwise cd to the location pushing the current directory first
     *)
