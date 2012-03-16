@@ -54,7 +54,6 @@ set t_Co=256
 colo mustang
 
 " Visible whitespace
-set list
 set listchars=tab:↹-,eol:↵
 hi SpecialKey cterm=NONE ctermfg=240 guifg=DarkRed
 hi NonText cterm=NONE ctermfg=240 guifg=DarkRed
@@ -107,7 +106,7 @@ map ,+ /.{81,}<CR>
 " Replace all instances of word
 nmap ,r :%s/\<<c-r>=expand("<cword>")<cr>\>//g
 " Toggle highlighting of search terms
-map ,k :set hls!<bar>set hls?<CR>:PyflakesUpdate<CR>
+map ,k :set hls!<bar>set hls?<CR>
 " Toggle visible whitespace
 nmap ,w :set list!<CR>
 " Toggle syntax
@@ -122,6 +121,8 @@ map ,p :set paste!<Bar>set paste?<CR>
 imap ,p <Esc>:set paste!<Bar>set paste?<CR>a
 " Maximize current split
 map ,m <C-w><C-_>
+" Browse for file to open
+map ,b :browse split<CR>
 
 " Easier way to jump between splits
 map <C-j> <C-w>j
@@ -130,10 +131,12 @@ noremap <C-l> <C-w>l
 map <C-h> <C-w>h
 
 " Easier way to increase / decrease the size of splits
-map + 5<C-W>+
-map - 5<C-W>-
-map <C-+> <C-W>+
-map <C--> <C-W>-
+map = <C-W>+
+map - <C-W>-
+map _ :split<CR>
+
+" I always hold shift that bit too long and type :Wq
+command Wq wq
 
 map zw zCzO
 " Get the file under the cursor in a split
