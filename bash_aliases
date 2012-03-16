@@ -86,8 +86,12 @@ __make_prompt
 # == Keys ==
 
 # History searching
-bind '"\e[A":history-search-backward'
-bind '"\e[B":history-search-forward'
+case "$-" in
+*i*)
+    bind '"\e[A":history-search-backward'
+    bind '"\e[B":history-search-forward'
+    ;;
+esac
 
 # == Aliases and Functions ==
 
