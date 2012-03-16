@@ -37,9 +37,15 @@ function __color_num() {
 
 # Turns a colour code (eg. kW) into a colour escape sequence
 function __color() {
-    bgc="${1:0:1}"
-    fgc="${1:1:1}"
-    echo "\e[48;5;$(__color_num $bgc);38;5;$(__color_num $fgc)m"
+    if [[ ${#1} == 1 ]]
+    then
+        fgc=$1
+        echo "\e[38;5;$(__color_num $fgc)m"
+    else
+        bgc="${1:0:1}"
+        fgc="${1:1:1}"
+        echo "\e[48;5;$(__color_num $bgc);38;5;$(__color_num $fgc)m"
+    fi
 }
 
 export GREP_COLORS="ms=01;34"
@@ -67,17 +73,17 @@ function __ps1_git() {
 function __make_prompt() {
 
     local ps1_ident="\
-\[$(__color kb)\]\h:"
+\[$(__color b)\]\h:"
 
     local ps1_path="\
-\[$(__color kK)\]\w"
+\[$(__color K)\]\w"
 
     local ps1_git="\
-\[$(__color ky)\]\$(__ps1_git)"
+\[$(__color y)\]\$(__ps1_git)"
 
     local ps1_prompt="\
-\[$(__color kW)\]\\$ \
-\[$(__color kw)\]"
+\[$(__color W)\]\\$ \
+\[$(__color w)\]"
 
     export PS1="\n${ps1_ident} ${ps1_path} ${ps1_git}\n${ps1_prompt}"
 }
