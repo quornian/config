@@ -61,16 +61,18 @@ hi NonText cterm=NONE ctermfg=240 guifg=DarkRed
 
 " Right margin
 set colorcolumn=73,74,75,76,77,78,79
-hi ColorColumn ctermbg=235 guibg=DarkGrey
+hi ColorColumn ctermbg=233 guibg=gray7
 
 " Mappings
 au BufRead,BufNewFile *.sdl,*.jdl set filetype=fcdl
 au BufRead,BufNewFile *.ma set filetype=mel
 au BufRead,BufNewFile *.def set filetype=tcl
 
-" Get rid of toolbar and menu in gvim
-set guioptions-=T
-set guioptions-=m
+" Get rid of toolbar, menu and scrollbars in gvim
+"set guioptions-=T
+"set guioptions-=m
+"set guioptions-=r
+set guioptions=
 set gfn=Monospace\ 9
 
 " Auto-close brackets
