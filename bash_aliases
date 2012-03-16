@@ -173,7 +173,7 @@ if [ -n "$STY" ]
 then
     __set_title() { printf "\033k%s\033\\" "$1"; }
     preexec() {
-        __set_title "($(substr "$1" 0 7)) $(substr "$PWD/" -5)"
+        __set_title "($(substr "$1" 0 7)) $(substr "$(basename "$PWD/")" 0 5)"
         [ -z $__cmd_time ] && __cmd_time="$(date '+%s')"
     }
     postexec() {
