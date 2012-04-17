@@ -48,6 +48,15 @@ vnoremap / /\v
 set mouse=nv
 behave xterm
 
+" Zero-padded strings are not octal
+set nrformats-=octal
+
+" Restore last location in the file
+autocmd! bufreadpost * silent! normal! '"
+
+" Source the .vimrc immediately after you save it.
+autocmd! bufwritepost .vimrc source %
+
 " Colours
 syntax enable
 set t_Co=256
@@ -141,6 +150,10 @@ nnoremap <C-h> <C-w>h
 map = <C-W>+
 map - <C-W>-
 map _ :split<CR>
+
+" Save and quit from insert mode (stop :wq appearing in files)
+iabbrev :w :w
+"iabbrev :wq :wq
 
 " I often hold shift that bit too long and type :Wq
 command! Wq wq
