@@ -129,6 +129,10 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 
+" Easier way to navigate wrapped text
+map <Down> gj
+map <Up> gk
+
 " Easier way to increase / decrease the size of splits
 map = <C-W>+
 map - <C-W>-
