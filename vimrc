@@ -68,8 +68,10 @@ hi SpecialKey cterm=NONE ctermfg=240 guifg=DarkRed
 hi NonText cterm=NONE ctermfg=240 guifg=DarkRed
 
 " Right margin
-set colorcolumn=73,74,75,76,77,78,79
-hi ColorColumn ctermbg=233 guibg=gray7
+if ! &diff
+    set colorcolumn=73,74,75,76,77,78,79
+    hi ColorColumn ctermbg=233 guibg=gray7
+endif
 
 " Mappings
 au BufRead,BufNewFile *.sdl,*.jdl set filetype=fcdl
