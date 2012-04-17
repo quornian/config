@@ -125,10 +125,14 @@ map ,m <C-w><C-_>
 map ,b :browse split<CR>
 
 " Easier way to jump between splits
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-noremap <C-l> <C-w>l
-map <C-h> <C-w>h
+nnoremap <C-Down> <C-w>j
+nnoremap <C-Up> <C-w>k
+nnoremap <C-Right> <C-w>l
+nnoremap <C-Left> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
 
 " Easier way to increase / decrease the size of splits
 map = <C-W>+

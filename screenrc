@@ -74,12 +74,6 @@ hardstatus alwayslastline "%-= %{= $THEME_FG}Session: %u%{= kW}%4` | %{= $THEME_
 # Swtich tabs with Ctrl-Shift-Left/Right
 bindkey ^[[1;6D prev    # Ctrl-Shift-Left
 bindkey ^[[1;6C next    # Ctrl-Shift-Right
-bindkey ^[[1;5A focus   # Ctrl-Up
-bindkey ^[[1;5B focus   # Ctrl-Down
-bindkey ^[[Z focus      # Ctrl-Shift-Tab
-
-# Ctrl-Page up enters scrollback
-bindkey -d "^[[5;5~" eval copy "stuff 5\025"
 
 # Scroll up
 bindkey -d "^[[5S" eval copy "stuff 5\025"
