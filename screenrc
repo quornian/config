@@ -56,10 +56,10 @@ attrcolor d -d
 hardstatus off
 
 # Set selection colours
-sorendition kb
+sorendition k$THEME_FG
 
 # Show "tabs" in all regions, in the caption bar
-caption always "%{= Kb} %-w%{= kb} %n: %{= kW}%t %{= Kb}%+w %-="
+caption always "%{= Kw} %-w%{= k$THEME_FG} %n: %{= kW}%t %{= Kw}%+w %-="
 
 # Define backticks to use in the hardstatus line
 # These are scripts in the PATH
@@ -69,7 +69,7 @@ backtick 3  10  10 _screen_swapbar
 backtick 4 300 300 _screen_sessionname
 
 # In the last line, show some system information
-hardstatus alwayslastline "%-= %{= kb}Session: %u%{= kW}%4` | %{= kb}Host: %{= kW}%H | %{= kb}Mem: %{= kW}%2`| %{= kb}Swap: %{= kW}%3`| %{= kb}%D %d %M %{= kW}%c"
+hardstatus alwayslastline "%-= %{= $THEME_FG}Session: %u%{= kW}%4` | %{= $THEME_FG}Host: %{= kW}%H | %{= $THEME_FG}Mem: %{= kW}%2`| %{= $THEME_FG}Swap: %{= kW}%3`| %{= $THEME_FG}%D %d %M %{= kW}%c"
 
 # Swtich tabs with Ctrl-Shift-Left/Right
 bindkey ^[[1;6D prev    # Ctrl-Shift-Left

@@ -69,11 +69,19 @@ function __ps1_git() {
     echo "[$b]"
 }
 
+# Set colour scheme differently for ssh
+if [[ ! -z "$SSH_CONNECTION" ]]
+then
+    export THEME_FG=g
+else
+    export THEME_FG=b
+fi
+
 # Function to join the parts together
 function __make_prompt() {
 
-    local ps1_ident="\
-\[$(__color b)\]\h:"
+        local ps1_ident="\
+\[$(__color $THEME_FG)\]\h:"
 
     local ps1_path="\
 \[$(__color K)\]\w"
