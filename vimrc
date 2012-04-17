@@ -93,36 +93,39 @@ inoremap [[     [
 inoremap []     []
 inoremap <expr> ]  strpart(getline('.'), col('.')-1, 1) == "]" ? "\<Right>" : "]"
 
+" Set <leader> to ',' (comma).
+let mapleader=','
+
 " Select the text you just pasted
 nnoremap <leader>v V`]
 
 " Toggle line numbers (relative)
-map ,l :if exists("+relativenumber") <Bar> :set relativenumber! <Bar> else <Bar> :set number! <Bar> endif <CR>
+nmap <leader>l :if exists("+relativenumber") <Bar> :set relativenumber! <Bar> else <Bar> :set number! <Bar> endif <CR>
 " Comment out a single line / range
-map ,# \c 
+nmap <leader># \c 
 " Search for any line longer than 80 characters
-map ,+ /.{81,}<CR>
+nmap <leader>+ /.{81,}<CR>
 
 " Replace all instances of word
-nmap ,r :%s/\<<c-r>=expand("<cword>")<cr>\>//g
+nmap <leader>r :%s/\<<c-r>=expand("<cword>")<cr>\>//g
 " Toggle highlighting of search terms
-map ,k :set hls!<bar>set hls?<CR>
+nmap <leader>k :set hls!<bar>set hls?<CR>
 " Toggle visible whitespace
-nmap ,w :set list!<CR>
+nmap <leader>w :set list!<CR>
 " Toggle syntax
-map ,syn :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
+nmap <leader>syn :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
 " Spell check
-map ,sp :set spell!
+nmap <leader>sp :set spell!
 
 " Explore the filesystem
-map <F9> :Sexplore<CR>
+nmap <F9> :Sexplore<CR>
 " Toggle paste
-map ,p :set paste!<Bar>set paste?<CR>
-imap ,p <Esc>:set paste!<Bar>set paste?<CR>a
+nmap <leader>p :set paste!<Bar>set paste?<CR>
+"imap <leader>p <Esc>:set paste!<Bar>set paste?<CR>a
 " Maximize current split
-map ,m <C-w><C-_>
+nmap <leader>m <C-w><C-_>
 " Browse for file to open
-map ,b :browse split<CR>
+nmap <leader>b :browse split<CR>
 
 " Easier way to jump between splits
 nnoremap <C-Down> <C-w>j
@@ -139,14 +142,15 @@ map = <C-W>+
 map - <C-W>-
 map _ :split<CR>
 
-" I always hold shift that bit too long and type :Wq
-command Wq wq
+" I often hold shift that bit too long and type :Wq
+command! Wq wq
+command! Q q
 
 map zw zCzO
 " Get the file under the cursor in a split
 map gf :sp <cfile><CR>
 " Change to the directory the current file is in
-map ,cd :exe 'cd ' . expand ("%:p:h")<CR>
+map <leader>cd :exe 'cd ' . expand ("%:p:h")<CR>
 " This should soooo be what Y does (like D, innit?)
 map Y y$
 
