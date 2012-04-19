@@ -1,29 +1,10 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import sys
 import inspect
-
-def _getClass(className):
-    '''
-    Given a string containing a module and a class in one, such as
-    "pipeFarm.Submission" or similar, this class will import the parent
-    module and then return the class in question. This will work even if the
-    module itself isn't imported yet and without polluting the global
-    namespace, which is rather cool...
-    
-    If anything goes wrong with the import (bad string provided or somesuch)
-    then we make no effort to catch the exception and handle it nicely or
-    return None or somesuch - we allow any exceptions to propagate outwards.
-    '''
-    #Hmm, __import__ seems to behave rather oddly:
-    # __import__('pipeSceneBuilder.assetBuilder') imports 'pipeSceneBuilder'
-    # __import__('pipeSceneBuilder') imports 'pipeSceneBuilder' but not all
-    #                                modules are present... ?!
-    tokens = className.split('.')
-    classObj = __import__( '.'.join(tokens[:-1]) )
-    for name in tokens[1:]:
-        classObj = getattr(classObj, name)
-    return classObj    
+import subprocess
 
 def main():
     if len(sys.argv) < 2:
@@ -33,6 +14,8 @@ def main():
 
     module = None
     element = None
+
+    less = subprocess.Popen(['/usr/bin/less', '-'], stdin=subprocess.PIPE)
 
     parts = sys.argv[1].split('.')
     for i in range(len(parts), 0, -1):
@@ -52,27 +35,77 @@ def main():
             break
 
     if element:
+        element_type = type(element).__name__
+        if element_type == 'type': element_type = 'class'
+        less.stdin.write('%s\n\n' % (sys.argv[1].upper(),))
+        less.stdin.write('\033[1m%s\033[0m\n' % element_type.upper())
         try:
             args, varargs, varkw, defaults = inspect.getargspec(element)
-            print 'Element:\n  \033[34;1m%s\033[33m%s\033[0m\n' % (element.__name__, inspect.formatargspec(args, varargs, varkw, defaults))
+            less.stdin.write(indent('\033[1m%s\033[0m%s\n' %
+                                    (element.__name__,
+                                     inspect.formatargspec(
+                                        args, varargs, varkw, defaults))))
         except:
-            print 'Element:\n  \033[34m%s\033[0m\n' % element.__name__
-        print 'Documentation:\n\033[32m%s\033[0m\n' % inspect.getdoc(element)
+            less.stdin.write(indent(element.__name__) + '\n')
+        less.stdin.write('\n')
+        less.stdin.write('\033[1mDOCUMENTATION\033[0m\n')
+        less.stdin.write(indent(trim(inspect.getdoc(element))) + '\n')
+        less.stdin.write('\n')
     else:
         try:
             element = eval(parts[0])
-            print 'Element:\n  \033[34m%s\033[0m\n' % parts[0]
-            print 'Documentation:\n\033[32m%s\033[0m\n' % inspect.getdoc(element)
+            less.stdin.write('\033[1mELEMENT\033[0m\n')
+            less.stdin.write(indent(parts[0]) + '\n')
+            less.stdin.write('\n')
+            less.stdin.write('\033[1mDOCUMENTATION\033[0m\n')
+            less.stdin.write(indent(trim(inspect.getdoc(element))) + '\n')
         except:
-            print 'Module not found: %s' % '.'.join(parts)
+            less.stdin.write('Module not found: %s' % '.'.join(parts) + '\n')
+        less.stdin.write('\n')
+        less.stdin.close()
+        less.wait()
         return
 
     if listing:
-        print 'Member listing:\033[31m'
+        less.stdin.write('\033[1mMEMBER LIST\033[0m\n')
         for item in sorted(dir(element or module)):
             if not item.startswith('_'):
-                print item,
-        print '\033[0m'
-        
+                less.stdin.write(indent(item) + '\n')
+        less.stdin.write('\033[0m\n')
+    less.stdin.close()
+    less.wait()
+
+
+def indent(text):
+    return '       ' + text.replace('\n', '\n       ').rstrip(' ')
+
+
+def trim(docstring):
+    if not docstring:
+        return ''
+    # Convert tabs to spaces (following the normal Python rules)
+    # and split into a list of lines:
+    lines = docstring.expandtabs().splitlines()
+    # Determine minimum indentation (first line doesn't count):
+    indent = sys.maxint
+    for line in lines[1:]:
+        stripped = line.lstrip()
+        if stripped:
+            indent = min(indent, len(line) - len(stripped))
+    # Remove indentation (first line is special):
+    trimmed = [lines[0].strip()]
+    if indent < sys.maxint:
+        for line in lines[1:]:
+            trimmed.append(line[indent:].rstrip())
+    # Strip off trailing and leading blank lines:
+    while trimmed and not trimmed[-1]:
+        trimmed.pop()
+    while trimmed and not trimmed[0]:
+        trimmed.pop(0)
+    # Return a single string:
+    return '\n'.join(trimmed)
+
+
 if __name__ == '__main__':
     main()
+
