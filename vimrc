@@ -13,7 +13,7 @@ set backupdir=~/.vim/backup
 
 " Persistant undo between sessions (7.3 only)
 set undofile
-set undodir=/tmp/undos
+set undodir=~/.vim/undo
 
 " Indentation
 set tabstop=4
@@ -143,8 +143,9 @@ iabbrev :w :w
 "iabbrev :wq :wq
 
 " I often hold shift that bit too long and type :Wq
-command! Wq wq
+command! W w
 command! Q q
+command! Wq wq
 
 map zw zCzO
 " Get the file under the cursor in a split
