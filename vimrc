@@ -7,8 +7,8 @@ set background=dark
 set laststatus=2    " Use an extra screen line to keep windows looking good
 set history=500
 
-" Swap and backups
-set directory=~/.vim/swap
+" Swap and backups (the // means use full path with % in place of /)
+set directory=~/.vim/swap//
 set backupdir=~/.vim/backup
 
 " Persistant undo between sessions (7.3 only)

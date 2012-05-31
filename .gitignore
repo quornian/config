@@ -1,0 +1,17 @@
+# Generated files
+*.pyc
+*.pyo
+*.o
+
+# Temporary files
+*.swp
+*.swo
+*.swn
+*.orig
+*~
+
+# Vim session files
+/vim/swap
+/vim/undo
+/vim/backup
+
