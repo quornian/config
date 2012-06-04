@@ -45,9 +45,6 @@ set incsearch       " Incremental search (ie. search as you type)
 set report=0        " Report number of lines changed during search/replace
 set ignorecase
 set smartcase
-" Use 'very magic' regular expressions when searching
-nnoremap / /\v
-vnoremap / /\v
 
 " Mouse support
 set mouse=nv
@@ -163,7 +160,11 @@ iabbrev :w :w
 " I often hold shift that bit too long and type :Wq
 command! W w
 command! Q q
+command! Qa qa
 command! Wq wq
+
+" Editing commands
+command! Rstrip %s/\v +$//
 
 map zw zCzO
 " Get the file under the cursor in a split
