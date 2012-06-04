@@ -12,8 +12,10 @@ set directory=~/.vim/swap//
 set backupdir=~/.vim/backup
 
 " Persistant undo between sessions (7.3 only)
-set undofile
-set undodir=~/.vim/undo
+if v:version >= 703
+    set undofile
+    set undodir=~/.vim/undo
+endif
 
 " Indentation
 set tabstop=4
@@ -80,7 +82,7 @@ hi SpecialKey cterm=NONE ctermfg=240 guifg=DarkRed
 hi NonText cterm=NONE ctermfg=240 guifg=DarkRed
 
 " Right margin
-if ! &diff
+if v:version >= 703 && ! &diff
     set colorcolumn=73,74,75,76,77,78,79
     hi ColorColumn ctermbg=233 guibg=gray7
 endif
@@ -171,4 +173,42 @@ map <leader>cd :exe 'cd ' . expand ("%:p:h")<CR>
 " This should soooo be what Y does (like D, innit?)
 map Y y$
 
+" Plugins --------------------------------------------------------------
+
+" Manage plugin bundles with Pathogen
+call pathogen#infect()  " Load bundle paths into vim
+Helptags                " Update help
+
+" Set up plugin options (which don't have adverse effects if the plugin
+" isn't loaded)
+let g:SuperTabDefaultCompletionType = "context"
+
+" Set up bindings for plugins (should only be done for sucessfully
+" loaded plugins)
+function SetupPlugins()
+    
+    " Files and directories tree
+    if exists(":NERDTree")
+        " Show on empty startup
+        if !argc()
+            NERDTree
+        endif
+        " Close vim if only a NERDTree is left
+        autocmd bufenter * if (winnr("$") == 1 &&
+            \ exists("b:NERDTreeType") &&
+            \ b:NERDTreeType == "primary") | q | endif
+    endif
+    
+    " Undo tree
+    if exists(":GundoToggle")
+        nnoremap <leader>u :GundoToggle<CR>
+    endif
+
+    " Syntax check
+    if exists(":SyntasticCheck")
+        nmap <leader>c :SyntasticCheck<CR>:Errors<CR>
+    endif
+
+endfunction
+autocmd vimenter * call SetupPlugins()
 
