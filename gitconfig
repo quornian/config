@@ -33,6 +33,7 @@
 [diff]
     # Search for diff sections to allow n/N movement in less
     pager = "less -FRSX -p '^diff.*'"
+    tool = "vimdiff"
 
 [gui]
     fontui = -family \"Liberation Sans\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
