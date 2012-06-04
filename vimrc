@@ -48,8 +48,17 @@ vnoremap / /\v
 set mouse=nv
 behave xterm
 
+" Global clipboard
+set clipboard=unnamedplus
+
 " Zero-padded strings are not octal
 set nrformats-=octal
+
+" File type settings:
+"  - filetype detection (implied)
+"  - filetype-specific plugin loading
+"  - filetype-specific indentation
+filetype plugin indent on
 
 " Restore last location in the file
 autocmd! bufreadpost * silent! normal! '"
@@ -85,6 +94,8 @@ au BufRead,BufNewFile *.def set filetype=tcl
 set guioptions=
 set gfn=Monospace\ 9
 
+" Key mapping ----------------------------------------------------------------
+
 " Set <leader> to ',' (comma).
 let mapleader=','
 
@@ -92,7 +103,8 @@ let mapleader=','
 nnoremap <leader>v V`]
 
 " Toggle line numbers (relative)
-nmap <leader>l :if exists("+relativenumber") <Bar> :set relativenumber! <Bar> else <Bar> :set number! <Bar> endif <CR>
+nmap <leader>l :if exists("+relativenumber") <Bar> :set relativenumber!
+            \ <Bar> else <Bar> :set number! <Bar> endif <CR>
 " Comment out a single line / range
 nmap <leader># \c 
 " Search for any line longer than 80 characters
@@ -105,7 +117,8 @@ nmap <leader>k :set hls!<bar>set hls?<CR>
 " Toggle visible whitespace
 nmap <leader>w :set list!<CR>
 " Toggle syntax
-nmap <leader>syn :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar> syntax enable <Bar> endif <CR>
+nmap <leader>syn :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar>
+            \ syntax enable <Bar> endif <CR>
 " Spell check
 nmap <leader>sp :set spell!
 
@@ -155,11 +168,4 @@ map <leader>cd :exe 'cd ' . expand ("%:p:h")<CR>
 " This should soooo be what Y does (like D, innit?)
 map Y y$
 
-" Global clipboard
-set clipboard=unnamedplus
 
-" File type settings:
-"  - filetype detection (implied)
-"  - filetype-specific plugin loading
-"  - filetype-specific indentation
-filetype plugin indent on
