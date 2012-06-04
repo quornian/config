@@ -35,6 +35,9 @@ set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc
 set wildmode=longest:full
 set wildmenu
 
+" General autocompletion                    " Only insert text common
+set completeopt=menuone,longest,preview     " to all matches (longest)
+
 " Search options
 set incsearch       " Incremental search (ie. search as you type)
 set report=0        " Report number of lines changed during search/replace
