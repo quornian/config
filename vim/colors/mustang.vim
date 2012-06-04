@@ -27,11 +27,12 @@ hi Cursor       guifg=NONE    guibg=#626262             ctermbg=241
 hi Normal       guifg=#e2e2e5 guibg=#202020 ctermfg=253            
 hi NonText      guifg=#808080 guibg=#303030 ctermfg=244            
 hi LineNr       guifg=#808080 guibg=#000000 ctermfg=244 ctermbg=232
-hi StatusLine   guifg=#d3d3d5 guibg=#444444 ctermfg=234 ctermbg=240
-hi StatusLineNC guifg=#939395 guibg=#444444 ctermfg=246 ctermbg=238
-hi VertSplit    guifg=#444444 guibg=#444444 ctermfg=238 ctermbg=238
+hi StatusLine   guifg=#d3d3d5 guibg=#444444 ctermfg=237 ctermbg=246
+hi StatusLineNC guifg=#939395 guibg=#444444 ctermfg=237 ctermbg=232 
+hi VertSplit    guifg=#444444 guibg=#444444 ctermfg=237 ctermbg=238
 hi Folded       guifg=#a0a8b0 guibg=#444444 ctermfg=2   ctermbg=16 
 hi FoldColumn   guifg=#a0a8b0 guibg=#444444 ctermfg=2   ctermbg=16 
+hi SignColumn   guifg=Cyan    guibg=Grey    ctermfg=14  ctermbg=none
 hi Title        guifg=#f6f3e8 guibg=NONE    ctermfg=254             gui=bold    cterm=bold
 hi Visual       guifg=#faf4c6 guibg=#3c414c ctermfg=254 ctermbg=4  
 hi SpecialKey   guifg=#808080 guibg=#343434 ctermfg=244 ctermbg=236
@@ -60,3 +61,5 @@ hi DiffAdd      ctermbg=236
 hi DiffDelete   ctermbg=234  ctermfg=232
 hi DiffChange   ctermbg=235
 hi DiffText     ctermbg=236
+
+hi SpellBad                                 ctermbg=17
