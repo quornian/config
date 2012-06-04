@@ -69,6 +69,14 @@ function __ps1_git() {
     echo "[$b]"
 }
 
+function __ps1_jobs() {
+    local pre='\[([0-9]+)\][-+]?\s+'
+    local post='\s+([A-Za-z0-9_/]+).*'
+    local running="$(jobs | sed -nr 's/'"${pre}Running${post}"'/\2\&/p')"
+    local stopped="$(jobs | sed -nr 's/'"${pre}Stopped${post}"'/\2^Z/p')"
+    echo -e "$(__color r)$stopped $(__color g)$running" | tr '\n' ' '
+}
+
 # Set colour scheme differently for ssh
 if [[ ! -z "$SSH_CONNECTION" ]]
 then
@@ -89,11 +97,14 @@ function __make_prompt() {
     local ps1_git="\
 \[$(__color y)\]\$(__ps1_git)"
 
+    local ps1_jobs="\
+\[$(__color g)\]\$(__ps1_jobs)"
+
     local ps1_prompt="\
 \[$(__color W)\]\\$ \
 \[$(__color w)\]"
 
-    export PS1="\n${ps1_ident} ${ps1_path} ${ps1_git}\n${ps1_prompt}"
+    export PS1="\n${ps1_ident} ${ps1_path} ${ps1_git} ${ps1_jobs}\n${ps1_prompt}"
 }
 __make_prompt
 
