@@ -21,7 +21,10 @@
     default = tracking
 
 [merge]
-    tool = "xxdiff"
+    tool = "vimdiff3"
+
+[mergetool "vimdiff3"]
+    cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
 
 [core]
     # Horizontal scrolling that makes sense
