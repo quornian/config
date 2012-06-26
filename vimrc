@@ -196,9 +196,7 @@ function! SetupPlugins()
             NERDTree
         endif
         " Close vim if only a NERDTree is left
-        autocmd bufenter * if (winnr("$") == 1 &&
-            \ exists("b:NERDTreeType") &&
-            \ b:NERDTreeType == "primary") | q | endif
+        nnoremap <leader>t :NERDTreeToggle<CR>
     endif
     
     " Undo tree
