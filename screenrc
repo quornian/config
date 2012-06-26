@@ -63,10 +63,10 @@ caption always "%{= Kw} %-w%{= k$THEME_FG} %n: %{= kW}%t %{= Kw}%+w %-="
 
 # Define backticks to use in the hardstatus line
 # These are scripts in the PATH
-backtick 1  30  30 _screen_uptime
-backtick 2   5   5 _screen_membar
-backtick 3  10  10 _screen_swapbar
-backtick 4 300 300 _screen_sessionname
+backtick 1  30  30 $HOME/.config/managed/bin/_screen_uptime
+backtick 2   5   5 $HOME/.config/managed/bin/_screen_membar
+backtick 3  10  10 $HOME/.config/managed/bin/_screen_swapbar
+backtick 4 300 300 $HOME/.config/managed/bin/_screen_sessionname
 
 # In the last line, show some system information
 hardstatus alwayslastline "%-= %{= $THEME_FG}Session: %u%{= kW}%4` | %{= $THEME_FG}Host: %{= kW}%H | %{= $THEME_FG}Mem: %{= kW}%2`| %{= $THEME_FG}Swap: %{= kW}%3`| %{= $THEME_FG}%D %d %M %{= kW}%c"
