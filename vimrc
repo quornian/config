@@ -165,6 +165,7 @@ command! Wq wq
 
 " Editing commands
 command! Rstrip %s/\v +$//
+command! -nargs=+ Grep execute 'silent grep! <args>' | copen 12 | redraw!
 
 map zw zCzO
 " Get the file under the cursor in a split
