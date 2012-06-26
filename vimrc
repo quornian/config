@@ -186,7 +186,7 @@ let g:SuperTabDefaultCompletionType = "context"
 
 " Set up bindings for plugins (should only be done for sucessfully
 " loaded plugins)
-function SetupPlugins()
+function! SetupPlugins()
     
     " Files and directories tree
     if exists(":NERDTree")
@@ -213,3 +213,11 @@ function SetupPlugins()
 endfunction
 autocmd vimenter * call SetupPlugins()
 
+" File type settings:
+"  - filetype detection (implied)
+"  - filetype-specific plugin loading
+"  - filetype-specific indentation
+filetype plugin indent on
+
+" Manage plugin bundles with Pathogen
+call pathogen#infect()
