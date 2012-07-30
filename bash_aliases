@@ -228,6 +228,27 @@ then
     }
     postexec() {
         local exitcode=$?
+        if [ $exitcode -gt 128 ]
+        then
+            case $[exitcode - 128] in
+             1) signame=SIGHUP;;   2) signame=SIGINT;;
+             3) signame=SIGQUIT;;  4) signame=SIGILL;;
+             5) signame=SIGTRAP;;  6) signame=SIGABRT;;
+             7) signame=SIGBUS;;   8) signame=SIGFPE;;
+             9) signame=SIGKILL;; 10) signame=SIGUSR1;;
+            11) signame=SIGSEGV;; 12) signame=SIGUSR2;;
+            13) signame=SIGPIPE;; 14) signame=SIGALRM;;
+            15) signame=SIGTERM;; 16) signame=SIGSTKFLT;;
+            17) signame=SIGCHLD;; 18) signame=SIGCONT;;
+            19) signame=SIGSTOP;; 20) signame=SIGTSTP;;
+            21) signame=SIGTTIN;; 22) signame=SIGTTOU;;
+            23) signame=SIGURG;;  24) signame=SIGXCPU;;
+            25) signame=SIGXFSZ;; 26) signame=SIGVTALRM;;
+            27) signame=SIGPROF;; 28) signame=SIGWINCH;;
+            29) signame=SIGIO;;   30) signame=SIGPWR;;
+            31) signame=SIGSYS;;   *) signame=UNKNOWN;;
+            esac
+        fi
 
         # Set title to directory or $TITLE
         [ -z "$TITLE" ] && __set_title "$(substr "$PWD/" -15)" || \
@@ -239,8 +260,19 @@ then
         then
             if [ $exitcode -ne 0 ]
             then
-                echo -en " $(__color kr)[Finished in $t seconds "
-                echo -e  "at $(date '+%H:%M:%S') with code $exitcode]\033[0m"
+                if [ $exitcode -eq 128 ]
+                then
+                    echo -e " $(__color kK)[Cancelled]\033[0m"
+                elif [ $exitcode -ge 128 ]
+                then
+                    echo -en " $(__color ky)[Terminated in $t seconds "
+                    echo -en  "at $(date '+%H:%M:%S') with signal "
+                    echo -e  "$[$exitcode - 128], $signame]\033[0m"
+                else
+                    echo -en " $(__color kr)[Finished in $t seconds "
+                    echo -en "at $(date '+%H:%M:%S') with code "
+                    echo -e  "$exitcode]\033[0m"
+                fi
             else
                 echo -en " $(__color kK)[Finished in $t seconds "
                 echo -e  "at $(date '+%H:%M:%S')]\033[0m"
