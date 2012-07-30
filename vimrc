@@ -69,6 +69,9 @@ autocmd! bufreadpost * silent! normal! '"
 " Source the .vimrc immediately after you save it.
 autocmd! bufwritepost .vimrc source %
 
+" Read templates
+au! BufNewFile * silent! 0r ~/.vim/template/%:e
+
 " Colours
 syntax enable
 set t_Co=256
