@@ -31,6 +31,7 @@ set softtabstop=4
 set foldmethod=indent
 set nofoldenable
 set nowrap
+set diffopt=filler,context:3
 
 " Filename autocompletion
 set wildignore=*.o,*.obj,*.bak,*.exe,*.pyc

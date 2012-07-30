@@ -58,7 +58,7 @@ hi pythonOperator guifg=#7e8aa2 gui=none ctermfg=103
 
 " Diff
 hi DiffAdd      ctermbg=236
-hi DiffDelete   ctermbg=234  ctermfg=232
+hi DiffDelete   ctermbg=None  ctermfg=235
 hi DiffChange   ctermbg=235
 hi DiffText     ctermbg=236
 
