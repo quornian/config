@@ -224,11 +224,11 @@ then
             cmd="$(jobs -r %% 2>/dev/null | sed -rn 's,.*(Running|Stopped)  +,,p')"
         fi
         __set_title "($(substr "$cmd" 0 7)) $(substr "$(basename "$PWD/")" 0 5)"
-        [ -z $__cmd_time ] && __cmd_time="$(date '+%s')"
+        [[ -z "$__cmd_time" ]] && __cmd_time="$(date '+%s')"
     }
     postexec() {
         local exitcode=$?
-        if [ $exitcode -gt 128 ]
+        if [[ $exitcode > 128 && $exitcode < 192 ]]
         then
             case $[exitcode - 128] in
              1) signame=SIGHUP;;   2) signame=SIGINT;;
@@ -251,26 +251,23 @@ then
         fi
 
         # Set title to directory or $TITLE
-        [ -z "$TITLE" ] && __set_title "$(substr "$PWD/" -15)" || \
+        [[ -z "$TITLE" ]] && __set_title "$(substr "$PWD/" -15)" || \
             __set_title "$TITLE"
 
         # Report the time the command took if greater than a threshold
         local t=$[ $(date '+%s') - __cmd_time ]
-        if [ $t -gt 3 -o $exitcode -ne 0 ]
+        if [[ $t > 3 || $exitcode != 0 ]]
         then
-            if [ $exitcode -ne 0 ]
+            if [[ $exitcode != 0 ]]
             then
-                if [ $exitcode -eq 128 ]
-                then
-                    echo -e " $(__color kK)[Cancelled]\033[0m"
-                elif [ $exitcode -ge 128 ]
+                if [[ $exitcode > 128 && $exitcode < 192 ]]
                 then
                     echo -en " $(__color ky)[Terminated in $t seconds "
                     echo -en  "at $(date '+%H:%M:%S') with signal "
                     echo -e  "$[$exitcode - 128], $signame]\033[0m"
                 else
                     echo -en " $(__color kr)[Finished in $t seconds "
-                    echo -en "at $(date '+%H:%M:%S') with code "
+                    echo -en "at $(date '+%H:%M:%S') with exit code "
                     echo -e  "$exitcode]\033[0m"
                 fi
             else
