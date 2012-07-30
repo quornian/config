@@ -131,6 +131,20 @@ isaliased ll && unalias ll
 ll() { ls -lph --color=always "$@" | sort --key=1.1,1.2 --stable; }
 alias l='ll'
 alias la='ll -A'
+duh() {
+    du "$@" | sort -n | while read size fname
+    do
+        for unit in k M G T P E Z Y
+        do
+            if [ $size -lt 1024 ]
+            then
+                echo -e "${size}${unit}\t${fname}"
+                break
+            fi
+            size=$((size/1024))
+        done
+    done
+}
 
 # Calculator
 alias calc='bc -lq'
