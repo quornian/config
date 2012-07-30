@@ -217,7 +217,13 @@ then
         printf "\033]0;$__host:%s\007" "$1"
     }
     preexec() {
-        __set_title "($(substr "$1" 0 7)) $(substr "$(basename "$PWD/")" 0 5)"
+        # Set title to command, if command is fg find current job command
+        local cmd="$1"
+        if [[ "$cmd" == "fg" ]]
+        then
+            cmd="$(jobs -r %% 2>/dev/null | sed -rn 's,.*(Running|Stopped)  +,,p')"
+        fi
+        __set_title "($(substr "$cmd" 0 7)) $(substr "$(basename "$PWD/")" 0 5)"
         [ -z $__cmd_time ] && __cmd_time="$(date '+%s')"
     }
     postexec() {
