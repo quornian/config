@@ -12,6 +12,10 @@ preexec_invoke_exec () {
 trap 'preexec_invoke_exec' DEBUG
 PROMPT_COMMAND='postexec'
 
+isaliased() {
+    alias | grep -q "^alias $1="
+}
+
 # == Colours ==
 
 # The following table matches GNU screen colour codes to
@@ -121,8 +125,11 @@ esac
 # == Aliases and Functions ==
 
 # List aliases
-alias ll='ls -lph --group-directories-first'
-alias  l='ll'
+isaliased ll && unalias ll
+
+# List, tag directories /, human readable, sorted with directories first
+ll() { ls -lph --color=always "$@" | sort --key=1.1,1.2 --stable; }
+alias l='ll'
 alias la='ll -A'
 
 # Calculator
