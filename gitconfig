@@ -14,7 +14,7 @@
     local = yellow
     remote = red
 
-    [color "diff"]
+[color "diff"]
     whitespace = green reverse
 
 [push]
