@@ -40,20 +40,72 @@ function __color_num() {
 }
 
 # Turns a colour code (eg. kW) into a colour escape sequence
-function __color() {
-    if [[ ${#1} == 1 ]]
-    then
-        fgc=$1
-        echo "\e[38;5;$(__color_num $fgc)m"
-    else
-        bgc="${1:0:1}"
-        fgc="${1:1:1}"
-        echo "\e[48;5;$(__color_num $bgc);38;5;$(__color_num $fgc)m"
-    fi
-}
+if [[ "$TERM" = "linux" && "$__colors_set" != "yes" ]]
+then
+    echo -en "\e]P0000000" #black
+    echo -en "\e]P1CF8383" #darkred
+    echo -en "\e]P2668984" #darkgreen
+    echo -en "\e]P39B7E61" #brown
+    echo -en "\e]P43465A4" #darkblue
+    echo -en "\e]P575507B" #darkmagenta
+    echo -en "\e]P67CB8CE" #darkcyan
+    echo -en "\e]P7AAAAAA" #lightgrey
+    echo -en "\e]P8333333" #darkgrey
+    echo -en "\e]P9FF5555" #red
+    echo -en "\e]PAA6DAC4" #green
+    echo -en "\e]PBE3E373" #yellow
+    echo -en "\e]PC50AEFF" #blue
+    echo -en "\e]PDD378D3" #magenta
+    echo -en "\e]PE33AFDC" #cyan
+    echo -en "\e]PFFFFFFF" #white
+    clear
+    __colors_set="yes"
 
-export GREP_COLORS="ms=01;34"
-export LS_COLORS="\
+    function __color() {
+        if [[ ${#1} == 1 ]]
+        then
+            local bgc="$(__color_num "k")"
+            local fgc="$(__color_num "$1")"
+        else
+            local bgc="$(__color_num "${1:0:1}")"
+            local fgc="$(__color_num "${1:1:1}")"
+        fi
+        local pre="0;3"
+        if [[ "$bgc" > 7 ]]
+        then
+            bgc="$[bgc - 8]"
+        fi
+        if [[ "$fgc" > 7 ]]
+        then
+            fgc="$[fgc - 8]"
+            pre="1;3"
+        fi
+        echo -e "\e[${pre}${fgc};4${bgc}m"
+    }
+
+    export GREP_COLORS="ms=01;34"
+    export LS_COLORS="\
+fi=37:\
+di=33:\
+ow=33:\
+ln=36:\
+ex=1:\
+mi=34:\
+su=07"
+else
+    function __color() {
+        if [[ ${#1} == 1 ]]
+        then
+            fgc=$1
+            echo "\e[38;5;$(__color_num $fgc)m"
+        else
+            bgc="${1:0:1}"
+            fgc="${1:1:1}"
+            echo "\e[48;5;$(__color_num $bgc);38;5;$(__color_num $fgc)m"
+        fi
+    }
+    export GREP_COLORS="ms=01;34"
+    export LS_COLORS="\
 fi=38;5;7:\
 di=38;5;3:\
 ow=38;5;3:\
@@ -61,6 +113,8 @@ ln=38;5;8:\
 ex=38;5;15:\
 mi=38;5;9:\
 su=07"
+fi
+
 export LESS="-RFS --shift=4"
 
 # == Prompt ==
