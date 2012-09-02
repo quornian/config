@@ -115,7 +115,7 @@ mi=38;5;9:\
 su=07"
 fi
 
-export LESS="-RFS --shift=4"
+export LESS="-RS --shift=4"
 
 # == Prompt ==
 
