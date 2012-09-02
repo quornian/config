@@ -74,18 +74,21 @@ au! BufNewFile * silent! 0r ~/.vim/template/%:e
 
 " Colours
 syntax enable
-set t_Co=256
-colo mustang
+if &term == "linux"
+    color colors_16
+else
+    set t_Co=256
+    color mustang
+endif
 
 " Visible whitespace
-set listchars=tab:↹-,eol:↵
+set listchars=tab:>-,eol:~
 hi SpecialKey cterm=NONE ctermfg=240 guifg=DarkRed
 hi NonText cterm=NONE ctermfg=240 guifg=DarkRed
 
 " Right margin
 if v:version >= 703 && ! &diff
     set colorcolumn=73,74,75,76,77,78,79
-    hi ColorColumn ctermbg=233 guibg=gray7
 endif
 
 " Mappings
