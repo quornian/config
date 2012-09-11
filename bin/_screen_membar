@@ -1,14 +1,17 @@
 #!/bin/bash
 
-eval $(free -m | grep Mem | awk '{print "total="$2"; used="$3";"}')
+eval $(free -m | grep Mem | awk '{print "total="$2"; used="$3"; cached="$7";"}')
 
 repeat() {
     for i in `seq $2`; do echo -n "$1"; done
 }
 
-used=$[8 * (used + 1) / total]
-free=$[8 - used]
+cached=$[8 * (cached + 1) / total]
+used=$[8 * (used + 1) / total - cached]
+free=$[8 - used - cached]
 
-repeat "$(echo -e '\xb7')" $used
+#repeat "$(echo -e '\xb7')" $used
+repeat ":" $used
+repeat "." $cached
 repeat " " $free
 echo
