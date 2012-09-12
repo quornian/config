@@ -1,18 +1,27 @@
-# do not bell on tab-completion
-#set bell-style none
+# http://gnu.org/software/bash/manual/html_node/Readline-Init-File-Syntax.html
 
+# Configure completion for less key presses
+set show-all-if-ambiguous on
+set completion-ignore-case on
+set completion-query-items 240
+set page-completions off
+
+# Format output nicer and only show hidden files when requested
+set completion-prefix-display-length 4
+set match-hidden-files off
+
+# Ease editing
+set horizontal-scroll-mode on
+set skip-completed-text on
+
+# Make sure we can receive all kinds of key codes like Home/End
 set meta-flag on
 set input-meta on
 set convert-meta off
 set output-meta on
 
-# Completed names which are symbolic links to
-# directories have a slash appended.
-set mark-symlinked-directories on
-
 $if mode=emacs
-
-# for linux console and RH/Debian xterm
+# For linux console and RH/Debian xterm
 "\e[1~": beginning-of-line
 "\e[4~": end-of-line
 "\e[5~": history-search-backward
@@ -24,16 +33,21 @@ $if mode=emacs
 "\e[1;5C": forward-word
 "\e[1;5D": backward-word
 
-# for rxvt
+# For rxvt
 "\e[8~": end-of-line
 "\eOc": forward-word
 "\eOd": backward-word
 
-# for non RH/Debian xterm, can't hurt for RH/DEbian xterm
+# For non RH/Debian xterm, can't hurt for RH/DEbian xterm
 "\eOH": beginning-of-line
 "\eOF": end-of-line
 
-# for freebsd console
+# For freebsd console
 "\e[H": beginning-of-line
 "\e[F": end-of-line
 $endif
+
+
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
