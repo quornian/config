@@ -182,6 +182,17 @@ map <leader>cd :exe 'cd ' . expand ("%:p:h")<CR>
 " This should soooo be what Y does (like D, innit?)
 map Y y$
 
+" Useful functions -----------------------------------------------------
+
+function! RecoverDiff()
+    save! /tmp/%
+    vsplit
+    bprev
+    wincmd H
+    windo diffthis
+endfunction
+command! RecoverDiff call RecoverDiff()
+
 " Plugins --------------------------------------------------------------
 
 " Manage plugin bundles with Pathogen
