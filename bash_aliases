@@ -150,7 +150,7 @@ function __make_prompt() {
 \[$(__color $THEME_FG)\]\h:"
 
     local ps1_path="\
-\[$(__color K)\]\w"
+\[$(__color K)\]\w/"
 
     local ps1_git="\
 \[$(__color y)\]\$(__ps1_git)"
