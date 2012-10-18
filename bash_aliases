@@ -93,6 +93,7 @@ ex=1:\
 mi=34:\
 su=07"
 else
+    export TERM="xterm-256color"
     function __color() {
         if [[ ${#1} == 1 ]]
         then
