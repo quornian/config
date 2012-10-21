@@ -1,3 +1,6 @@
+# Colours for 256-colour terminals, sourced by color.bash
+#
+
 # Override terminal variable for tmux 256 colours (probably a bad idea)
 export TERM="xterm-256color"
 

@@ -1,5 +1,10 @@
-#!/bin/bash
+# Bash startup
+#
+# Sourced directly by non-login interactive shells. May be sourced
+# indirectly for login shells via .bash_profile.
+#
 
+# Source modules
 source "$HOME/.bash/color.bash"
 source "$HOME/.bash/prompt.bash"
 source "$HOME/.bash/exec-hook.bash"

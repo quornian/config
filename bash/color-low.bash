@@ -1,3 +1,6 @@
+# Colours for 8- or 16-colour terminals, sourced by color.bash
+#
+
 # Linux framebuffer colour palette setup
 echo -en "\e]P0000000" #black
 echo -en "\e]P1CF8383" #darkred

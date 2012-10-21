@@ -1,9 +1,12 @@
 # Defines extension functions not provided by bash itself
+#
 
+# Check if a given alias exists
 isaliased() {
     alias | grep -q "^alias $1="
 }
 
+# A programmer-friendly substring function
 substr() { # $1 string, $2 start, $3 end
     local start=$2
     local end=$3
@@ -20,6 +23,7 @@ substr() { # $1 string, $2 start, $3 end
     fi
 }
 
+# Set the tab/window title where supported
 set-title() {
     # Use escape sequences for GNU screen and tmux
     if [[ -n "$TMUX" || -n "$STY" ]]
@@ -29,6 +33,7 @@ set-title() {
     fi
 }
 
+# Return the name of a given signal
 signal-name() {
     if [[ -z "$exitcode" ]]
     then

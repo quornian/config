@@ -1,3 +1,6 @@
+# Keyboard settings for the shell
+#
+
 # Set key repeat for X
 # For the linux framebuffer, set the following in /etc/rc.local:
 # kbdrate -s -r200 -d50 >/dev/null  (has to be run as root)

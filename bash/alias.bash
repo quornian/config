@@ -1,3 +1,6 @@
+# Bash aliases and command overrides
+#
+
 # Directory listing aliases
 isaliased ll && unalias ll
 ll() { ls -lph --color=always "$@" | sort --key=1.1,1.2 --stable; }
