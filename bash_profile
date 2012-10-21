@@ -1,16 +1,7 @@
 #!/bin/bash
 shopt -u expand_aliases
 
-# Tie into the DEBUG event to get a zsh-like preexec hook
-# A more complete version at: http://glyf.livejournal.com/63106.html
-preexec() { :; }    # Default empty function
-postexec() { :; }   # Default empty function
-preexec_invoke_exec () {
-    [ -n "$COMP_LINE" ] && return  # Completing, do nothing
-    preexec "$(history 1 | sed -e "s/^[ ]*[0-9]*[ ]*//g")";
-}
-trap 'preexec_invoke_exec' DEBUG
-PROMPT_COMMAND='postexec'
+source "$HOME/.bash/exec-hook.bash"
 
 isaliased() {
     alias | grep -q "^alias $1="
