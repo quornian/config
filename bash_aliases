@@ -184,6 +184,7 @@ isaliased ll && unalias ll
 
 # List, tag directories /, human readable, sorted with directories first
 ll() { ls -lph --color=always "$@" | sort --key=1.1,1.2 --stable; }
+alias ls='ls --color=auto'
 alias l='ll'
 alias la='ll -A'
 duh() {
