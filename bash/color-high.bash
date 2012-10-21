@@ -13,3 +13,5 @@ fi
 __color_prompt_path="38;5;8"
 __color_prompt_git="33"
 __color_prompt="38;5;15"
+__color_exit="38;5;8"
+__color_exit_error="38;5;9"

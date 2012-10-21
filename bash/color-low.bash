@@ -28,3 +28,5 @@ fi
 __color_prompt_path="37"
 __color_prompt_git="33"
 __color_prompt=""
+__color_exit="32"
+__color_exit_error="31"
