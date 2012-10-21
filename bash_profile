@@ -1,5 +1,4 @@
 #!/bin/bash
-shopt -u expand_aliases
 
 source "$HOME/.bash/color.bash"
 source "$HOME/.bash/prompt.bash"
@@ -10,21 +9,6 @@ source "$HOME/.bash/alias.bash"
 source "$HOME/.bash/directory.bash"
 test -f "$HOME/.bash/local.bash" && source "$HOME/.bash/local.bash"
 
-export LESS="-RS --shift=4"
-
-# == Settings ==
-
-# Set system default editor
-export EDITOR=vim
-
-# Delete prior duplicates in history
-export HISTCONTROL=ignorespace:erasedups
-
-# Local bin
-export PATH="$HOME/bin:$HOME/scripts:$HOME/local/bin:$HOME/config/bin:$PATH"
-
-shopt -s expand_aliases
-
 # Allow editing of failed history substitutions
 shopt -s histreedit
 shopt -s histverify
@@ -32,6 +16,19 @@ shopt -s histverify
 # Save multi-line history properly
 shopt -s cmdhist
 shopt -s lithist
+
+# Delete prior duplicates in history
+export HISTCONTROL=ignorespace:erasedups
+
+# Set system default editor
+export EDITOR=vim
+
+# Better horizontal scrolling in less, with colours too
+export LESS="-RS --shift=4"
+
+# Local bin
+export PATH="$HOME/bin:$HOME/scripts:$HOME/local/bin:$PATH"
+
 
 # == Screen ==
 
