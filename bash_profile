@@ -1,111 +1,13 @@
 #!/bin/bash
 shopt -u expand_aliases
 
+source "$HOME/.bash/color.bash"
 source "$HOME/.bash/exec-hook.bash"
 
 isaliased() {
     alias | grep -q "^alias $1="
 }
 
-# == Colours ==
-
-# The following table matches GNU screen colour codes to
-# colour escape sequence values for use in the prompt:
-#   0:k black         8:K dark grey
-#   1:r red           9:R bright red
-#   2:g green        10:G bright green
-#   3:y yellow       11:Y bright yellow
-#   4:b blue         12:B bright blue
-#   5:m magenta      13:M bright magenta
-#   6:c cyan         14:C bright cyan
-#   7:w light grey   15:W white
-function __color_num() {
-    case $1 in
-        k) n=0 ;; r) n=1 ;; g) n=2 ;; y) n=3 ;;
-        b) n=4 ;; m) n=5 ;; c) n=6 ;; w) n=7 ;;
-        K) n=8 ;; R) n=9 ;; G) n=10;; Y) n=11;;
-        B) n=12;; M) n=13;; C) n=14;; W) n=15;;
-        *) echo "Bad Colour: $1" 1>&2 ;  n=9 ;;
-    esac
-    echo $n
-}
-
-# Turns a colour code (eg. kW) into a colour escape sequence
-if [[ "$TERM" = "linux" && "$__colors_set" != "yes" ]]
-then
-    echo -en "\e]P0000000" #black
-    echo -en "\e]P1CF8383" #darkred
-    echo -en "\e]P2668984" #darkgreen
-    echo -en "\e]P39B7E61" #brown
-    echo -en "\e]P43465A4" #darkblue
-    echo -en "\e]P575507B" #darkmagenta
-    echo -en "\e]P67CB8CE" #darkcyan
-    echo -en "\e]P7AAAAAA" #lightgrey
-    echo -en "\e]P8333333" #darkgrey
-    echo -en "\e]P9FF5555" #red
-    echo -en "\e]PAA6DAC4" #green
-    echo -en "\e]PBE3E373" #yellow
-    echo -en "\e]PC50AEFF" #blue
-    echo -en "\e]PDD378D3" #magenta
-    echo -en "\e]PE33AFDC" #cyan
-    echo -en "\e]PFFFFFFF" #white
-    clear
-    __colors_set="yes"
-
-    function __color() {
-        if [[ ${#1} == 1 ]]
-        then
-            local bgc="$(__color_num "k")"
-            local fgc="$(__color_num "$1")"
-        else
-            local bgc="$(__color_num "${1:0:1}")"
-            local fgc="$(__color_num "${1:1:1}")"
-        fi
-        local pre="0;3"
-        if [[ "$bgc" > 7 ]]
-        then
-            bgc="$[bgc - 8]"
-        fi
-        if [[ "$fgc" > 7 ]]
-        then
-            fgc="$[fgc - 8]"
-            pre="1;3"
-        fi
-        echo -e "\e[${pre}${fgc};4${bgc}m"
-    }
-
-    export GREP_COLORS="ms=01;34"
-    export LS_COLORS="\
-fi=37:\
-di=33:\
-ow=33:\
-ln=36:\
-ex=1:\
-mi=34:\
-su=07"
-else
-    export TERM="xterm-256color"
-    function __color() {
-        if [[ ${#1} == 1 ]]
-        then
-            fgc=$1
-            echo "\e[38;5;$(__color_num $fgc)m"
-        else
-            bgc="${1:0:1}"
-            fgc="${1:1:1}"
-            echo "\e[48;5;$(__color_num $bgc);38;5;$(__color_num $fgc)m"
-        fi
-    }
-    export GREP_COLORS="ms=01;34"
-    export LS_COLORS="\
-fi=38;5;7:\
-di=38;5;3:\
-ow=38;5;3:\
-ln=38;5;8:\
-ex=38;5;15:\
-mi=38;5;9:\
-su=07"
-fi
 
 export LESS="-RS --shift=4"
 
