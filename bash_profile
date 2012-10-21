@@ -7,12 +7,9 @@ source "$HOME/.bash/exec-hook.bash"
 source "$HOME/.bash/keyboard.bash"
 source "$HOME/.bash/function.bash"
 source "$HOME/.bash/alias.bash"
-
+source "$HOME/.bash/directory.bash"
 
 export LESS="-RS --shift=4"
-
-# Directory management
-source ~/.bash/directory_management
 
 # == Settings ==
 
