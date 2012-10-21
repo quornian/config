@@ -1,4 +1,6 @@
-#!/bin/echo "To source only"
+# A replacement for builtin cd that provides much more functionality
+# while retaining backwards compatibility
+#
 
 # Known issues
 #   cd ../foo sometimes just goes to .. if ../foo does not exist
