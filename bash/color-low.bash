@@ -20,3 +20,11 @@ echo -en "\e]PFFFFFFF" #white
 export GREP_COLORS="ms=01;34"
 export LS_COLORS="fi=37:di=33:ow=33:ln=36:ex=1:mi=34:su=07"
 
+# Colour options for the shell initialization
+if [[ ! -z "$SSH_CONNECTION" ]]
+then __color_prompt_ident="32"
+else __color_prompt_ident="34"
+fi
+__color_prompt_path="37"
+__color_prompt_git="33"
+__color_prompt=""

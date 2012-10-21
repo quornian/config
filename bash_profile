@@ -2,6 +2,7 @@
 shopt -u expand_aliases
 
 source "$HOME/.bash/color.bash"
+source "$HOME/.bash/prompt.bash"
 source "$HOME/.bash/exec-hook.bash"
 
 isaliased() {
@@ -11,54 +12,6 @@ isaliased() {
 
 export LESS="-RS --shift=4"
 
-# == Prompt ==
-
-# Git indicator
-function __ps1_git() {
-    git rev-parse 2>/dev/null || return
-    b=$(git branch | sed -n 's/^\* \(.*\)/\1/p')
-    [ "$b" != "(no branch)" ] || b=$(git log -1 --pretty=%h)
-    echo "[$b]"
-}
-
-function __ps1_jobs() {
-    local pre='\[([0-9]+)\][-+]?\s+'
-    local post='\s+([A-Za-z0-9_/]+).*'
-    local running="$(jobs | sed -nr 's/'"${pre}Running${post}"'/\2\&/p')"
-    local stopped="$(jobs | sed -nr 's/'"${pre}Stopped${post}"'/\2^Z/p')"
-    echo -e "$(__color r)$stopped $(__color g)$running" | tr '\n' ' '
-}
-
-# Set colour scheme differently for ssh
-if [[ ! -z "$SSH_CONNECTION" ]]
-then
-    export THEME_FG=g
-else
-    export THEME_FG=b
-fi
-
-# Function to join the parts together
-function __make_prompt() {
-
-        local ps1_ident="\
-\[$(__color $THEME_FG)\]\h:"
-
-    local ps1_path="\
-\[$(__color K)\]\w/"
-
-    local ps1_git="\
-\[$(__color y)\]\$(__ps1_git)"
-
-    local ps1_jobs="\
-\[$(__color g)\]\$(__ps1_jobs)"
-
-    local ps1_prompt="\
-\[$(__color W)\]\\$ \
-\[$(__color w)\]"
-
-    export PS1="\n${ps1_ident} ${ps1_path} ${ps1_git} ${ps1_jobs}\n${ps1_prompt}"
-}
-__make_prompt
 
 # == Keys ==
 
