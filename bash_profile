@@ -4,6 +4,7 @@ shopt -u expand_aliases
 source "$HOME/.bash/color.bash"
 source "$HOME/.bash/prompt.bash"
 source "$HOME/.bash/exec-hook.bash"
+source "$HOME/.bash/keyboard.bash"
 
 isaliased() {
     alias | grep -q "^alias $1="
@@ -12,16 +13,6 @@ isaliased() {
 
 export LESS="-RS --shift=4"
 
-
-# == Keys ==
-
-# History searching
-case "$-" in
-*i*)
-    bind '"\e[A":history-search-backward'
-    bind '"\e[B":history-search-forward'
-    ;;
-esac
 
 # == Aliases and Functions ==
 
@@ -180,7 +171,3 @@ then
         __cmd_time=
     }
 fi
-
-# Set key repeat for X. For the linux framebuffer, set the following in
-# /etc/rc.local: kbdrate -s -r200 -d50 >/dev/null
-xset r rate 200 50 2>/dev/null
