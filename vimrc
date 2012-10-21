@@ -213,7 +213,6 @@ function! SetupPlugins()
         if !argc()
             NERDTree
         endif
-        " Close vim if only a NERDTree is left
         nnoremap <leader>t :NERDTreeToggle<CR>
     endif
     
