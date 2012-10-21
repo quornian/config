@@ -8,6 +8,7 @@ source "$HOME/.bash/keyboard.bash"
 source "$HOME/.bash/function.bash"
 source "$HOME/.bash/alias.bash"
 source "$HOME/.bash/directory.bash"
+test -f "$HOME/.bash/local.bash" && source "$HOME/.bash/local.bash"
 
 export LESS="-RS --shift=4"
 
@@ -21,16 +22,6 @@ export HISTCONTROL=ignorespace:erasedups
 
 # Local bin
 export PATH="$HOME/bin:$HOME/scripts:$HOME/local/bin:$HOME/config/bin:$PATH"
-
-# Work / home customizations
-if [ -f ~/.bash_aliases_work ]
-then
-    . ~/.bash_aliases_work
-fi
-if [ -f ~/.bash_aliases_home ]
-then
-    . ~/.bash_aliases_home
-fi
 
 shopt -s expand_aliases
 
