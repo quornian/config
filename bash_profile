@@ -6,47 +6,13 @@ source "$HOME/.bash/prompt.bash"
 source "$HOME/.bash/exec-hook.bash"
 source "$HOME/.bash/keyboard.bash"
 source "$HOME/.bash/function.bash"
+source "$HOME/.bash/alias.bash"
 
 
 export LESS="-RS --shift=4"
 
-
-# == Aliases and Functions ==
-
-# List aliases
-isaliased ll && unalias ll
-
-# List, tag directories /, human readable, sorted with directories first
-ll() { ls -lph --color=always "$@" | sort --key=1.1,1.2 --stable; }
-alias ls='ls --color=auto'
-alias l='ll'
-alias la='ll -A'
-duh() {
-    du "$@" | sort -n | while read size fname
-    do
-        for unit in k M G T P E Z Y
-        do
-            if [ $size -lt 1024 ]
-            then
-                echo -e "${size}${unit}\t${fname}"
-                break
-            fi
-            size=$((size/1024))
-        done
-    done
-}
-
-# Calculator
-alias calc='bc -lq'
-
-# Shortcuts
-vw() { vim "$(which "$1")"; }
-cw() { cat "$(which "$1")"; }
-view() { vim -MR "$1"; }
-
 # Directory management
 source ~/.bash/directory_management
-alias cdg='cd `git rev-parse --show-cdup`'
 
 # == Settings ==
 
