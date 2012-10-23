@@ -1,0 +1,5 @@
+#!/bin/bash
+mem=($(free -b | sed -nr 's,^(Mem|Swap): +([0-9]+)[0-9][0-9] +([0-9]+) +([0-9]+).*,\3 / \2,p' | bc))
+echo -n "Mem ${mem[0]}%"
+[[ ${mem[1]} > 0 ]] && echo -en "  Swap ${mem[1]}%"
+echo
