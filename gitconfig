@@ -24,7 +24,7 @@
     tool = "vimdiff3"
 
 [mergetool "vimdiff3"]
-    cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+    cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"+:0/<<<.*\\|===.*\\|>>>.*\"
 
 [core]
     # Horizontal scrolling that makes sense
