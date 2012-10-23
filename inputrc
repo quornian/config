@@ -7,11 +7,11 @@ set completion-query-items 240
 set page-completions off
 
 # Format output nicer and only show hidden files when requested
-set completion-prefix-display-length 4
+set completion-prefix-display-length 0
 set match-hidden-files off
 
 # Ease editing
-set horizontal-scroll-mode on
+set horizontal-scroll-mode off
 set skip-completed-text on
 
 # Make sure we can receive all kinds of key codes like Home/End
