@@ -1,4 +1,5 @@
-# http://gnu.org/software/bash/manual/html_node/Readline-Init-File-Syntax.html
+# This file overrides the system-wide settings, include them first
+$include /etc/inputrc
 
 # Configure completion for less key presses
 set show-all-if-ambiguous on
@@ -14,40 +15,7 @@ set match-hidden-files off
 set horizontal-scroll-mode off
 set skip-completed-text on
 
-# Make sure we can receive all kinds of key codes like Home/End
-set meta-flag on
-set input-meta on
-set convert-meta off
-set output-meta on
-
-$if mode=emacs
-# For linux console and RH/Debian xterm
-"\e[1~": beginning-of-line
-"\e[4~": end-of-line
-"\e[5~": history-search-backward
-"\e[6~": history-search-forward
-"\e[3~": delete-char
-"\e[2~": quoted-insert
-"\e[5C": forward-word
-"\e[5D": backward-word
-"\e[1;5C": forward-word
-"\e[1;5D": backward-word
-
-# For rxvt
-"\e[8~": end-of-line
-"\eOc": forward-word
-"\eOd": backward-word
-
-# For non RH/Debian xterm, can't hurt for RH/DEbian xterm
-"\eOH": beginning-of-line
-"\eOF": end-of-line
-
-# For freebsd console
-"\e[H": beginning-of-line
-"\e[F": end-of-line
-$endif
-
-
+# Bind up and down arrow keys to history search
 "\e[A": history-search-backward
 "\e[B": history-search-forward
 
