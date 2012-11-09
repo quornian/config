@@ -21,7 +21,7 @@ echo -en "\e]PFFFFFFF" #white
 
 # Other program colour options
 export GREP_COLORS="ms=01;34"
-export LS_COLORS="fi=37:di=33:ow=33:ln=34:ex=1:mi=34:su=07"
+export LS_COLORS="fi=37:di=33:ow=33:ln=36:ex=1:mi=34:su=07"
 
 # Colour options for the shell initialization
 if [[ ! -z "$SSH_CONNECTION" ]]
