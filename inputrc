@@ -19,3 +19,7 @@ set skip-completed-text on
 "\e[A": history-search-backward
 "\e[B": history-search-forward
 
+# In bash, make space expand things like !$
+$if Bash
+Space: magic-space
+$endif
