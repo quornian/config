@@ -24,6 +24,9 @@ shopt -s lithist
 
 # Delete prior duplicates in history
 export HISTCONTROL=ignorespace:erasedups
+export HISTSIZE=15000
+export HISTFILESIZE=15000
+export HISTIGNORE="bg:fg:history"
 
 # Set system default editor
 export EDITOR=vim
