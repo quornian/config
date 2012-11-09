@@ -2,6 +2,7 @@
 set showcmd         " Show the current partial command right of command line
 set ruler           " Show the row,col combination
 set splitbelow      " Make new split below the current one
+set splitright      " Make new vsplits on the right (keep current on left)
 set scrolloff=5     " Keep lines visible at top and bottom of screen
 set background=dark
 set laststatus=2    " Use an extra screen line to keep windows looking good
@@ -107,6 +108,9 @@ set gfn=Monospace\ 9
 
 " Set <leader> to ',' (comma).
 let mapleader=','
+
+" Easy quit
+nmap <leader>q :qa<CR>
 
 " Select the text you just pasted
 nnoremap <leader>v V`]
