@@ -55,6 +55,10 @@ behave xterm
 " Global clipboard
 set clipboard=unnamedplus
 
+" For when the global clipboard doesn't work
+map <C-Y> :w ~/.vim/swap/clipboard
+nmap <C-P> :read ~/.vim/swap/clipboard
+
 " Zero-padded strings are not octal
 set nrformats-=octal
 
