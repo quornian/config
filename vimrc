@@ -259,3 +259,7 @@ call pathogen#infect()
 " Generate tags with: ctags -R -f ~/.vim/tags/python.ctags /usr/lib/python*
 set tags+=$HOME/.vim/tags/python.ctags
 nmap <leader>] :execute "ltag " . expand("<cword>") <CR> :lopen <CR>
+
+" Highlight end of line whitespace.
+highlight WhitespaceEOL ctermbg=235 guibg=235
+match WhitespaceEOL /\s\+$/
