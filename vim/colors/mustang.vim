@@ -14,7 +14,7 @@ let colors_name = "mustang"
 
 " Vim >= 7.0 specific colors
 if version >= 700
-  hi CursorLine               guibg=#2d2d2d             ctermbg=236            
+  hi CursorLine               guibg=#2d2d2d             ctermbg=236 term=None   cterm=None
   hi CursorColumn             guibg=#2d2d2d             ctermbg=236            
   hi ColorColumn              guibg=gray7               ctermbg=233            
   hi MatchParen guifg=#d0ffc0 guibg=#2f2f2f ctermfg=157 ctermbg=237 gui=bold    cterm=bold
@@ -24,7 +24,7 @@ endif
                                                                                
 " General colors                                                               
 hi Cursor       guifg=NONE    guibg=#626262             ctermbg=241
-hi Normal       guifg=#e2e2e5 guibg=#202020 ctermfg=253            
+hi Normal       guifg=#e2e2e5 guibg=#202020 ctermfg=7
 hi NonText      guifg=#808080 guibg=#303030 ctermfg=244            
 hi LineNr       guifg=#808080 guibg=#000000 ctermfg=244 ctermbg=232
 hi StatusLine   guifg=#d3d3d5 guibg=#444444 ctermfg=237 ctermbg=246
@@ -62,4 +62,12 @@ hi DiffDelete   ctermbg=None  ctermfg=235
 hi DiffChange   ctermbg=235
 hi DiffText     ctermbg=236
 
+" Other Diff
+hi diffRemoved  ctermfg=1
+hi diffAdded    ctermfg=2
+hi diffFile     ctermfg=7
+hi diffLine     ctermfg=6
+
 hi SpellBad                                 ctermbg=17
+hi Directory    ctermfg=3
+hi NERDTreeCWD  ctermfg=8
