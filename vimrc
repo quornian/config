@@ -210,19 +210,28 @@ let g:SuperTabDefaultCompletionType = "context"
 " Set up bindings for plugins (should only be done for sucessfully
 " loaded plugins)
 function! SetupPlugins()
-    
+
     " Files and directories tree
     if exists(":NERDTree")
-        " Show on empty startup
-        if !argc()
-            NERDTree
-        endif
-        nnoremap <leader>t :NERDTreeToggle<CR>
+        nnoremap <leader>t :NERDTreeFind<CR>
+        autocmd bufenter * if (winnr("$") == 1 &&
+            \ exists("b:NERDTreeType") &&
+            \ b:NERDTreeType == "primary") | q | endif
+        let g:NERDTreeMinimalUI = 1
+        let g:NERDTreeQuitOnOpen = 1
+        let g:NERDTreeWinPos = "right"
     endif
-    
+
     " Undo tree
     if exists(":GundoToggle")
         nnoremap <leader>u :GundoToggle<CR>
+    endif
+
+    " Tagbar outline
+    if exists(":TagbarToggle")
+        nnoremap <leader>o :TagbarToggle<CR>
+        let g:tagbar_autoclose = 1
+        let g:tagbar_autofocus = 1
     endif
 
     " Syntax check
@@ -241,3 +250,7 @@ filetype plugin indent on
 
 " Manage plugin bundles with Pathogen
 call pathogen#infect()
+
+" Generate tags with: ctags -R -f ~/.vim/tags/python.ctags /usr/lib/python*
+set tags+=$HOME/.vim/tags/python.ctags
+nmap <leader>] :execute "ltag " . expand("<cword>") <CR> :lopen <CR>
