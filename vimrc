@@ -69,7 +69,7 @@ set nrformats-=octal
 filetype plugin indent on
 
 " Restore last location in the file
-autocmd! bufreadpost * silent! normal! '"
+autocmd! bufreadpost * silent! normal! `"
 
 " Source the .vimrc immediately after you save it.
 autocmd! bufwritepost .vimrc source %
@@ -112,6 +112,7 @@ set gfn=Monospace\ 9
 
 " Set <leader> to ',' (comma).
 let mapleader=','
+nnoremap ; :
 
 " Easy quit
 nmap <leader>q :qa<CR>
