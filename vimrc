@@ -203,6 +203,29 @@ function! RecoverDiff()
 endfunction
 command! RecoverDiff call RecoverDiff()
 
+" Copied from http://stackoverflow.com/questions/5025558/
+"                    check-if-current-tab-is-empty-in-vim
+function! TabIsEmpty()
+    " Remember which window we're in at the moment
+    let initial_win_num = winnr()
+
+    let win_count = 0
+    " Add the length of the file name on to count:
+    " this will be 0 if there is no file name
+    windo let win_count += len(expand('%'))
+
+    " Go back to the initial window
+    exe initial_win_num . "wincmd w"
+
+    " Check count
+    if win_count == 0
+        " Tab page is empty
+        return 1
+    else
+        return 0
+    endif
+endfunction
+
 " Plugins --------------------------------------------------------------
 
 " Manage plugin bundles with Pathogen
@@ -219,7 +242,8 @@ function! SetupPlugins()
 
     " Files and directories tree
     if exists(":NERDTree")
-        nnoremap <leader>t :NERDTreeFind<CR>
+        nnoremap <leader>t :if TabIsEmpty() == 1 <Bar> :NERDTreeToggle
+            \ <Bar> else <Bar> :NERDTreeFind <Bar> endif <CR>
         autocmd bufenter * if (winnr("$") == 1 &&
             \ exists("b:NERDTreeType") &&
             \ b:NERDTreeType == "primary") | q | endif
