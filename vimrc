@@ -116,6 +116,7 @@ nnoremap ; :
 
 " Easy quit
 nmap <leader>q :qa<CR>
+nmap <leader>Q :qa!<CR>
 
 " Select the text you just pasted
 nnoremap <leader>v V`]
@@ -260,6 +261,7 @@ call pathogen#infect()
 set tags+=$HOME/.vim/tags/python.ctags
 nmap <leader>] :execute "ltag " . expand("<cword>") <CR> :lopen <CR>
 
-" Highlight end of line whitespace.
-highlight WhitespaceEOL ctermbg=235 guibg=235
-match WhitespaceEOL /\s\+$/
+" Highlight trailing whitespace on non-blank lines
+highlight WhitespaceError ctermbg=5
+match WhitespaceError /\S\@<=\s\+$\|\t/
+
