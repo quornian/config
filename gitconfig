@@ -1,73 +1,73 @@
 [user]
-    name = "Ian Thompson"
-    email = ian@quornian.co.uk
+	name = "Ian Thompson"
+	email = ian@quornian.co.uk
 
 [color]
-    branch = auto
-    diff = auto
-    interactive = auto
-    status = auto
-    shortlog = auto
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+	shortlog = auto
 
 [color "branch"]
-    current = yellow bold
-    local = yellow
-    remote = red
+	current = yellow bold
+	local = yellow
+	remote = red
 
 [color "diff"]
-    whitespace = green reverse
+	whitespace = green reverse
 
 [push]
-    default = tracking
+	default = tracking
 
 [merge]
-    tool = "vimdiff3"
+	tool = "vimdiff3"
 
 [mergetool "vimdiff3"]
-    cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"+:0/<<<.*\\|===.*\\|>>>.*\"
+	cmd = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"+:0/<<<.*\\|===.*\\|>>>.*\"
 
 [core]
-    # Horizontal scrolling that makes sense
-    pager = "less -FRSX -#5"
+	# Horizontal scrolling that makes sense
+	pager = "less -FRSX -#5"
 
-    # Favourite editor
-    editor = vim
+	# Favourite editor
+	editor = vim
 
 [diff]
-    # Search for diff sections to allow n/N movement in less
-    pager = "less -FRSX -p '^diff.*'"
-    tool = "vimdiff"
+	# Search for diff sections to allow n/N movement in less
+	pager = "less -FRSX -p '^diff.*'"
+	tool = "vimdiff"
 
 [gui]
-    fontui = -family \"Liberation Sans\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
-    fontdiff = -family \"Liberation Mono\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
+	fontui = -family \"Liberation Sans\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family \"Liberation Mono\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
 
 [rerere]
-    enabled = 1
+	enabled = 1
 
 [alias]
-    # Hiding changed files from git, doesn't always do what you expect
-    hide = update-index --assume-unchanged
-    unhide = update-index --no-assume-unchanged
-    hidden = "!git ls-files -v | grep -v '^[HSMRCK] '"
+	# Hiding changed files from git, doesn't always do what you expect
+	hide = update-index --assume-unchanged
+	unhide = update-index --no-assume-unchanged
+	hidden = "!git ls-files -v | grep -v '^[HSMRCK] '"
 
-    # Branch management
-    current-branch = !git symbolic-ref HEAD 2> /dev/null | sed -e 's#refs/heads/##'
+	# Branch management
+	current-branch = !git symbolic-ref HEAD 2> /dev/null | sed -e 's#refs/heads/##'
 
-    # Shorthand
-    br  = branch
-    co  = checkout
-    df  = !git diff --color | sed 's/diff/\\n\\n\\n\\ndiff/' | less -FRSX -p '^diff.*'
-    ff  = pull --ff-only
-    gr  = !git graph
-    l   = log --oneline
-    man = help
-    rb  = rebase --interactive --autosquash
-    st  = status -s --untracked-files=no
-    sta = status -s
+	# Shorthand
+	br  = branch
+	co  = checkout
+	df  = !git diff --color | sed 's/diff/\\n\\n\\n\\ndiff/' | less -FRSX -p '^diff.*'
+	ff  = pull --ff-only
+	gr  = !git graph
+	l   = log --oneline
+	man = help
+	rb  = rebase --interactive --autosquash
+	st  = status -s --untracked-files=no
+	sta = status -s
 
-    stat = !git diff --stat=$(tput cols),$(expr $(tput cols) / 2)
-    meld = !meld .
-    browse = gui browser HEAD
-    vim = difftool --tool=vim
-    vd = !env GIT_EXTERNAL_DIFF='vimdiff $2 $5; echo > /dev/null' GIT_PAGER='' git diff
+	stat = !git diff --stat=$(tput cols),$(expr $(tput cols) / 2)
+	meld = !meld .
+	browse = gui browser HEAD
+	vim = difftool --tool=vim
+	vd = !env GIT_EXTERNAL_DIFF='vimdiff $2 $5; echo > /dev/null' GIT_PAGER='' git diff

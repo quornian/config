@@ -24,6 +24,9 @@ set shiftwidth=4
 set autoindent
 set expandtab
 
+" Git config uses tabs, not spaces
+autocmd FileType gitconfig setlocal noexpandtab
+
 " Make backspace behave
 set backspace=indent,eol,start
 set softtabstop=4
