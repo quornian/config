@@ -140,7 +140,7 @@ nmap <leader>syn :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar>
 nmap <leader>sp :set spell!
 
 " Explore the filesystem
-nmap <F9> :Sexplore<CR>
+nmap <F8> :Sexplore<CR>
 " Toggle paste
 nmap <leader>p :set paste!<Bar>set paste?<CR>
 "imap <leader>p <Esc>:set paste!<Bar>set paste?<CR>a
@@ -148,6 +148,25 @@ nmap <leader>p :set paste!<Bar>set paste?<CR>
 nmap <leader>m <C-w><C-_>
 " Browse for file to open
 nmap <leader>b :browse split<CR>
+
+" Debugging
+nmap <F9> :call StartDebugging()<CR>
+function! StartDebugging()
+    nnoremap <F9> :call StopDebugging()<CR>
+    nnoremap s :Cstep<CR>
+    nnoremap n :Cnext<CR>
+    nnoremap r :Creturn<CR>
+    nnoremap l :C import pprint; pprint.pprint(locals())<CR>
+    Pyclewn pdb %:p
+endfunction
+function! StopDebugging()
+   nunmap s
+   nunmap n
+   nunmap r
+   nunmap l
+   nbclose
+   nmap <F9> :call StartDebugging()<CR>
+endfunction
 
 " Easier way to jump between splits
 nnoremap <C-Down> <C-w>j
