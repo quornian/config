@@ -30,6 +30,10 @@ case $1 in
         gconftool-2 --type string --set $path/foreground_color "#AAAAAAAAAAAA"
         gconftool-2 --type string --set $path/palette "$palette"
         ;;
+    sexcolors)
+        palette="#252525:#FF9F95:#A6E22E:#FD971F:#435e87:#789ec6:#5E7175:#DBDCDC:#454545:#FF8D80:#B6E354:#FD971F:#587aa4:#46a4ff:#A3BABF:#FDFDFD"
+        gconftool-2 --type string --set $path/palette "$palette"
+        ;;
     presentation)
         $0
         gconftool-2 --type string --set $path/font "Monospace 14"
