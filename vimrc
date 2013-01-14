@@ -88,8 +88,6 @@ endif
 
 " Visible whitespace
 set listchars=tab:>-,eol:~
-hi SpecialKey cterm=NONE ctermfg=240 guifg=DarkRed
-hi NonText cterm=NONE ctermfg=240 guifg=DarkRed
 
 " Right margin
 if v:version >= 703 && ! &diff
@@ -106,7 +104,7 @@ au BufRead,BufNewFile *.def set filetype=tcl
 "set guioptions-=m
 "set guioptions-=r
 set guioptions=
-set gfn=Monospace\ 9
+set gfn=Monospace\ 10
 
 " Key mapping ----------------------------------------------------------------
 
