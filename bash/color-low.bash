@@ -2,22 +2,15 @@
 #
 
 # Linux framebuffer colour palette setup
-echo -en "\e]P0000000" #black
-echo -en "\e]P1CF8383" #darkred
-echo -en "\e]P2668984" #darkgreen
-echo -en "\e]P39B7E61" #brown
-echo -en "\e]P43465A4" #darkblue
-echo -en "\e]P575507B" #darkmagenta
-echo -en "\e]P67CB8CE" #darkcyan
-echo -en "\e]P7AAAAAA" #lightgrey
-echo -en "\e]P8333333" #darkgrey
-echo -en "\e]P9FF5555" #red
-echo -en "\e]PAA6DAC4" #green
-echo -en "\e]PBE3E373" #yellow
-echo -en "\e]PC50AEFF" #blue
-echo -en "\e]PDD378D3" #magenta
-echo -en "\e]PE33AFDC" #cyan
-echo -en "\e]PFFFFFFF" #white
+if [[ -z "$LINUX_PALETTE_LOADED" ]]
+then
+    for x in {0..9} {A..F}
+    do
+        v="__c$x"
+        echo -en "\e]P${x}${!v}"
+    done
+    export LINUX_PALETTE_LOADED=1
+fi
 
 # Other program colour options
 export GREP_COLORS="ms=01;34"

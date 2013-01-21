@@ -82,12 +82,7 @@ au! BufNewFile * silent! 0r ~/.vim/template/%:e
 
 " Colours
 syntax enable
-if &term == "linux"
-    color colors_16
-else
-    set t_Co=256
-    color mustang
-endif
+color colorscheme
 
 " Visible whitespace
 set listchars=tab:>-,eol:~
