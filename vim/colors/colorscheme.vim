@@ -18,12 +18,12 @@ if version >= 700
   hi CursorColumn                           cterm=reverse
   hi ColorColumn            ctermbg=3       cterm=reverse
   hi MatchParen ctermfg=2   ctermbg=0       cterm=bold
-  hi Pmenu      ctermfg=2   ctermbg=0
-  hi PmenuSel   ctermfg=3   ctermbg=0       cterm=reverse
+  hi Pmenu      ctermfg=0   ctermbg=7
+  hi PmenuSel   ctermfg=0   ctermbg=2
 endif
 
 " General colors
-hi Cursor                   ctermbg=0
+hi Cursor       ctermfg=7   ctermbg=0       cterm=reverse
 hi Normal       ctermfg=7
 hi NonText      ctermfg=7
 hi LineNr       ctermfg=7   ctermbg=8
@@ -34,7 +34,7 @@ hi Folded       ctermfg=2   ctermbg=4
 hi FoldColumn   ctermfg=2   ctermbg=4
 hi SignColumn   ctermfg=6   ctermbg=none
 hi Title        ctermfg=6                   cterm=bold
-hi Visual       ctermfg=6   ctermbg=6
+hi Visual       ctermfg=7   ctermbg=4       cterm=bold
 hi SpecialKey   ctermfg=6   ctermbg=4
 
 " Syntax highlighting
@@ -69,4 +69,13 @@ if &term != "linux"
     hi CursorLine           ctermbg=236     cterm=none
     hi CursorColumn         ctermbg=236
     hi ColorColumn          ctermfg=233
+
+    " Diff
+    hi DiffAdd              ctermbg=236
+    hi DiffDelete ctermfg=235 ctermbg=none
+    hi DiffChange           ctermbg=235
+    hi DiffText             ctermbg=236
+
+    " Fix for disappearing cursor when over light-black on black
+    hi Comment  ctermfg=59                  cterm=bold
 endif
