@@ -1,0 +1,6 @@
+#!/bin/bash
+
+newyork=$(TZ=America/New_York date +'%H:%M %Z')
+london=$(TZ=Europe/London date +'%H:%M %Z')
+
+echo "$london $newyork"
