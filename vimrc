@@ -5,7 +5,7 @@ set splitbelow      " Make new split below the current one
 set splitright      " Make new vsplits on the right (keep current on left)
 set scrolloff=5     " Keep lines visible at top and bottom of screen
 set background=dark
-set laststatus=1    " Use an extra screen line to keep windows looking good
+set laststatus=2    " Use an extra screen line to keep windows looking good
 set history=500
 
 " Swap and backups (the // means use full path with % in place of /)
