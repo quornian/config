@@ -1,5 +1,13 @@
-# This file overrides the system-wide settings, include them first
-$include /etc/inputrc
+# Configure readline (overrides system defaults)
+
+# Not sure what these do but their in the system default
+set meta-flag on
+set input-meta on
+set convert-meta off
+set output-meta on
+
+# Append slash to completed symlinks to directories
+set mark-symlinked-directories on
 
 # Configure completion for less key presses
 set show-all-if-ambiguous on
@@ -15,11 +23,45 @@ set match-hidden-files off
 set horizontal-scroll-mode off
 set skip-completed-text on
 
+# In bash, make space expand things like !$
+$if Bash
+Space: magic-space
+$endif
+
+# Key bindings for emacs mode (ie. non-vi mode)
+$if mode=emacs
+
+# For linux console and RH/Debian xterm
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward
+"\e[7~": beginning-of-line
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+
+# For rxvt
+"\e[8~": end-of-line
+"\e[8~": end-of-line
+"\eOc": forward-word
+"\eOd": backward-word
+
+# For non RH/Debian xterm
+"\eOH": beginning-of-line
+"\eOF": end-of-line
+
+# For freebsd console
+"\e[H": beginning-of-line
+"\e[F": end-of-line
+
 # Bind up and down arrow keys to history search
 "\e[A": history-search-backward
 "\e[B": history-search-forward
 
-# In bash, make space expand things like !$
-$if Bash
-Space: magic-space
 $endif
