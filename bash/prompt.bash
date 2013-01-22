@@ -28,7 +28,7 @@ function __make_prompt() {
     local jobinfo="\[$(__cx 31)\]\$(__prompt_jobs Stopped)"
     jobinfo="$jobinfo\[$(__cx 32)\]\$(__prompt_jobs Running)"
     local prompt="\[$(__cx "$__color_prompt")\]\\$ \[$(__cx)\]"
-    export PS1="\n${ident} ${path} ${git}${jobinfo}\n${prompt}"
+    export PS1="\n${ident} ${path} ${git} ${jobinfo}\n${prompt}"
 }
 
 __make_prompt
