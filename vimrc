@@ -5,7 +5,7 @@ set splitbelow      " Make new split below the current one
 set splitright      " Make new vsplits on the right (keep current on left)
 set scrolloff=5     " Keep lines visible at top and bottom of screen
 set background=dark
-set laststatus=2    " Use an extra screen line to keep windows looking good
+set laststatus=1    " Use an extra screen line to keep windows looking good
 set history=500
 
 " Swap and backups (the // means use full path with % in place of /)
@@ -126,7 +126,7 @@ nmap <leader># \c
 nmap <leader>+ /.{81,}<CR>
 
 " Replace all instances of word
-nmap <leader>r :%s/\<<c-r>=expand("<cword>")<cr>\>//g
+nmap <leader>r :%s/\<<C-r>=expand("<cword>")<CR>\>//g<Left><Left>
 " Toggle highlighting of search terms
 nmap <leader>k :set hls!<bar>set hls?<CR>
 " Toggle visible whitespace
@@ -151,6 +151,7 @@ nmap <leader>b :browse split<CR>
 nmap <F9> :call StartDebugging()<CR>
 function! StartDebugging()
     nnoremap <F9> :call StopDebugging()<CR>
+    nnoremap q :call StopDebugging()<CR>
     nnoremap s :Cstep<CR>
     nnoremap n :Cnext<CR>
     nnoremap r :Creturn<CR>
@@ -158,12 +159,14 @@ function! StartDebugging()
     Pyclewn pdb %:p
 endfunction
 function! StopDebugging()
-   nunmap s
-   nunmap n
-   nunmap r
-   nunmap l
-   nbclose
-   nmap <F9> :call StartDebugging()<CR>
+    nunmap q
+    nunmap s
+    nunmap n
+    nunmap r
+    nunmap l
+    nbclose
+    bdelete (clewn)_console
+    nmap <F9> :call StartDebugging()<CR>
 endfunction
 
 " Easier way to jump between splits
