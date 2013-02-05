@@ -259,45 +259,6 @@ function! TabIsEmpty()
     endif
 endfunction
 
-" Project management ---------------------------------------------------
-
-function! SaveProject()
-    if isdirectory(".vimproject")
-        " Customize what is saved to the project session
-        set sessionoptions=buffers,curdir,folds,tabpages,winsize
-        execute "mksession! .vimproject/session.vim"
-    endif
-endfunction
-
-function! NewProject()
-    if ! isdirectory(".vimproject")
-        call mkdir(".vimproject")
-    endif
-    echo "Project created"
-    if exists(":NERDTree")
-        NERDTreeToggle
-    endif
-endfunction
-
-function! LoadProject()
-    if ! isdirectory(".vimproject")
-        echo "Create project here? [y/N] "
-        if nr2char(getchar()) == "y"
-            call NewProject()
-        else
-            echo ""
-        endif
-    elseif filereadable(".vimproject/session.vim")
-        execute "so .vimproject/session.vim"
-    endif
-endfunction
-
-" Only use project mode when opening Vim without any files
-if argc() == 0
-    autocmd VimLeave * call SaveProject()
-    autocmd VimEnter * nested call LoadProject()
-endif
-
 " Plugins --------------------------------------------------------------
 
 " Manage plugin bundles with Pathogen
@@ -352,6 +313,45 @@ filetype plugin indent on
 
 " Manage plugin bundles with Pathogen
 call pathogen#infect()
+
+" Project management ---------------------------------------------------
+
+function! SaveProject()
+    if isdirectory(".vimproject")
+        " Customize what is saved to the project session
+        set sessionoptions=buffers,curdir,folds,tabpages,winsize
+        execute "mksession! .vimproject/session.vim"
+    endif
+endfunction
+
+function! NewProject()
+    if ! isdirectory(".vimproject")
+        call mkdir(".vimproject")
+    endif
+    echo "Project created"
+    if exists(":NERDTree")
+        NERDTreeToggle
+    endif
+endfunction
+
+function! LoadProject()
+    if ! isdirectory(".vimproject")
+        echo "Create project here? [y/N] "
+        if nr2char(getchar()) == "y"
+            call NewProject()
+        else
+            echo ""
+        endif
+    elseif filereadable(".vimproject/session.vim")
+        execute "so .vimproject/session.vim"
+    endif
+endfunction
+
+" Only use project mode when opening Vim without any files
+if argc() == 0
+    autocmd VimLeave * call SaveProject()
+    autocmd VimEnter * nested call LoadProject()
+endif
 
 " Generate tags with: ctags -R -f ~/.vim/tags/python.ctags /usr/lib/python*
 set tags+=$HOME/.vim/tags/python.ctags
