@@ -262,15 +262,6 @@ endfunction
 
 function! SaveProject()
     if isdirectory(".vimproject")
-        let hidden = 0
-        for bnum in range(1, bufnr("$"))
-            if buflisted(bnum) && ! bufloaded(bnum)
-                let hidden = hidden + 1
-            endif
-        endfor
-        if hidden > 0
-            echo "Saving " . hidden . " hidden buffers"
-        endif
         execute "mksession! .vimproject/session.vim"
     endif
 endfunction
