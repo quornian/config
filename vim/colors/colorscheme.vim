@@ -27,9 +27,12 @@ hi Cursor       ctermfg=7   ctermbg=0       cterm=reverse
 hi Normal       ctermfg=7
 hi NonText      ctermfg=7
 hi LineNr       ctermfg=7   ctermbg=8
-hi StatusLine   ctermfg=6   ctermbg=0       cterm=reverse
-hi StatusLineNC ctermfg=6   ctermbg=4       cterm=reverse
-hi VertSplit    ctermfg=7   ctermbg=0
+hi StatusLine   ctermfg=7   ctermbg=6       cterm=bold
+hi StatusLineNC ctermfg=7   ctermbg=6       cterm=none
+hi TabLineFill  ctermfg=0   ctermbg=6       cterm=none
+hi TabLine      ctermfg=7   ctermbg=6       cterm=none
+hi TabLineSel   ctermfg=7   ctermbg=6       cterm=bold
+hi VertSplit    ctermfg=6   ctermbg=6       cterm=none
 hi Folded       ctermfg=0   ctermbg=7
 hi FoldColumn   ctermfg=7   ctermbg=0
 hi SignColumn   ctermfg=6   ctermbg=none

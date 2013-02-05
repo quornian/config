@@ -6,6 +6,7 @@ set splitright      " Make new vsplits on the right (keep current on left)
 set scrolloff=5     " Keep lines visible at top and bottom of screen
 set background=dark
 set laststatus=2    " Use an extra screen line to keep windows looking good
+set showtabline=2
 set history=500
 
 " Swap and backups (the // means use full path with % in place of /)
@@ -144,8 +145,21 @@ nmap <leader>p :set paste!<Bar>set paste?<CR>
 "imap <leader>p <Esc>:set paste!<Bar>set paste?<CR>a
 " Maximize current split
 nmap <leader>m <C-w><C-_>
-" Browse for file to open
-nmap <leader>b :browse split<CR>
+
+" Tab controls
+nmap <leader>n :tabnew<CR>
+nmap <Tab> :tabnext<CR>
+nmap <S-Tab> :tabprev<CR>
+nmap <leader>1 1gt
+nmap <leader>2 2gt
+nmap <leader>3 3gt
+nmap <leader>4 4gt
+nmap <leader>5 5gt
+nmap <leader>6 6gt
+nmap <leader>7 7gt
+nmap <leader>8 8gt
+nmap <leader>9 9gt
+nmap <leader>b :buffers<CR>
 
 " Debugging
 nmap <F9> :call StartDebugging()<CR>
@@ -243,6 +257,35 @@ function! TabIsEmpty()
         return 0
     endif
 endfunction
+
+" Project management ---------------------------------------------------
+
+function! SaveProject()
+    if isdirectory(".vimproject")
+        let hidden = 0
+        for bnum in range(1, bufnr("$"))
+            if buflisted(bnum) && ! bufloaded(bnum)
+                let hidden = hidden + 1
+            endif
+        endfor
+        if hidden > 0
+            echo "Saving " . hidden . " hidden buffers"
+        endif
+        execute "mksession! .vimproject/session.vim"
+    endif
+endfunction
+
+function! LoadProject()
+    if filereadable(".vimproject/session.vim")
+        execute "so .vimproject/session.vim"
+    endif
+endfunction
+
+" Only use project mode when opening without explicit files
+if argc() == 0
+    autocmd VimLeave * call SaveProject()
+    autocmd VimEnter * call LoadProject()
+endif
 
 " Plugins --------------------------------------------------------------
 
