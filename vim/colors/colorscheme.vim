@@ -16,8 +16,8 @@ let colors_name = "colorscheme"
 if version >= 700
   hi CursorLine                             cterm=reverse
   hi CursorColumn                           cterm=reverse
-  hi ColorColumn            ctermbg=3       cterm=reverse
-  hi MatchParen ctermfg=2   ctermbg=0       cterm=bold
+  hi ColorColumn ctermfg=none ctermbg=7     cterm=none
+  hi MatchParen ctermfg=none ctermbg=4      cterm=none
   hi Pmenu      ctermfg=0   ctermbg=7
   hi PmenuSel   ctermfg=0   ctermbg=2
 endif
@@ -27,11 +27,12 @@ hi Cursor       ctermfg=7   ctermbg=0       cterm=reverse
 hi Normal       ctermfg=7
 hi NonText      ctermfg=7
 hi LineNr       ctermfg=7   ctermbg=8
-hi StatusLine   ctermfg=7   ctermbg=6       cterm=bold
+hi Search       ctermfg=3   ctermbg=0       cterm=underline,bold
+hi StatusLine   ctermfg=7   ctermbg=4       cterm=bold
 hi StatusLineNC ctermfg=7   ctermbg=6       cterm=none
 hi TabLineFill  ctermfg=0   ctermbg=6       cterm=none
 hi TabLine      ctermfg=7   ctermbg=6       cterm=none
-hi TabLineSel   ctermfg=7   ctermbg=6       cterm=bold
+hi TabLineSel   ctermfg=7   ctermbg=4       cterm=bold
 hi VertSplit    ctermfg=6   ctermbg=6       cterm=none
 hi Folded       ctermfg=0   ctermbg=7
 hi FoldColumn   ctermfg=7   ctermbg=0
@@ -71,7 +72,7 @@ if &term != "linux"
     set t_Co=256
     hi CursorLine           ctermbg=236     cterm=none
     hi CursorColumn         ctermbg=236
-    hi ColorColumn          ctermfg=233
+    hi ColorColumn          ctermbg=233
 
     " Diff
     hi DiffAdd              ctermbg=236
