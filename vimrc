@@ -8,6 +8,7 @@ set background=dark
 set laststatus=2    " Use an extra screen line to keep windows looking good
 set showtabline=2
 set history=500
+set shortmess+=I
 
 " Swap and backups (the // means use full path with % in place of /)
 set directory=~/.vim/swap//
@@ -268,8 +269,25 @@ function! SaveProject()
     endif
 endfunction
 
+function! NewProject()
+    if ! isdirectory(".vimproject")
+        call mkdir(".vimproject")
+    endif
+    echo "Project created"
+    if exists(":NERDTree")
+        NERDTreeToggle
+    endif
+endfunction
+
 function! LoadProject()
-    if filereadable(".vimproject/session.vim")
+    if ! isdirectory(".vimproject")
+        echo "Create project here? [y/N] "
+        if nr2char(getchar()) == "y"
+            call NewProject()
+        else
+            echo ""
+        endif
+    elseif filereadable(".vimproject/session.vim")
         execute "so .vimproject/session.vim"
     endif
 endfunction
