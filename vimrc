@@ -262,6 +262,8 @@ endfunction
 
 function! SaveProject()
     if isdirectory(".vimproject")
+        " Customize what is saved to the project session
+        set sessionoptions=buffers,curdir,folds,tabpages,winsize
         execute "mksession! .vimproject/session.vim"
     endif
 endfunction
@@ -272,10 +274,10 @@ function! LoadProject()
     endif
 endfunction
 
-" Only use project mode when opening without explicit files
+" Only use project mode when opening Vim without any files
 if argc() == 0
     autocmd VimLeave * call SaveProject()
-    autocmd VimEnter * call LoadProject()
+    autocmd VimEnter * nested call LoadProject()
 endif
 
 " Plugins --------------------------------------------------------------
