@@ -4,6 +4,9 @@
 # indirectly for login shells via .bash_profile.
 #
 
+# Source system bashrc if it exists
+test -f /etc/bashrc && source /etc/bashrc
+
 # Source modules
 source "$HOME/.bash/color.bash"
 source "$HOME/.bash/prompt.bash"
