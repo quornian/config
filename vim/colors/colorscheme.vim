@@ -32,8 +32,8 @@ hi StatusLine   ctermfg=7   ctermbg=4       cterm=bold
 hi StatusLineNC ctermfg=7   ctermbg=6       cterm=none
 hi TabLineFill  ctermfg=0   ctermbg=6       cterm=none
 hi TabLine      ctermfg=7   ctermbg=6       cterm=none
-hi TabLineSel   ctermfg=7   ctermbg=4       cterm=bold
-hi VertSplit    ctermfg=6   ctermbg=6       cterm=none
+hi TabLineSel   ctermfg=7   ctermbg=none    cterm=bold
+hi VertSplit    ctermfg=7   ctermbg=7       cterm=none
 hi Folded       ctermfg=0   ctermbg=7
 hi FoldColumn   ctermfg=7   ctermbg=0
 hi SignColumn   ctermfg=6   ctermbg=none
@@ -73,12 +73,16 @@ if &term != "linux"
     hi CursorLine           ctermbg=236     cterm=none
     hi CursorColumn         ctermbg=236
     hi ColorColumn          ctermbg=233
+    hi VertSplit ctermfg=236 ctermbg=236
+    hi StatusLine           ctermbg=240
+    hi StatusLineNC         ctermbg=236
 
     " Diff
     hi DiffAdd              ctermbg=236
     hi DiffDelete ctermfg=235 ctermbg=none
     hi DiffChange           ctermbg=235
     hi DiffText             ctermbg=236
+    hi Folded   ctermfg=240 ctermbg=234
 
     " Fix for disappearing cursor when over light-black on black
     hi Comment  ctermfg=59                  cterm=bold
