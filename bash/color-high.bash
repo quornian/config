@@ -3,7 +3,15 @@
 
 # Other program colour options
 export GREP_COLORS="ms=01;34"
-export LS_COLORS="fi=38;5;7:di=38;5;3:ow=38;5;3:ln=38;5;6:ex=38;5;15:mi=38;5;9:su=07"
+export LS_COLORS="\
+fi=38;5;7:\
+di=38;5;3:\
+ow=38;5;3:\
+ln=38;5;6:\
+ex=38;5;15:\
+mi=38;5;9:\
+su=07:\
+*.c=32:*.cpp=32:*.h=32:*.hpp=32:*.json=32:*.py=32"
 
 # Colour options for the shell initialization
 if [[ ! -z "$SSH_CONNECTION" ]]
@@ -20,7 +28,7 @@ __color_exit_error="38;5;9"
 export LESS_TERMCAP_md=$'\e[1;36m'  # Begin bold
 export LESS_TERMCAP_mb=$'\e[1;31m'  # Begin blinking
 export LESS_TERMCAP_me=$'\e[m'      # End mode
-export LESS_TERMCAP_so=$'\e[36m'    # Begin standout / info box
+export LESS_TERMCAP_so=$'\e[4;33m'  # Begin standout / info box
 export LESS_TERMCAP_se=$'\e[m'      # End standout
 export LESS_TERMCAP_us=$'\e[1m'     # Begin underline
 export LESS_TERMCAP_ue=$'\e[m'      # End underline
