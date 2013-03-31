@@ -52,7 +52,7 @@ hi Identifier   ctermfg=6
 hi Function     ctermfg=7
 hi Type         ctermfg=6
 hi Statement    ctermfg=4  cterm=bold   "Things like class, hi, return
-hi Keyword      ctermfg=5
+hi Keyword      ctermfg=4
 hi Constant     ctermfg=4
 hi PreProc      ctermfg=4   cterm=bold
 hi SpellBad                 ctermbg=7
@@ -63,8 +63,24 @@ hi DiffDelete   ctermfg=0   ctermbg=1
 hi DiffChange               ctermbg=3
 hi DiffText                 ctermbg=7
 
+" Git
+hi diffAdded    ctermfg=2
+hi diffRemoved  ctermfg=1
+hi diffFile     ctermfg=8
+hi diffSubname  ctermfg=8
+hi gitcommitDiff ctermfg=8
+hi gitcommitBranch ctermfg=3
+hi gitcommitFile ctermfg=4
+hi gitcommitType ctermfg=8
+hi gitcommitOverflow ctermfg=6
+hi gitcommitSummary ctermfg=7
+
 " Language specifics
 hi vimCommentTitle ctermfg=7                cterm=bold
+
+" Highlight trailing whitespace on non-blank lines
+hi WhitespaceError ctermfg=8 ctermbg=0      cterm=underline,bold
+match WhitespaceError /\S\@<=\s\+$\|\t/
 
 " When 256 is available, modify *some* colors but keep most consistent
 " we rely instead on the terminal palette
