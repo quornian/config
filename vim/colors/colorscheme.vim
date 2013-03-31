@@ -1,6 +1,6 @@
 " Maintainer:   Ian P. Thompson (ian@quornian.co.uk)
 " Version:      1.0
-" Last Change:  21 January 2013
+" Last Change:  31 March 2013
 
 set background=dark
 
@@ -26,7 +26,7 @@ endif
 hi Cursor       ctermfg=7   ctermbg=0       cterm=reverse
 hi Normal       ctermfg=7
 hi NonText      ctermfg=7
-hi LineNr       ctermfg=7   ctermbg=8
+hi LineNr       ctermfg=7   ctermbg=0
 hi Search       ctermfg=3   ctermbg=0       cterm=underline,bold
 hi StatusLine   ctermfg=7   ctermbg=4       cterm=bold
 hi StatusLineNC ctermfg=7   ctermbg=6       cterm=none
@@ -51,7 +51,7 @@ hi Special      ctermfg=5
 hi Identifier   ctermfg=6
 hi Function     ctermfg=7
 hi Type         ctermfg=6
-hi Statement    ctermfg=4  cterm=bold   "Things like class, hi, return
+hi Statement    ctermfg=4  cterm=bold
 hi Keyword      ctermfg=4
 hi Constant     ctermfg=4
 hi PreProc      ctermfg=4   cterm=bold
@@ -66,20 +66,20 @@ hi DiffText                 ctermbg=7
 " Git
 hi diffAdded    ctermfg=2
 hi diffRemoved  ctermfg=1
-hi diffFile     ctermfg=8
-hi diffSubname  ctermfg=8
-hi gitcommitDiff ctermfg=8
+hi diffFile     ctermfg=0                   cterm=bold
+hi diffSubname  ctermfg=0                   cterm=bold
+hi gitcommitDiff ctermfg=0                  cterm=bold
 hi gitcommitBranch ctermfg=3
 hi gitcommitFile ctermfg=4
-hi gitcommitType ctermfg=8
+hi gitcommitType ctermfg=0                  cterm=bold
 hi gitcommitOverflow ctermfg=6
 hi gitcommitSummary ctermfg=7
 
 " Language specifics
-hi vimCommentTitle ctermfg=7                cterm=bold
+hi vimCommentTitle ctermfg=0                cterm=bold
 
 " Highlight trailing whitespace on non-blank lines
-hi WhitespaceError ctermfg=8 ctermbg=0      cterm=underline,bold
+hi WhitespaceError ctermfg=0 ctermbg=0      cterm=underline,bold
 match WhitespaceError /\S\@<=\s\+$\|\t/
 
 " When 256 is available, modify *some* colors but keep most consistent
@@ -99,7 +99,4 @@ if &term != "linux"
     hi DiffChange           ctermbg=235
     hi DiffText             ctermbg=236
     hi Folded   ctermfg=240 ctermbg=234
-
-    " Fix for disappearing cursor when over light-black on black
-    hi Comment  ctermfg=59                  cterm=bold
 endif
