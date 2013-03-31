@@ -6,7 +6,7 @@
 # Git branch indicator
 function __prompt_git() {
     git rev-parse 2>/dev/null || return
-    local bramch=$(git branch | sed -n 's/^\* \(.*\)/\1/p')
+    local branch=$(git branch | sed -n 's/^\* \(.*\)/\1/p')
     [ "$branch" != "(no branch)" ] || branch=$(git log -1 --pretty=%h)
     echo " [$branch]"
 }
