@@ -13,8 +13,8 @@ function __prompt_git() {
 
 # Background jobs indicator
 function __prompt_jobs() {
-    jobs | awk '/Stopped/ {printf " '"$(__cx 31)"'%s^Z", $3}
-                /Running/ {printf " '"$(__cx 32)"'%s&", $3}'
+    # Usage: __prompt_jobs "Running|Stopped" suffix
+    jobs | awk "/$1/ {printf \" %s$2\", \$3}"
 }
 
 # Function to join the parts together
@@ -22,8 +22,9 @@ function __make_prompt() {
     local ident="\[$(__cx "$__color_prompt_ident")\]\h:"
     local path="\[$(__cx "$__color_prompt_path")\]\w/"
     local git="\[$(__cx "$__color_prompt_git")\]\$(__prompt_git)"
-    local jobinfo="\[$(__cx 31)\]\$(__prompt_jobs)"
-    local prompt="\[$(__cx "$__color_prompt")\]\\$ \[$(__cx)\]"
+    local jobinfo="\[$(__cx 32)\]\$(__prompt_jobs Running '&')"
+    jobinfo="$jobinfo\[$(__cx 31)\]\$(__prompt_jobs Stopped '^Z')"
+    local prompt="\[$(__cx "$__color_prompt")\]\\$ \[$(__cx 0)\]"
     export PS1="\n${ident} ${path}${git}${jobinfo}\n${prompt}"
 }
 
