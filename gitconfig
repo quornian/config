@@ -53,6 +53,7 @@
 
 	# Branch management
 	current-branch = !git symbolic-ref HEAD 2> /dev/null | sed -e 's#refs/heads/##'
+	unpushed = !git log --oneline HEAD \"^origin/$(git current-branch)\"
 
 	# Shorthand
 	br  = branch
@@ -63,6 +64,10 @@
 	l   = log --oneline
 	man = help
 	rb  = rebase --interactive --autosquash
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbl = !git log --pretty=\"format:%C(blue bold)pick %C(cyan)%h %C(green)%s%C(reset)\" --reverse HEAD ^\"origin/$(git current-branch)\"
+	rbo  = !git rebase --interactive --autosquash \"origin/$(git current-branch)\"
 	st  = status -s --untracked-files=no
 	sta = status -s
 
