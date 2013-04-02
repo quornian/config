@@ -25,11 +25,12 @@ substr() { # $1 string, $2 start, $3 end
 
 # Set the tab/window title where supported
 set-title() {
-    # Use escape sequences for GNU screen and tmux
-    if [[ -n "$TMUX" || -n "$STY" ]]
+    if [[ -n "$TMUX" ]]
     then
-        printf "\033k%s\033\\" "$1"
-        printf "\033]0;$__host:%s\007" "$1"
+        tmux rename-window -t $TMUX_PANE "$1"
+    elif [[ -n "$STY" ]]
+    then
+        screen -X title "$1"
     fi
 }
 
