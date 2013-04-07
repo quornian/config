@@ -47,7 +47,7 @@ hi Todo         ctermfg=0   ctermbg=2
 hi Boolean      ctermfg=7
 hi String       ctermfg=2
 hi Number       ctermfg=4
-hi Special      ctermfg=5
+hi Special      ctermfg=6
 hi Identifier   ctermfg=6
 hi Function     ctermfg=7
 hi Type         ctermfg=6
@@ -88,7 +88,7 @@ if &term != "linux"
     set t_Co=256
     hi CursorLine           ctermbg=236     cterm=none
     hi CursorColumn         ctermbg=236
-    hi ColorColumn          ctermbg=233
+    hi ColorColumn          ctermbg=237
     hi VertSplit ctermfg=236 ctermbg=236
     hi StatusLine           ctermbg=240
     hi StatusLineNC         ctermbg=236
