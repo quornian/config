@@ -202,6 +202,10 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
+nnoremap <Esc>[1;5B <C-w>j
+nnoremap <Esc>[1;5A <C-w>k
+nnoremap <Esc>[1;5C <C-w>l
+nnoremap <Esc>[1;5D <C-w>h
 
 " Easier way to navigate wrapped text
 map <Down> gj
@@ -363,6 +367,14 @@ if argc() == 0
 endif
 
 " Generate tags with: ctags -R -f ~/.vim/tags/python.ctags /usr/lib/python*
-set tags+=$HOME/.vim/tags/python.ctags
+function! GenerateTags()
+    if ! isdirectory(".vimproject")
+        echo "Not in a project"
+        return
+    endif
+    !ctags --recurse --tag-relative -f ".vimproject/tags" *
+endfunction
+command! GenerateTags call GenerateTags()
+set tags+=.vimproject/tags
 nmap <leader>] :execute "ltag " . expand("<cword>") <CR> :lopen <CR>
 
