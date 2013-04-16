@@ -45,7 +45,7 @@ set wildmode=longest:full
 set wildmenu
 
 " General autocompletion                    " Only insert text common
-set completeopt=menuone,longest,preview     " to all matches (longest)
+set completeopt=menu,longest,preview        " to all matches (longest)
 
 " Search options
 set incsearch       " Incremental search (ie. search as you type)
