@@ -134,10 +134,7 @@ nmap <leader>k :set hls!<bar>set hls?<CR>
 " Toggle visible whitespace
 nmap <leader>w :set list!<CR>
 " Toggle syntax
-nmap <leader>syn :if exists("syntax_on") <Bar> syntax off <Bar> else <Bar>
-            \ syntax enable <Bar> endif <CR>
 " Spell check
-nmap <leader>sp :set spell!
 
 " Explore the filesystem
 nmap <F8> :Sexplore<CR>
@@ -152,6 +149,12 @@ nmap <leader>gk :silent !git gui &<CR>:redraw!<CR>
 nmap <leader>h :if match(expand("%:e"), "h") == 0 <Bar>
             \ exe "edit " . glob(expand("%:r") . ".c*") <Bar> else <Bar>
             \ exe "edit " . glob(expand("%:r") . ".h*") <Bar> endif <CR>
+
+" Search for the word under the cursor in the current directory
+nmap <leader>s :execute 'silent grep! -rI --exclude-dir \.git "\<\>" .'<Bar>
+    \ copen 12 <Bar>redraw! <Left><Left><Left><Left><Left><Left><Left>
+    \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+    \<Left><Left><Left><Left><Left><Left><Left><Left><C-R><C-W>
 
 " Tab controls
 nmap <leader>n :tabnew<CR>
