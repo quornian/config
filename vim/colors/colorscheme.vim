@@ -111,7 +111,7 @@ call s:Hi("gitcommitSummary", 7, 0, "none")
 call s:Hi("vimCommentTitle", 0, 0, "bold")
 
 " Highlight trailing whitespace on non-blank lines
-call s:Hi("WhitespaceError", 0, 0, "underline,bold")
+call s:Hi("WhitespaceError", 1, 0, "underline,bold")
 match WhitespaceError /\S\@<=\s\+$\|\t/
 
 " When 256 is available, modify *some* colors but keep most consistent
