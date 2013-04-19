@@ -11,6 +11,8 @@ __c0="444444"; __c1="AF5F5F"; __c2="AFD75F"; __c3="FF8700"; # Bk Rd Gn Yl
 __c4="00AFD7"; __c5="D75FAF"; __c6="00AF87"; __c7="D7D7D7"; # Bu Mg Cy Gy
 __c8="878787"; __c9="D75F5F"; __cA="D7FF5F"; __cB="FFAF00"; # Dk Rd Gn Yl
 __cC="5FD7FF"; __cD="FF87D7"; __cE="5FD7AF"; __cF="FFFFFF"; # Bu Mg Cy Wt
+export __c0 __c1 __c2 __c3 __c4 __c5 __c6 __c7
+export __c8 __c9 __cA __cB __cC __cD __cE __cF
 
 # Check if it's the linux framebuffer, otherwise assume we have a
 # 256-colour terminal emulator we can use.

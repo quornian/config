@@ -4,12 +4,12 @@
 # Other program colour options
 export GREP_COLORS="ms=01;34"
 export LS_COLORS="\
-fi=38;5;7:\
-di=38;5;3:\
-ow=38;5;3:\
-ln=38;5;6:\
-ex=38;5;15:\
-mi=38;5;9:\
+fi=37:\
+di=34:\
+ow=34:\
+ln=36:\
+ex=1;37:\
+mi=1;31:\
 su=07:\
 *.c=32:*.cpp=32:*.h=32:*.hpp=32:*.json=32:*.py=32"
 

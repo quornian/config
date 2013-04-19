@@ -12,155 +12,122 @@ endif
 
 let colors_name = "colorscheme"
 
+" Function to pull the colorscheme from environment variables $__c? when
+" opening the gvim GUI
+function! s:Hi(type, fg, bg, flags)
+    if has("gui_running")
+        let s:fg = a:fg
+        if s:fg > 231
+            let s:guifg = printf("%06X", 0x10101 * (10 * s:fg - 2312))
+        else
+            if match(a:flags, "bold") != -1
+                let s:fg += 8
+            endif
+            exe "let s:guifg=$__c" . printf("%X", s:fg)
+        endif
+        if a:bg > 231
+            let s:guibg = printf("%06X", 0x10101 * (10 * a:bg - 2312))
+        else
+            exe "let s:guibg=$__c" . printf("%X", a:bg)
+        endif
+        exe "highlight " . a:type .
+            \ " guifg=#" . s:guifg . " guibg=#" . s:guibg . " gui=" . a:flags
+    else
+        exe "highlight " . a:type .
+            \ " ctermfg=" . a:fg . " ctermbg=" . a:bg . " cterm=" . a:flags
+    endif
+endfunction
+
 " Vim >= 7.0 specific colors
 if version >= 700
-  hi CursorLine                                     cterm=reverse
-                \                                   gui=reverse
-  hi CursorColumn                                   cterm=reverse
-                \                                   gui=reverse
-  hi ColorColumn    ctermfg=none    ctermbg=7       cterm=none
-                \                   guibg=#D7D7D7   gui=none
-  hi MatchParen     ctermfg=none    ctermbg=4       cterm=none
-                \                   guibg=#00AFD7   gui=none
-  hi Pmenu          ctermfg=0       ctermbg=7
-                \   guifg=#444444   guibg=#D7D7D7
-  hi PmenuSel       ctermfg=0       ctermbg=2
-                \   guifg=#444444   guibg=#AFD75F
+    call s:Hi("CursorLine", 0, 0, "reverse")
+    call s:Hi("CursorColumn", 0, 0, "reverse")
+    call s:Hi("ColorColumn", 0, 7, "none")
+    call s:Hi("MatchParen", 0, 4, "none")
+    
+    call s:Hi("Pmenu", 0, 7, "none")
+    call s:Hi("PmenuSel", 0, 2, "none")
 endif
 
 " General colors
-hi Cursor           ctermfg=7       ctermbg=0       cterm=reverse
-                \   guifg=#D7D7D7   guibg=#444444   gui=reverse
-hi Normal           ctermfg=7       ctermbg=0
-                \   guifg=#D7D7D7   guibg=#444444
-hi NonText          ctermfg=7       ctermbg=0
-                \   guifg=#D7D7D7   guibg=#444444
-hi LineNr           ctermfg=7       ctermbg=0
-                \   guifg=#D7D7D7   guibg=#444444
-hi Search           ctermfg=3       ctermbg=0       cterm=underline,bold
-                \   guifg=#FF8700   guibg=#444444   gui=underline,bold
-hi StatusLine       ctermfg=7       ctermbg=4       cterm=bold
-                \   guifg=#FFFFFF   guibg=#00AFD7   gui=bold
-hi StatusLineNC     ctermfg=7       ctermbg=6       cterm=none
-                \   guifg=#D7D7D7   guibg=#00AF87   gui=none
-hi TabLineFill      ctermfg=0       ctermbg=6       cterm=none
-                \   guifg=#444444   guibg=#00AF87   gui=none
-hi TabLine          ctermfg=7       ctermbg=6       cterm=none
-                \   guifg=#D7D7D7   guibg=#00AF87   gui=none
-hi TabLineSel       ctermfg=7       ctermbg=none    cterm=bold
-                \   guifg=#FFFFFF                   gui=bold
-hi VertSplit        ctermfg=7       ctermbg=7       cterm=none
-                \   guifg=#D7D7D7   guibg=#D7D7D7   gui=none
-hi Folded           ctermfg=0       ctermbg=7
-                \   guifg=#444444   guibg=#D7D7D7
-hi FoldColumn       ctermfg=7       ctermbg=0
-                \   guifg=#D7D7D7   guibg=#444444
-hi SignColumn       ctermfg=6       ctermbg=none
-                \   guifg=#00AF87
-hi Title            ctermfg=6                       cterm=bold
-                \   guifg=#5FD7AF                   gui=bold
-hi Visual           ctermfg=7       ctermbg=4       cterm=bold
-                \   guifg=#FFFFFF   guibg=#00AFD7   gui=bold
-hi SpecialKey       ctermfg=6       ctermbg=4
-                \   guifg=#00AF87   guibg=#00AFD7
+call s:Hi("Cursor", 7, 0, "reverse")
+call s:Hi("Normal", 7, 0, "none")
+call s:Hi("NonText", 7, 0, "none")
+call s:Hi("LineNr", 7, 0, "none")
+call s:Hi("Search", 3, 0, "underline,bold")
+call s:Hi("StatusLine", 7, 4, "bold")
+call s:Hi("StatusLineNC", 7, 6, "none")
+call s:Hi("TabLineFill", 0, 6, "none")
+call s:Hi("TabLine", 7, 6, "none")
+call s:Hi("TabLineSel", 7, 0, "bold")
+call s:Hi("VertSplit", 7, 7, "none")
+call s:Hi("Folded", 0, 7, "none")
+call s:Hi("FoldColumn", 7, 0, "none")
+call s:Hi("SignColumn", 6, 0, "none")
+call s:Hi("Title", 6, 0, "bold")
+call s:Hi("Visual", 7, 4, "bold")
+call s:Hi("SpecialKey", 6, 4, "none")
+
+call s:Hi("Directory", 4, 0, "none")
+call s:Hi("Error", 1, 7, "reverse,bold")
+call s:Hi("WarningMsg", 1, 0, "none")
 
 " Syntax highlighting
-hi Comment          ctermfg=0                       cterm=bold
-                \   guifg=#878787                   gui=bold
-hi Todo             ctermfg=0       ctermbg=2
-                \   guifg=#444444   guibg=#AFD75F
-hi Boolean          ctermfg=7
-                \   guifg=#D7D7D7
-hi String           ctermfg=2
-                \   guifg=#AFD75F
-hi Number           ctermfg=4
-                \   guifg=#00AFD7
-hi Special          ctermfg=6
-                \   guifg=#00AF87
-hi Identifier       ctermfg=6
-                \   guifg=#00AF87
-hi Function         ctermfg=7
-                \   guifg=#D7D7D7
-hi Type             ctermfg=6
-                \   guifg=#00AF87
-hi Statement        ctermfg=4                       cterm=bold
-                \   guifg=#5FD7FF                   gui=bold
-hi Keyword          ctermfg=4
-                \   guifg=#00AFD7
-hi Constant         ctermfg=4
-                \   guifg=#00AFD7
-hi PreProc          ctermfg=4                       cterm=bold
-                \   guifg=#5FD7FF                   gui=bold
-hi SpellBad                         ctermbg=7
-                \                   guibg=#D7D7D7
+call s:Hi("Comment", 0, 0, "bold")
+call s:Hi("Todo", 0, 2, "none")
+call s:Hi("Boolean", 7, 0, "none")
+call s:Hi("String", 2, 0, "none")
+call s:Hi("Number", 4, 0, "none")
+call s:Hi("Special", 6, 0, "none")
+call s:Hi("Identifier", 6, 0, "none")
+call s:Hi("Function", 7, 0, "none")
+call s:Hi("Type", 6, 0, "none")
+call s:Hi("Statement", 4, 0, "bold")
+call s:Hi("Keyword", 4, 0, "none")
+call s:Hi("Constant", 4, 0, "none")
+call s:Hi("PreProc", 4, 0, "bold")
+call s:Hi("SpellBad", 0, 7, "none")
 
 " Diff
-hi DiffAdd                          ctermbg=2
-                \                   guibg=#AFD75F
-hi DiffDelete       ctermfg=0       ctermbg=1
-                \   guifg=#444444   guibg=#AF5F5F
-hi DiffChange                       ctermbg=3
-                \                   guibg=#FF8700
-hi DiffText                         ctermbg=7
-                \                   guibg=#D7D7D7
+call s:Hi("DiffAdd", 0, 2, "none")
+call s:Hi("DiffDelete", 0, 1, "none")
+call s:Hi("DiffChange", 0, 3, "none")
+call s:Hi("DiffText", 0, 7, "none")
 
 " Git
-hi diffAdded        ctermfg=2
-                \   guifg=#AFD75F
-hi diffRemoved      ctermfg=1
-                \   guifg=#AF5F5F
-hi diffFile         ctermfg=0                       cterm=bold
-                \   guifg=#878787                   gui=bold
-hi diffSubname      ctermfg=0                       cterm=bold
-                \   guifg=#878787                   gui=bold
-hi gitcommitDiff    ctermfg=0                       cterm=bold
-                \   guifg=#878787                   gui=bold
-hi gitcommitBranch  ctermfg=3
-                \   guifg=#FF8700
-hi gitcommitFile    ctermfg=4
-                \   guifg=#00AFD7
-hi gitcommitType    ctermfg=0                       cterm=bold
-                \   guifg=#878787                   gui=bold
-hi gitcommitOverflow ctermfg=6
-                \   guifg=#00AF87
-hi gitcommitSummary ctermfg=7
-                \   guifg=#D7D7D7
+call s:Hi("diffAdded", 2, 0, "none")
+call s:Hi("diffRemoved", 1, 0, "none")
+call s:Hi("diffFile", 0, 0, "bold")
+call s:Hi("diffSubname", 0, 0, "bold")
+call s:Hi("gitcommitDiff", 0, 0, "bold")
+call s:Hi("gitcommitBranch", 3, 0, "none")
+call s:Hi("gitcommitFile", 4, 0, "none")
+call s:Hi("gitcommitType", 0, 0, "bold")
+call s:Hi("gitcommitOverflow", 6, 0, "none")
+call s:Hi("gitcommitSummary", 7, 0, "none")
 
 " Language specifics
-hi vimCommentTitle  ctermfg=0                       cterm=bold
-                \   guifg=#878787                   gui=bold
+call s:Hi("vimCommentTitle", 0, 0, "bold")
 
 " Highlight trailing whitespace on non-blank lines
-hi WhitespaceError  ctermfg=0       ctermbg=0       cterm=underline,bold
-                \   guifg=#444444   guibg=#444444   gui=underline,bold
+call s:Hi("WhitespaceError", 0, 0, "underline,bold")
 match WhitespaceError /\S\@<=\s\+$\|\t/
 
 " When 256 is available, modify *some* colors but keep most consistent
 " we rely instead on the terminal palette
 if &term != "linux"
   set t_Co=256
-  hi CursorLine                     ctermbg=236     cterm=none
-                \                   guibg=#303030   gui=none
-  hi CursorColumn                   ctermbg=236
-                \                   guibg=#303030
-  hi ColorColumn                    ctermbg=237
-                \                   guibg=#3A3A3A
-  hi VertSplit      ctermfg=236     ctermbg=236
-                \   guifg=#303030   guibg=#303030
-  hi StatusLine                     ctermbg=240
-                \                   guibg=#5A5A5A
-  hi StatusLineNC                   ctermbg=236
-                \                   guibg=#303030
-
+  call s:Hi("CursorLine", 0, 236, "none")
+  call s:Hi("CursorColumn", 0, 236, "none")
+  call s:Hi("ColorColumn", 0, 237, "none")
+  call s:Hi("VertSplit", 236, 236, "none")
+  call s:Hi("StatusLine", 7, 240, "none")
+  call s:Hi("StatusLineNC", 7, 236, "none")
+  
   " Diff
-  hi DiffAdd                        ctermbg=236
-                \                   guibg=#303030
-  hi DiffDelete     ctermfg=235     ctermbg=none
-                \   guifg=#262626
-  hi DiffChange                     ctermbg=235
-                \                   guibg=#262626
-  hi DiffText                       ctermbg=236
-                \                   guibg=#303030
-  hi Folded         ctermfg=240     ctermbg=234
-                \   guifg=#5A5A5A   guibg=#1C1C1C
+  call s:Hi("DiffAdd", "none", 236, "none")
+  call s:Hi("DiffDelete", 235, 0, "none")
+  call s:Hi("DiffChange", "none", 235, "none")
+  call s:Hi("DiffText", "none", 236, "none")
+  call s:Hi("Folded", 240, 234, "none")
 endif
