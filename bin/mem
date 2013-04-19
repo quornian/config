@@ -1,5 +1,13 @@
 #!/bin/bash
-mem=($(free -b | sed -nr 's,^(Mem|Swap): +([0-9]+)[0-9][0-9] +([0-9]+) +([0-9]+).*,\3 / \2,p' | bc))
+#mem=($(free -b | sed -nr 's,^(Mem|Swap): +([0-9]+)[0-9][0-9] +([0-9]+) +([0-9]+).*,\3 / \2,p' | bc))
+
+mem=($(free | egrep '^Mem|^Swap' | sort | (
+    read name total used free shared buffers cached
+    read name swaptotal swapused swapfree
+    echo $[100 * (used - cached) / total]
+    echo $[100 * swapused / swaptotal]
+)))
+
 echo -n "Mem ${mem[0]}%"
 [[ ${mem[1]} > 0 ]] && echo -en "  Swap ${mem[1]}%"
 echo
