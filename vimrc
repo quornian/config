@@ -228,7 +228,7 @@ command! Wq wq
 
 " Editing commands
 command! Rstrip %s/\v +$//
-command! -nargs=+ Grep execute 'silent grep! <args>' | copen 12 | redraw!
+command! -nargs=+ Grep execute 'silent grep! -I <args>' | copen 12 | redraw!
 
 map zw zCzO
 " Get the file under the cursor in a split
@@ -280,7 +280,8 @@ Helptags                " Update help
 
 " Set up plugin options (which don't have adverse effects if the plugin
 " isn't loaded)
-let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
 
 " Set up bindings for plugins (should only be done for sucessfully
 " loaded plugins)
