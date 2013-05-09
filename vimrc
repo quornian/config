@@ -147,7 +147,8 @@ nmap <leader>p :set paste!<Bar>set paste?<CR>
 " Maximize current split
 nmap <leader>m <C-w><C-_>
 
-nmap <leader>g :silent !git gui &<CR>:redraw!<CR>
+nmap <leader>gg :silent !git gui &<CR>:redraw!<CR>
+nmap <leader>gk :silent !git gui &<CR>:redraw!<CR>
 nmap <leader>h :if match(expand("%:e"), "h") == 0 <Bar>
             \ exe "edit " . glob(expand("%:r") . ".c*") <Bar> else <Bar>
             \ exe "edit " . glob(expand("%:r") . ".h*") <Bar> endif <CR>
