@@ -36,7 +36,12 @@ set-title() {
 
 # Return the name of a given signal
 signal-name() {
-    echo "SIG$(kill -l "$1")"
+    if [[ "$1" > 0 ]] && [[ "$1" < 65 ]]
+    then
+        echo "SIG$(kill -l "$1")"
+    else
+        echo "UNKNOWN($1)"
+    fi
 }
 
 # Cached system values
