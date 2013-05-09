@@ -1,5 +1,7 @@
 " Project management ---------------------------------------------------
 
+" Saves the current session into the current project. No project will
+" be created if it does not exist, use NewProject for this
 function! SaveProject()
     if isdirectory(".vimproject")
         " Customize what is saved to the project session
@@ -8,17 +10,23 @@ function! SaveProject()
     endif
 endfunction
 
+" Creates a new project in the current directory, that is, a .vimproject
+" directory will be created here
 function! NewProject()
     if ! isdirectory(".vimproject")
         call mkdir(".vimproject")
     endif
-    echo "Project created"
+    echo "Project created."
     if exists(":NERDTree")
         NERDTreeToggle
     endif
 endfunction
 
+" Loads a project from the current directory, if no project exists in
+" the current directory but a project is defined further up, the current
+" directory will be set to this first
 function! LoadProject()
+    call RootProject()
     if ! isdirectory(".vimproject")
         echo "Create project here? [y/N] "
         if nr2char(getchar()) == "y"
@@ -33,14 +41,31 @@ function! LoadProject()
     call GenerateTags()
 endfunction
 
+" Finds the root directory of the project and makes this the current
+" directory so that project files can be accessed via relative paths
+function! RootProject()
+    let s:path = fnamemodify(".", ":p:h")
+    while s:path != "/"
+        if isdirectory(s:path . "/" . ".vimproject")
+            echo "Project found: " . s:path
+            execute "cd " . s:path
+            return
+        endif
+        let s:path = fnamemodify(s:path, ":h")
+    endwhile
+endfunction
+
 " Tag support ----------------------------------------------------------
 
+" Generate or update a tags file for the current project and save it
+" within the project data files
 function! GenerateTags()
     if ! isdirectory(".vimproject")
         echo "Not in a project"
         return
     endif
-    execute "silent! !ctags --recurse --tag-relative -f .vimproject/tags * 2>/dev/null &"
+    execute "silent! !ctags --recurse --tag-relative " .
+          \ "-f .vimproject/tags * 2>/dev/null &"
     redraw!
 endfunction
 
