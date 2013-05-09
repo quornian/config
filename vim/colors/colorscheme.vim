@@ -43,7 +43,7 @@ if version >= 700
     call s:Hi("CursorLine", 0, 0, "reverse")
     call s:Hi("CursorColumn", 0, 0, "reverse")
     call s:Hi("ColorColumn", 0, 7, "none")
-    call s:Hi("MatchParen", 0, 4, "none")
+    call s:Hi("MatchParen", 0, 7, "underline,bold")
     
     call s:Hi("Pmenu", 0, 7, "none")
     call s:Hi("PmenuSel", 0, 2, "none")
@@ -71,6 +71,7 @@ call s:Hi("SpecialKey", 6, 4, "none")
 call s:Hi("Directory", 4, 0, "none")
 call s:Hi("Error", 1, 7, "reverse,bold")
 call s:Hi("WarningMsg", 1, 0, "none")
+call s:Hi("Question", 7, 0, "bold")
 
 " Syntax highlighting
 call s:Hi("Comment", 0, 0, "bold")
@@ -119,7 +120,7 @@ if &term != "linux"
   set t_Co=256
   call s:Hi("CursorLine", 0, 236, "none")
   call s:Hi("CursorColumn", 0, 236, "none")
-  call s:Hi("ColorColumn", 0, 237, "none")
+  call s:Hi("ColorColumn", "none", 237, "none")
   call s:Hi("VertSplit", 236, 236, "none")
   call s:Hi("StatusLine", 7, 240, "none")
   call s:Hi("StatusLineNC", 7, 236, "none")
