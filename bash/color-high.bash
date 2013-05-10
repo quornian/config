@@ -43,6 +43,7 @@ apply-terminal-palette() {
     gconftool-2 --type string --set "$profile/background_color" "#$__c0"
     gconftool-2 --type string --set "$profile/foreground_color" "#$__c7"
     gconftool-2 --type string --set "$profile/palette" "$palette"
+    gconftool-2 --type string --set "$profile/cursor_blink_mode" "off"
 }
 
 # Xfce Terminal
