@@ -33,8 +33,12 @@ function! s:Hi(type, fg, bg, flags)
         exe "highlight " . a:type .
             \ " guifg=#" . s:guifg . " guibg=#" . s:guibg . " gui=" . a:flags
     else
+        let s:bg = a:bg
+        if s:bg == 0
+            let s:bg = "none"
+        endif
         exe "highlight " . a:type .
-            \ " ctermfg=" . a:fg . " ctermbg=" . a:bg . " cterm=" . a:flags
+            \ " ctermfg=" . a:fg . " ctermbg=" . s:bg . " cterm=" . a:flags
     endif
 endfunction
 
@@ -66,7 +70,7 @@ call s:Hi("FoldColumn", 7, 0, "none")
 call s:Hi("SignColumn", 6, 0, "none")
 call s:Hi("Title", 6, 0, "bold")
 call s:Hi("Visual", 7, 4, "bold")
-call s:Hi("SpecialKey", 6, 4, "none")
+call s:Hi("SpecialKey", 1, 7, "bold")
 
 call s:Hi("Directory", 4, 0, "none")
 call s:Hi("Error", 1, 7, "reverse,bold")
