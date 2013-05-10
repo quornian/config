@@ -149,6 +149,7 @@ nmap <leader>gk :silent !git gui &<CR>:redraw!<CR>
 nmap <leader>h :if match(expand("%:e"), "h") == 0 <Bar>
             \ exe "edit " . glob(expand("%:r") . ".c*") <Bar> else <Bar>
             \ exe "edit " . glob(expand("%:r") . ".h*") <Bar> endif <CR>
+nmap <leader>x :call ExecuteProject()<CR>
 
 " Search for the word under the cursor in the current directory
 nmap <leader>s :execute 'silent grep! -rI "\<\>" *'<Bar>

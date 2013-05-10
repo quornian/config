@@ -55,6 +55,21 @@ function! RootProject()
     endwhile
 endfunction
 
+" Executes any file called run.sh stored in the .vimproject directory
+" allowing for custom build and execution scripts to be written
+function! ExecuteProject()
+    if ! isdirectory(".vimproject")
+        return
+    endif
+    if ! filereadable(".vimproject/run.sh")
+        silent !echo "\#\!/bin/sh" > ".vimproject/run.sh"
+        silent !chmod +x ".vimproject/run.sh"
+        split ".vimproject/run.sh"
+    else
+        !.vimproject/run.sh
+    endif
+endfunction
+
 " Tag support ----------------------------------------------------------
 
 " Generate or update a tags file for the current project and save it
