@@ -151,7 +151,7 @@ nmap <leader>h :if match(expand("%:e"), "h") == 0 <Bar>
             \ exe "edit " . glob(expand("%:r") . ".h*") <Bar> endif <CR>
 
 " Search for the word under the cursor in the current directory
-nmap <leader>s :execute 'silent grep! -rI --exclude-dir \.git "\<\>" .'<Bar>
+nmap <leader>s :execute 'silent grep! -rI "\<\>" *'<Bar>
     \ copen 12 <Bar>redraw! <Left><Left><Left><Left><Left><Left><Left>
     \<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
     \<Left><Left><Left><Left><Left><Left><Left><Left><C-R><C-W>
