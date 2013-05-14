@@ -47,7 +47,7 @@ if version >= 700
     call s:Hi("CursorLine", 0, 0, "reverse")
     call s:Hi("CursorColumn", 0, 0, "reverse")
     call s:Hi("ColorColumn", 0, 7, "none")
-    call s:Hi("MatchParen", 0, 7, "underline,bold")
+    call s:Hi("MatchParen", 1, "none", "underline,bold")
     
     call s:Hi("Pmenu", 0, 7, "none")
     call s:Hi("PmenuSel", 0, 2, "none")
