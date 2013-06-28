@@ -122,19 +122,19 @@ match WhitespaceError /\S\@<=\s\+$\|\t/
 " we rely instead on the terminal palette
 if &term != "linux"
   set t_Co=256
-  call s:Hi("CursorLine", 0, 236, "none")
-  call s:Hi("CursorColumn", 0, 236, "none")
-  call s:Hi("ColorColumn", "none", 236, "none")
-  call s:Hi("VertSplit", 236, 236, "none")
-  call s:Hi("StatusLine", 7, 236, "bold")
-  call s:Hi("StatusLineNC", 0, 236, "bold")
-  call s:Hi("TabLineFill", 7, 236, "none")
-  call s:Hi("TabLine", 0, 236, "bold")
+  call s:Hi("CursorLine", 0, 234, "none")
+  call s:Hi("CursorColumn", 0, 234, "none")
+  call s:Hi("ColorColumn", "none", 234, "none")
+  call s:Hi("VertSplit", 234, 234, "none")
+  call s:Hi("StatusLine", 7, 234, "bold")
+  call s:Hi("StatusLineNC", 0, 234, "bold")
+  call s:Hi("TabLineFill", 7, 234, "none")
+  call s:Hi("TabLine", 0, 234, "bold")
   
   " Diff
-  call s:Hi("DiffAdd", "none", 236, "none")
-  call s:Hi("DiffDelete", 235, 0, "none")
-  call s:Hi("DiffChange", "none", 235, "none")
-  call s:Hi("DiffText", "none", 236, "none")
-  call s:Hi("Folded", 240, 234, "none")
+  call s:Hi("DiffAdd", "none", 234, "none")
+  call s:Hi("DiffDelete", 233, 0, "none")
+  call s:Hi("DiffChange", "none", 233, "none")
+  call s:Hi("DiffText", "none", 234, "none")
+  call s:Hi("Folded", 240, 232, "none")
 endif
