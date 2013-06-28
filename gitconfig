@@ -52,7 +52,7 @@
 	hidden = "!git ls-files -v | grep -v '^[HSMRCK] '"
 
 	# Branch management
-	current-branch = !git symbolic-ref HEAD 2> /dev/null | sed -e 's#refs/heads/##'
+	current-branch = "!git symbolic-ref HEAD 2> /dev/null | sed -e 's#refs/heads/##'"
 	unpushed = !git log --oneline HEAD \"^origin/$(git current-branch)\"
 
 	# Shorthand
