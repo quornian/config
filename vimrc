@@ -136,8 +136,6 @@ nmap <leader>w :set list!<CR>
 " Toggle syntax
 " Spell check
 
-" Explore the filesystem
-nmap <F8> :Sexplore<CR>
 " Toggle paste
 nmap <leader>p :set paste!<Bar>set paste?<CR>
 "imap <leader>p <Esc>:set paste!<Bar>set paste?<CR>a
@@ -150,6 +148,22 @@ nmap <leader>h :if match(expand("%:e"), "h") == 0 <Bar>
             \ exe "edit " . glob(expand("%:r") . ".c*") <Bar> else <Bar>
             \ exe "edit " . glob(expand("%:r") . ".h*") <Bar> endif <CR>
 nmap <leader>x :call ExecuteProject()<CR>
+
+" Bind frequently used functions to the F keys
+nmap <F2> <leader>r
+nmap <F3> <leader>s
+nmap <F4> <leader>q
+nmap <F5> <leader>t
+nmap <F6> :w<CR>
+nmap <F7> <leader>h
+"nmap <F8>
+nmap <F9> <leader>x
+"nmap <F10>
+"nmap <F11>
+nmap <F12> :q<CR>
+
+" Bind some in insert mode too
+imap <F6> <Esc><F6>
 
 " Search for the word under the cursor in the current directory
 nmap <leader>s :execute 'silent grep! -rI "\<\>" *'<Bar>
@@ -173,7 +187,7 @@ nmap <leader>9 9gt
 nmap <leader>b :buffers<CR>
 
 " Debugging
-nmap <F9> :call StartDebugging()<CR>
+"nmap <F9> :call StartDebugging()<CR>
 function! StartDebugging()
     nnoremap <F9> :call StopDebugging()<CR>
     nnoremap q :call StopDebugging()<CR>
