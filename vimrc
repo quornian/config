@@ -139,11 +139,10 @@ nmap <leader>w :set list!<CR>
 " Toggle paste
 nmap <leader>p :set paste!<Bar>set paste?<CR>
 "imap <leader>p <Esc>:set paste!<Bar>set paste?<CR>a
-" Maximize current split
 nmap <leader>m <C-w><C-_>
 
 nmap <leader>gg :silent !git gui &<CR>:redraw!<CR>
-nmap <leader>gk :silent !git gui &<CR>:redraw!<CR>
+nmap <leader>gk :silent !gitk &<CR>:redraw!<CR>
 nmap <leader>h :if match(expand("%:e"), "h") == 0 <Bar>
             \ exe "edit " . glob(expand("%:r") . ".c*") <Bar> else <Bar>
             \ exe "edit " . glob(expand("%:r") . ".h*") <Bar> endif <CR>
@@ -209,18 +208,18 @@ function! StopDebugging()
 endfunction
 
 " Easier way to jump between splits
+nnoremap <C-Left> <C-w>h
 nnoremap <C-Down> <C-w>j
 nnoremap <C-Up> <C-w>k
 nnoremap <C-Right> <C-w>l
-nnoremap <C-Left> <C-w>h
+nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
+nnoremap <Esc>[1;5D <C-w>h
 nnoremap <Esc>[1;5B <C-w>j
 nnoremap <Esc>[1;5A <C-w>k
 nnoremap <Esc>[1;5C <C-w>l
-nnoremap <Esc>[1;5D <C-w>h
 
 " Easier way to navigate wrapped text
 map <Down> gj
@@ -312,6 +311,7 @@ function! SetupPlugins()
         let g:NERDTreeMinimalUI = 1
         let g:NERDTreeQuitOnOpen = 1
         let g:NERDTreeWinPos = "right"
+        let g:NERDTreeIgnore = ['\.pyc$', '\.d$', '\.o$']
     endif
 
     " Undo tree
@@ -342,5 +342,4 @@ filetype plugin indent on
 
 " Manage plugin bundles with Pathogen
 call pathogen#infect()
-
 
