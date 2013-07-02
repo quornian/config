@@ -98,6 +98,7 @@ endif
 au BufRead,BufNewFile *.sdl,*.jdl set filetype=fcdl
 au BufRead,BufNewFile *.ma set filetype=mel
 au BufRead,BufNewFile *.def set filetype=tcl
+au BufRead,BufNewFile *.sl set filetype=glsl
 
 " Get rid of toolbar, menu and scrollbars in gvim
 "set guioptions-=T
