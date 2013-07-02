@@ -73,7 +73,8 @@ call s:Hi("Visual", 7, 4, "bold")
 call s:Hi("SpecialKey", 1, 7, "bold")
 
 call s:Hi("Directory", 4, 0, "none")
-call s:Hi("Error", 1, 7, "reverse,bold")
+call s:Hi("Error", 1, 0, "reverse,bold")
+call s:Hi("ErrorMsg", 1, 0, "reverse,bold")
 call s:Hi("WarningMsg", 1, 0, "none")
 call s:Hi("Question", 7, 0, "bold")
 
