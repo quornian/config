@@ -27,7 +27,7 @@ substr() { # $1 string, $2 start, $3 end
 set-title() {
     if [[ -n "$TMUX" ]]
     then
-        tmux rename-window -t $TMUX_PANE "$1"
+        tmux rename-window -t $TMUX_PANE -- "$1"
     elif [[ -n "$STY" ]]
     then
         screen -X title "$1"
