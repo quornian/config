@@ -1,6 +1,41 @@
 #!/bin/bash
 
-for dir in $(find -L -maxdepth 2 -name ".git")
+# Usage info
+usage() {
+    echo "Usage: $0 [options] command [command-options] ..."
+    echo ""
+    echo "Options:"
+    echo "  -m PATTERN | --match=PATTERN"
+    echo "      Match the given glob PATTERN in the current directory"
+    echo ""
+}
+
+# Parse options
+match='*'
+while true
+do
+    case $1 in
+    -m)
+        match=$2
+        shift 2
+        ;;
+    --match=*)
+        match=${2:8}
+        shift 1
+        ;;
+    -*)
+        echo "Unknown option $1" >&2
+        usage >&2
+        exit 1
+        ;;
+    *)
+        break
+        ;;
+    esac
+done
+echo "Match is: $match"
+
+for dir in $(find -L -maxdepth 2 -path "./$match/.git")
 do (
     dir="${dir#\./}"
     dir="${dir%/\.git}"
