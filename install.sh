@@ -17,7 +17,7 @@ function install() {
     target="$2"
     while [ -e "$target" ]
     do
-        if [ "$(realpath "$(readlink "$target")")" == "$(realpath "$source")" ]
+        if [ "$(realpath "$target")" = "$(realpath "$source")" ]
         then
             echo "Already installed '$target'."
             return
