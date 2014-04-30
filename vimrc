@@ -142,8 +142,13 @@ nmap <leader>p :set paste!<Bar>set paste?<CR>
 "imap <leader>p <Esc>:set paste!<Bar>set paste?<CR>a
 nmap <leader>m <C-w><C-_>
 
+" Git commands
 nmap <leader>gg :silent !git gui &<CR>:redraw!<CR>
 nmap <leader>gk :silent !gitk &<CR>:redraw!<CR>
+nmap <leader>gd :tabedit %<CR>:Gdiff<CR>
+nmap <leader>gs :Gstatus<CR><C-w>20+
+nmap <leader>gl :Glog -10<CR>:copen<CR>
+nmap <leader>ge :Gedit<CR>
 nmap <leader>h :if match(expand("%:e"), "h") == 0 <Bar>
             \ exe "edit " . glob(expand("%:r") . ".c*") <Bar> else <Bar>
             \ exe "edit " . glob(expand("%:r") . ".h*") <Bar> endif <CR>
@@ -296,7 +301,6 @@ Helptags                " Update help
 " Set up plugin options (which don't have adverse effects if the plugin
 " isn't loaded)
 "let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabDefaultCompletionType = "<c-x><c-p>"
 
 " Set up bindings for plugins (should only be done for sucessfully
 " loaded plugins)
