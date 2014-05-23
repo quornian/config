@@ -1,0 +1,113 @@
+#!/usr/bin/env python
+from __future__ import print_function
+
+import re
+import sys
+import argparse
+
+# Parse arguments
+parser = argparse.ArgumentParser(
+        description=
+            "A similar tool to awk, using Python as the command processor",
+        epilog=
+            "command variables:\n"
+            "  NR          line number\n"
+            "  NF          number of fields of current line\n"
+            "  FS          field separator (default ' ')\n"
+            "  $0 $1 $NF   fields ($-1 == $NF)\n"
+            "  FILENAME    the filename (or '-' if stdin)\n"
+            "\n"
+            "command functions:\n"
+            "  g(0) g(1)   groups captured from pattern\n"
+            "  sub         re.sub function\n"
+            "  match       re.match function\n"
+            "  print       print function\n",
+        formatter_class=argparse.RawTextHelpFormatter)
+parser.add_argument(
+        "expression",
+        help=
+            "pattern-command pairs in any of these forms:\n"
+            "    BEGIN {...}    /pattern/ {...}\n"
+            "    END {...}      {...}\n"
+            "where pattern is a regular expression and ... is\n"
+            "a command.")
+parser.add_argument(
+        "file",
+        nargs="?",
+        default="-",
+        help="file to read, or '-' to read from stdin (the default)")
+args = parser.parse_args()
+
+begin_command = None
+line_commands = []  # List of pattern-command tuples
+end_command = None
+
+def check_command(command):
+    if not re.match("^\{.*\}$", command):
+        raise Exception("Not a command string: %s" % command)
+    return command[1:-1]
+
+# Process the input to obtain patterns and commands to run
+parts = filter(None, re.split(" *(\{.*?\}) *", args.expression))
+parts = iter(parts)
+for part in parts:
+    if part == "BEGIN":
+        begin_command = check_command(parts.next())
+        continue
+    elif part == "END":
+        end_command = check_command(parts.next())
+        continue
+    elif re.match("^/.*/$", part):
+        pattern = part[1:-1]
+        command = check_command(parts.next())
+    else:
+        pattern = ""
+        command = check_command(part)
+    line_commands.append((pattern, command))
+
+# Build the namespace in which commands will execute
+namespace = dict(
+        # Variables
+        NR=0,
+        NF=0,
+        FS=" ",
+        FILENAME=args.file,
+        # Functions
+        print=print,
+        sub=re.sub,
+        match=re.match,
+)
+
+# Execute any BEGIN command
+if begin_command is not None:
+    exec begin_command in namespace
+
+# Read the input stream and perform pattern matching/command execution
+infile = sys.stdin if args.file == "-" else open(args.file)
+for lineno, line in enumerate(infile, 1):
+
+    # Set line-based namespace entries
+    fields = [line] + line.split(namespace["FS"])
+    namespace.update(
+            NR=lineno,
+            NF=len(fields) - 1,
+            _dollar=fields)
+
+    # Test each pattern against the line
+    for pattern, command in line_commands:
+        # Field access via $0 (whole line), $1, ... $NF
+        command = re.sub(r"\$(-?\d+|NF)",
+                         r"(_dollar[\1] if \1 <= NF else '')",
+                         command)
+        match = re.search(pattern, line)
+
+        # Execute matching line commands
+        if match is not None:
+            # Add match.group() function to namespace as g()
+            namespace["g"] = match.group
+            exec command in namespace
+
+# Execute any END command
+if end_command is not None:
+    exec end_command in namespace
+
