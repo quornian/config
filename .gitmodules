@@ -14,3 +14,9 @@
 	path = vim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
 
+[submodule "vim/bundle/vim-characterize"]
+	path = vim/bundle/vim-characterize
+	url = https://github.com/tpope/vim-characterize.git
+[submodule "vim/bundle/signify"]
+	path = vim/bundle/signify
+	url = https://github.com/mhinz/vim-signify.git
