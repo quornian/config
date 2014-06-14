@@ -40,8 +40,8 @@ apply-terminal-palette() {
     local profile="/apps/gnome-terminal/profiles/Default"
     local palette="#$__c0:#$__c1:#$__c2:#$__c3:#$__c4:#$__c5:#$__c6:#$__c7"
     palette="$palette:#$__c8:#$__c9:#$__cA:#$__cB:#$__cC:#$__cD:#$__cE:#$__cF"
-    gconftool-2 --type string --set "$profile/background_color" "#$__c0"
-    gconftool-2 --type string --set "$profile/foreground_color" "#$__c7"
+    gconftool-2 --type string --set "$profile/background_color" "#$__cbg"
+    gconftool-2 --type string --set "$profile/foreground_color" "#$__cfg"
     gconftool-2 --type string --set "$profile/palette" "$palette"
     gconftool-2 --type string --set "$profile/cursor_blink_mode" "off"
 }
