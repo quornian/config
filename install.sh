@@ -9,6 +9,7 @@ function main() {
     install inputrc ~/.inputrc
     install screenrc ~/.screenrc
     install tmux.conf ~/.tmux.conf
+    install vim ~/.vim
     install vimrc ~/.vimrc
 }
 
@@ -17,7 +18,7 @@ function install() {
     target="$2"
     while [ -e "$target" ]
     do
-        if [ "$(realpath "$target")" = "$(realpath "$source")" ]
+        if [ "$(readlink -m "$target")" = "$(readlink -m "$source")" ]
         then
             echo "Already installed '$target'."
             return
@@ -44,7 +45,7 @@ function install() {
         esac
     done
     echo "Installing '$source' to '$target'..."
-    ln -sv "$(realpath "$source")" "$target"
+    ln -sv "$(readlink -m "$source")" "$target"
 }
 
 function backup() {

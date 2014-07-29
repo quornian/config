@@ -22,6 +22,7 @@ cd() {
         echo "    cd /path/to/file  Navigates to the file's parent directory"
         echo "    cd -              Navigates to the previous directory or back again"
         echo "    cd --   (rd)      Navigates to the previous directory and pops it"
+        echo "    cd ,              Prompt for frequency-based, full path completion"
         echo "    cdhist            Show the directory history"
         echo "    cd 1-99           Navigates to this entry in the history by number"
         echo "    cd @part          If $PWD is /aa/party/cc/dd navigates to /aa/party"
@@ -42,6 +43,9 @@ cd() {
     # Use "cd --" to restore the previous directory and pop it
     --) rd;;
 
+    # Use "cd ," to run full-path completion
+    ,) local p; p="$(cd.py suggest)" && cd "$p";;
+
     # Use "cd @*" to navigate up to first directory starting *
     @*)
         cd $(echo "$PWD" | sed -r "s_(.*/${1#@}[^/]*)/.*_\\1_");;
@@ -56,6 +60,9 @@ cd() {
         # If it's a directory (or empty) use normal cd
         else builtin cd "$@"; fi;;
     esac
+
+    # Finally record where we ended up in the frequency table
+    cd.py record "$PWD"
 }
 
 # Restore last directory from history and pop the stack

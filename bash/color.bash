@@ -7,10 +7,11 @@
 __cx() { echo -en "\e[${1}m"; }
 
 # Palette
-__c0="1B2426"; __c1="D9AE95"; __c2="B9BA91"; __c3="CCB48C"; # Bk Rd Gn Yl
-__c4="AFBBB1"; __c5="C2B5B5"; __c6="ACBDA2"; __c7="9B9D98"; # Bu Mg Cy Gy
-__c8="686A66"; __c9="F2C3A7"; __cA="CFD0A2"; __cB="E4C99C"; # Dk Rd Gn Yl
-__cC="C3D0C6"; __cD="D7CACA"; __cE="C0D3B4"; __cF="CDD0C9"; # Bu Mg Cy Wt
+__c0="272822"; __c1="F92672"; __c2="A6E22E"; __c3="FD971F"; # Bk Rd Gn Yl
+__c4="66BCEF"; __c5="AE81FF"; __c6="66D9EF"; __c7="708090"; # Bu Mg Cy Gy
+__c8="708090"; __c9="F92672"; __cA="A6E22E"; __cB="FD971F"; # Dk Rd Gn Yl
+__cC="66BCEF"; __cD="AE81FF"; __cE="66D9EF"; __cF="F8F8F2"; # Bu Mg Cy Wt
+__cbg="181818"; __cfg="FFFFFF";
 
 export __c0 __c1 __c2 __c3 __c4 __c5 __c6 __c7
 export __c8 __c9 __cA __cB __cC __cD __cE __cF
