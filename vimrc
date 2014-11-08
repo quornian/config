@@ -1,4 +1,5 @@
 " General settings
+set nocompatible    " Sets other options, default, but useful on re-sourcing
 set showcmd         " Show the current partial command right of command line
 set ruler           " Show the row,col combination
 set splitbelow      " Make new split below the current one
@@ -245,10 +246,14 @@ command! W w
 command! Q q
 command! Qa qa
 command! Wq wq
+nmap Q <NOP>
 
 " Editing commands
 command! Rstrip %s/\v +$//
 command! -nargs=+ Grep execute 'silent grep! -I <args>' | copen 12 | redraw!
+
+" Validation
+command! Pylint set makeprg=pylint\ --rcfile=/dev/null\ -d\ R,C,W,F0401\ -e\ C0301,C0322,W0611\ -r\ n\ -i\ y\ --output-format=parseable\ %:p | silent make | copen | redraw!
 
 map zw zCzO
 " Get the file under the cursor in a split
