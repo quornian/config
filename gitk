@@ -1,0 +1,63 @@
+set mainfont {monofur 13}
+set textfont {monofur 13}
+set uifont {{DejaVu Sans} 9}
+set tabstop 8
+set findmergefiles 0
+set maxgraphpct 50
+set maxwidth 16
+set cmitmode patch
+set wrapcomment none
+set autoselect 0
+set autosellen 40
+set showneartags 1
+set maxrefs 20
+set hideremotes 0
+set showlocalchanges 1
+set datetimeformat {%Y-%m-%d %H:%M:%S}
+set limitdiffs 1
+set uicolor #0c1a1d
+set want_ttk 1
+set bgcolor #0c1a1d
+set fgcolor #7b8284
+set uifgcolor black
+set uifgdisabledcolor #999
+set colors {#6a82b6 #ac7384 #7bb574}
+set diffcolors {{#ac7384} #7bb574 #6a82b6}
+set mergecolors {red blue green purple brown "#009090" magenta "#808000" "#009000" "#ff0080" cyan "#b07070" "#70b0f0" "#70f0b0" "#f0b070" "#ff70b0"}
+set markbgcolor #6a82b6
+set diffcontext 1
+set selectbgcolor #223333
+set foundbgcolor #6a82b6
+set currentsearchhitbgcolor #7bb574
+set extdifftool meld
+set perfile_attrs 0
+set headbgcolor #7bb574
+set headfgcolor black
+set headoutlinecolor black
+set remotebgcolor #ada574
+set tagbgcolor #a5a590
+set tagfgcolor black
+set tagoutlinecolor black
+set reflinecolor black
+set filesepbgcolor #464f50
+set filesepfgcolor black
+set linehoverbgcolor #ffff80
+set linehoverfgcolor black
+set linehoveroutlinecolor black
+set mainheadcirclecolor #ada574
+set workingfilescirclecolor #ac7384
+set indexcirclecolor #7bb574
+set circlecolors {white #6a82b6 gray blue blue}
+set linkfgcolor #464f50
+set circleoutlinecolor black
+set geometry(main) 1440x1121+0+0
+set geometry(state) normal
+set geometry(topwidth) 1440
+set geometry(topheight) 390
+set geometry(pwsash0) "891 1"
+set geometry(pwsash1) "1061 1"
+set geometry(botwidth) 1075
+set geometry(botheight) 726
+set permviews {{{By Date} {} {--all --date-order --all} {}}
+{{Local Branches, All Tags} {} {--branches --tags} {}}
+}
