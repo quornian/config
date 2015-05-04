@@ -25,6 +25,9 @@ shopt -s histverify
 shopt -s cmdhist
 shopt -s lithist
 
+# Never complete when the line is empty
+shopt -s no_empty_cmd_completion
+
 # Delete prior duplicates in history
 export HISTCONTROL=ignorespace:erasedups
 export HISTSIZE=15000
