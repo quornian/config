@@ -73,24 +73,29 @@ set-theme() {
 
     # Apply theme to xterm
     cat >"$HOME/.Xresources" <<END
-*background: rgb:${__cbg:0:2}/${__cbg:2:2}/${__cbg:4:2}
-*foreground: rgb:${__cfg:0:2}/${__cfg:2:2}/${__cfg:4:2}
-*color0: rgb:${__c0:0:2}/${__c0:2:2}/${__c0:4:2}
-*color1: rgb:${__c1:0:2}/${__c1:2:2}/${__c1:4:2}
-*color2: rgb:${__c2:0:2}/${__c2:2:2}/${__c2:4:2}
-*color3: rgb:${__c3:0:2}/${__c3:2:2}/${__c3:4:2}
-*color4: rgb:${__c4:0:2}/${__c4:2:2}/${__c4:4:2}
-*color5: rgb:${__c5:0:2}/${__c5:2:2}/${__c5:4:2}
-*color6: rgb:${__c6:0:2}/${__c6:2:2}/${__c6:4:2}
-*color7: rgb:${__c7:0:2}/${__c7:2:2}/${__c7:4:2}
-*color8: rgb:${__c8:0:2}/${__c8:2:2}/${__c8:4:2}
-*color9: rgb:${__c9:0:2}/${__c9:2:2}/${__c9:4:2}
-*color10: rgb:${__cA:0:2}/${__cA:2:2}/${__cA:4:2}
-*color11: rgb:${__cB:0:2}/${__cB:2:2}/${__cB:4:2}
-*color12: rgb:${__cC:0:2}/${__cC:2:2}/${__cC:4:2}
-*color13: rgb:${__cD:0:2}/${__cD:2:2}/${__cD:4:2}
-*color14: rgb:${__cE:0:2}/${__cE:2:2}/${__cE:4:2}
-*color15: rgb:${__cF:0:2}/${__cF:2:2}/${__cF:4:2}
+UXTerm*background: rgb:${__cbg:0:2}/${__cbg:2:2}/${__cbg:4:2}
+UXTerm*foreground: rgb:${__cfg:0:2}/${__cfg:2:2}/${__cfg:4:2}
+UXTerm*color0: rgb:${__c0:0:2}/${__c0:2:2}/${__c0:4:2}
+UXTerm*color1: rgb:${__c1:0:2}/${__c1:2:2}/${__c1:4:2}
+UXTerm*color2: rgb:${__c2:0:2}/${__c2:2:2}/${__c2:4:2}
+UXTerm*color3: rgb:${__c3:0:2}/${__c3:2:2}/${__c3:4:2}
+UXTerm*color4: rgb:${__c4:0:2}/${__c4:2:2}/${__c4:4:2}
+UXTerm*color5: rgb:${__c5:0:2}/${__c5:2:2}/${__c5:4:2}
+UXTerm*color6: rgb:${__c6:0:2}/${__c6:2:2}/${__c6:4:2}
+UXTerm*color7: rgb:${__c7:0:2}/${__c7:2:2}/${__c7:4:2}
+UXTerm*color8: rgb:${__c8:0:2}/${__c8:2:2}/${__c8:4:2}
+UXTerm*color9: rgb:${__c9:0:2}/${__c9:2:2}/${__c9:4:2}
+UXTerm*color10: rgb:${__cA:0:2}/${__cA:2:2}/${__cA:4:2}
+UXTerm*color11: rgb:${__cB:0:2}/${__cB:2:2}/${__cB:4:2}
+UXTerm*color12: rgb:${__cC:0:2}/${__cC:2:2}/${__cC:4:2}
+UXTerm*color13: rgb:${__cD:0:2}/${__cD:2:2}/${__cD:4:2}
+UXTerm*color14: rgb:${__cE:0:2}/${__cE:2:2}/${__cE:4:2}
+UXTerm*color15: rgb:${__cF:0:2}/${__cF:2:2}/${__cF:4:2}
+UXTerm*font: -*-fixed-medium-*-*-*-18-*-*-*-*-*-*-*
+UXTerm*boldFont: -*-fixed-medium-*-*-*-18-*-*-*-*-*-*-*
+UXTerm*boldMode: false
+UXTerm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
+UXTerm*scrollBar: false
 END
     xrdb -merge "$HOME/.Xresources"
 
