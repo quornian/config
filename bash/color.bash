@@ -6,7 +6,7 @@
 # Example: "$(__cx '1;32')Bold, green Text$(__cx)"
 __cx() { echo -en "\e[${1}m"; }
 
-themes=(
+__themes=(
 "deep1      000000 AF0000 AFD700 FF8700 005F87 875F87 008787 AFAFAF \
             5F5F5F D70000 D7FF5F FFAF00 5FAFFF D75FFF 87D7D7 FFFFFF \
             000000 AFAFAF"
@@ -42,37 +42,47 @@ themes=(
             0C1A1D 7B8385"
 )
 
-set-theme() {
-    local sought="$1"
-    local code="$(
-        for theme in "${themes[@]}"
-        do
-            read name c0 c1 c2 c3 c4 c5 c6 c7 \
-                      c8 c9 cA cB cC cD cE cF \
-                      cbg cfg <<<"$theme"
-            if [ "$name" = "$sought" ]
-            then
-                echo "export __c0=$c0 __c1=$c1 __c2=$c2 __c3=$c3"
-                echo "export __c4=$c4 __c5=$c5 __c6=$c6 __c7=$c7"
-                echo "export __c8=$c8 __c9=$c9 __cA=$cA __cB=$cB"
-                echo "export __cC=$cC __cD=$cD __cE=$cE __cF=$cF"
-                echo "export __cbg=$cbg __cfg=$cfg"
-            fi
-        done
-    )"
-    $code
+theme() {
+    case $1 in
+        list)
+            for theme in "${__themes[@]}"
+            do
+                read name rest <<<"$theme"
+                echo "$name"
+            done
+            ;;
+        apply)
+            shift 1
+            local sought="$1"
+            local code="$(
+                for theme in "${__themes[@]}"
+                do
+                    read name c0 c1 c2 c3 c4 c5 c6 c7 \
+                              c8 c9 cA cB cC cD cE cF \
+                              cbg cfg <<<"$theme"
+                    if [ "$name" = "$sought" ]
+                    then
+                        echo "export __c0=$c0 __c1=$c1 __c2=$c2 __c3=$c3"
+                        echo "export __c4=$c4 __c5=$c5 __c6=$c6 __c7=$c7"
+                        echo "export __c8=$c8 __c9=$c9 __cA=$cA __cB=$cB"
+                        echo "export __cC=$cC __cD=$cD __cE=$cE __cF=$cF"
+                        echo "export __cbg=$cbg __cfg=$cfg"
+                    fi
+                done
+            )"
+            $code
 
-    # Apply theme to gnome-terminal
-    local profile="/apps/gnome-terminal/profiles/Default"
-    local palette="#$__c0:#$__c1:#$__c2:#$__c3:#$__c4:#$__c5:#$__c6:#$__c7"
-    palette="$palette:#$__c8:#$__c9:#$__cA:#$__cB:#$__cC:#$__cD:#$__cE:#$__cF"
-    gconftool-2 --type string --set "$profile/background_color" "#$__cbg"
-    gconftool-2 --type string --set "$profile/foreground_color" "#$__cfg"
-    gconftool-2 --type string --set "$profile/palette" "$palette"
-    gconftool-2 --type string --set "$profile/cursor_blink_mode" "off"
+            # Apply theme to gnome-terminal
+            local profile="/apps/gnome-terminal/profiles/Default"
+            local palette="#$__c0:#$__c1:#$__c2:#$__c3:#$__c4:#$__c5:#$__c6:#$__c7"
+            palette="$palette:#$__c8:#$__c9:#$__cA:#$__cB:#$__cC:#$__cD:#$__cE:#$__cF"
+            gconftool-2 --type string --set "$profile/background_color" "#$__cbg"
+            gconftool-2 --type string --set "$profile/foreground_color" "#$__cfg"
+            gconftool-2 --type string --set "$profile/palette" "$palette"
+            gconftool-2 --type string --set "$profile/cursor_blink_mode" "off"
 
-    # Apply theme to xterm
-    cat >"$HOME/.Xresources" <<END
+            # Apply theme to xterm
+            cat >"$HOME/.Xresources" <<END
 UXTerm*background: rgb:${__cbg:0:2}/${__cbg:2:2}/${__cbg:4:2}
 UXTerm*foreground: rgb:${__cfg:0:2}/${__cfg:2:2}/${__cfg:4:2}
 UXTerm*color0: rgb:${__c0:0:2}/${__c0:2:2}/${__c0:4:2}
@@ -97,10 +107,10 @@ UXTerm*boldMode: false
 UXTerm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
 UXTerm*scrollBar: false
 END
-    xrdb -merge "$HOME/.Xresources"
+            xrdb -merge "$HOME/.Xresources"
 
-    # Apply theme to xfce terminal
-    cat >"$HOME/.terminalrc" <<END
+            # Apply theme to xfce terminal
+            cat >"$HOME/.terminalrc" <<END
 [Configuration]
 FontName=Monospace 9
 FontAntiAlias=FALSE
@@ -140,13 +150,16 @@ MiscTabCloseMiddleClick=TRUE
 MiscTabPosition=GTK_POS_TOP
 MiscHighlightUrls=TRUE
 END
-}
-
-preview-themes() {
-    # Write an HTML file to represent the colours
-    local file="$HOME/.bash/color-preview.html"
-    local theme name c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 cA cB cC cD cE cF cbg cfg
-    cat >"$file" <<END
+            ;;
+        preview)
+            shift 1
+            local sought="$1"
+            if [ "$sought" == "all" ]
+            then
+                # Write an HTML file to represent the colours
+                local file="$HOME/.bash/color-preview.html"
+                local theme name c0 c1 c2 c3 c4 c5 c6 c7 c8 c9 cA cB cC cD cE cF cbg cfg
+                cat >"$file" <<END
 <!DOCTYPE html>
 <html><head><style type="text/css">
     body { margin: 0; }
@@ -155,12 +168,12 @@ preview-themes() {
 </style></head>
 <body>
 END
-    for theme in "${themes[@]}"
-    do
-        read name c0 c1 c2 c3 c4 c5 c6 c7 \
-                  c8 c9 cA cB cC cD cE cF \
-                  cbg cfg <<<"$theme"
-        cat >>"$file" <<END
+                for theme in "${__themes[@]}"
+                do
+                    read name c0 c1 c2 c3 c4 c5 c6 c7 \
+                              c8 c9 cA cB cC cD cE cF \
+                              cbg cfg <<<"$theme"
+                    cat >>"$file" <<END
     <table style="background:#$cbg" width="100%">
     <tr><td width="300px">
     <table cellspacing="5px" class="pal">
@@ -203,11 +216,49 @@ END
 </pre></td>
     </tr></table>
 END
-    done
-    cat >>"$file" <<END
+                done
+                cat >>"$file" <<END
 </body>
 </html>
 END
+            else
+                local code="$(
+                    for theme in "${__themes[@]}"
+                    do
+                        read name c0 c1 c2 c3 c4 c5 c6 c7 \
+                                  c8 c9 cA cB cC cD cE cF \
+                                  cbg cfg <<<"$theme"
+                        if [ "$name" = "$sought" ]
+                        then
+                            echo "export __c0=$c0 __c1=$c1 __c2=$c2 __c3=$c3"
+                            echo "export __c4=$c4 __c5=$c5 __c6=$c6 __c7=$c7"
+                            echo "export __c8=$c8 __c9=$c9 __cA=$cA __cB=$cB"
+                            echo "export __cC=$cC __cD=$cD __cE=$cE __cF=$cF"
+                            echo "export __cbg=$cbg __cfg=$cfg"
+                        fi
+                    done
+                )"
+                $code
+                echo -en "\033]4;0;#$__c0\007"
+                echo -en "\033]4;1;#$__c1\007"
+                echo -en "\033]4;2;#$__c2\007"
+                echo -en "\033]4;3;#$__c3\007"
+                echo -en "\033]4;4;#$__c4\007"
+                echo -en "\033]4;5;#$__c5\007"
+                echo -en "\033]4;6;#$__c6\007"
+                echo -en "\033]4;7;#$__c7\007"
+                echo -en "\033]4;8;#$__c8\007"
+                echo -en "\033]4;9;#$__c9\007"
+                echo -en "\033]4;10;#$__cA\007"
+                echo -en "\033]4;11;#$__cB\007"
+                echo -en "\033]4;12;#$__cC\007"
+                echo -en "\033]4;13;#$__cD\007"
+                echo -en "\033]4;14;#$__cE\007"
+                echo -en "\033]4;15;#$__cF\007"
+                echo -en "\033]10;#$__cfg;#$__cbg\007"
+            fi
+            ;;
+    esac
 }
 
 # Check if it's the linux framebuffer, otherwise assume we have a
