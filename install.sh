@@ -6,6 +6,7 @@ function main() {
     install bashrc ~/.bashrc
     install bin ~/bin
     install gitconfig ~/.gitconfig
+    install gitk ~/.gitk
     install inputrc ~/.inputrc
     install screenrc ~/.screenrc
     install tmux.conf ~/.tmux.conf

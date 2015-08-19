@@ -1,6 +1,6 @@
 # Configure readline (overrides system defaults)
 
-# Not sure what these do but their in the system default
+# Not sure what these do but they're in the system default
 set meta-flag on
 set input-meta on
 set convert-meta off
@@ -45,6 +45,8 @@ $if mode=emacs
 "\e\e[D": backward-word
 "\e[1;5C": forward-word
 "\e[1;5D": backward-word
+"\e[1;3D": backward-word
+
 
 # For rxvt
 "\e[8~": end-of-line

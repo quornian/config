@@ -35,7 +35,7 @@ set headbgcolor #7bb574
 set headfgcolor black
 set headoutlinecolor black
 set remotebgcolor #ada574
-set tagbgcolor #a5a590
+set tagbgcolor #7b7b74
 set tagfgcolor black
 set tagoutlinecolor black
 set reflinecolor black

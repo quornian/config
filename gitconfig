@@ -42,6 +42,11 @@
 	fontui = -family \"Liberation Sans\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family \"Liberation Mono\" -size 8 -weight normal -slant roman -underline 0 -overstrike 0
 
+[guitool "Show intent to add"]
+	cmd = git add -N -- $FILENAME
+	needsfile = yes
+	noconsole = yes
+
 [rerere]
 	enabled = 1
 
