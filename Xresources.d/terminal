@@ -1,0 +1,4 @@
+UXTerm*termName: xterm-256color
+UXTerm*boldMode: true
+UXTerm*charClass: 33:48,35:48,37:48,43:48,45-47:48,58:48,64:48,95:48,126:48
+UXTerm*scrollBar: false

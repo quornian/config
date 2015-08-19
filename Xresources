@@ -1,0 +1,3 @@
+#include ".Xresources.d/color"
+#include ".Xresources.d/font"
+#include ".Xresources.d/terminal"

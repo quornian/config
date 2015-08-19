@@ -12,6 +12,8 @@ function main() {
     install tmux.conf ~/.tmux.conf
     install vim ~/.vim
     install vimrc ~/.vimrc
+    install Xresources ~/.Xresources
+    install Xresources.d ~/.Xresources.d
 }
 
 function install() {
