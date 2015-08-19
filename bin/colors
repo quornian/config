@@ -11,6 +11,18 @@ then
     exit 0
 fi
 
+for c in 16 131 65 137 67 132 74 145
+do echo -en "\e[48;5;${c}m$(printf %3d $c)\e[0m"
+done
+echo
+for c in 59 174 71 222 110 169 117 231
+do echo -en "\e[48;5;${c}m$(printf %3d $c)\e[0m"
+done
+echo
+echo
+
+[ "$1" == "16" ] && exit
+
 # Advanced colours
 for row in $(seq 0 6)
 do
@@ -38,8 +50,20 @@ do
         then
             break
         fi
-        echo -en "\e[48;5;${c}m$(printf %03d $c)\e[0m"
+        echo -en "\e[48;5;${c}m$(printf %3d $c)\e[0m"
     done
     echo
 done
+
+for c in {16..231..43}
+do
+    echo -en "\e[48;5;${c}m$(printf "%02x" $c)\e[0m"
+done
+echo
+
+for c in 0 241 245 249 253
+do
+    echo -en "\e[48;5;${c}m$(printf "%02x" $c)\e[0m"
+done
+echo
 

@@ -31,6 +31,12 @@ __themes=(
 "cool-blue  0D141F D581A1 7EA578 C0916F 12A5E6 A38FDC 00ACB3 949BAA \
             454B58 D581A1 7EA578 C0916F 12A5E6 A38FDC 00ACB3 E5ECFD \
             0D141F 949BAA"
+"cool-2     090E16 D581A1 7EA578 C0916F 12A5E6 A38FDC 00ACB3 949BAA \
+            454B58 D581A1 7EA578 C0916F 12A5E6 A38FDC 00ACB3 E5ECFD \
+            090E16 949BAA"
+"cool-3     090E16 D581A1 7EA578 C0916F 12A5E6 A38FDC 00ACB3 949BAA \
+            454B58 D581A1 7EA578 C0916F 12A5E6 A38FDC 00ACB3 B5BCCD \
+            090E16 949BAA"
 "solarized  073642 DC322F 859900 B58900 268BD2 D33682 2AA198 EEE8D5 \
             002B36 CB4B16 586E75 657B83 839496 6C71C4 93A1A1 FDF6E3 \
             002B36 839496"
@@ -40,6 +46,9 @@ __themes=(
 "teal       0C1A1D AD7385 7BB674 ADA574 6A83B7 9C73B7 6AB6A7 7B8385 \
             464F50 C8B0BA B0D0B2 C8C8B2 A8B8D2 C0B0D2 A8D0CA C0C8CA \
             0C1A1D 7B8385"
+"ambiance   222222 CF7EA9 78CF8A CDA869 AAC6E3 9999CC 24C2C7 777777 \
+            333333 CF7EA9 78CF8A CDA869 AAC6E3 9999CC 24C2C7 E6E1DC \
+            222222 777777"
 )
 
 theme() {
@@ -47,65 +56,71 @@ theme() {
         list)
             for theme in "${__themes[@]}"
             do
-                read name rest <<<"$theme"
+                read name colors <<<"$theme"
                 echo "$name"
             done
             ;;
-        apply)
+        show)
             shift 1
             local sought="$1"
-            local code="$(
-                for theme in "${__themes[@]}"
-                do
-                    read name c0 c1 c2 c3 c4 c5 c6 c7 \
-                              c8 c9 cA cB cC cD cE cF \
-                              cbg cfg <<<"$theme"
-                    if [ "$name" = "$sought" ]
-                    then
-                        echo "export __c0=$c0 __c1=$c1 __c2=$c2 __c3=$c3"
-                        echo "export __c4=$c4 __c5=$c5 __c6=$c6 __c7=$c7"
-                        echo "export __c8=$c8 __c9=$c9 __cA=$cA __cB=$cB"
-                        echo "export __cC=$cC __cD=$cD __cE=$cE __cF=$cF"
-                        echo "export __cbg=$cbg __cfg=$cfg"
-                    fi
-                done
-            )"
-            $code
+            local found=
+            for theme in "${__themes[@]}"
+            do
+                read name colors <<<"$theme"
+                if [ "$name" = "$sought" ]
+                then
+                    echo $colors
+                    found=1
+                    break
+                fi
+            done
+            if [ -z "$found" ]
+            then
+                echo >&2 "Not found: $sought"
+                return 1
+            fi
+            ;;
+        apply)
+            set -o pipefail
+            shift 1
+            local sought="$1"
+            read c0 c1 c2 c3 c4 c5 c6 c7 \
+                 c8 c9 cA cB cC cD cE cF \
+                 cbg cfg <<<"`theme show $sought`"
+            if [ -z "$cfg" ]
+            then
+                return 1
+            fi
 
             # Apply theme to gnome-terminal
             local profile="/apps/gnome-terminal/profiles/Default"
-            local palette="#$__c0:#$__c1:#$__c2:#$__c3:#$__c4:#$__c5:#$__c6:#$__c7"
-            palette="$palette:#$__c8:#$__c9:#$__cA:#$__cB:#$__cC:#$__cD:#$__cE:#$__cF"
-            gconftool-2 --type string --set "$profile/background_color" "#$__cbg"
-            gconftool-2 --type string --set "$profile/foreground_color" "#$__cfg"
+            local palette="#$c0:#$c1:#$c2:#$c3:#$c4:#$c5:#$c6:#$c7"
+            palette="$palette:#$c8:#$c9:#$cA:#$cB:#$cC:#$cD:#$cE:#$cF"
+            gconftool-2 --type string --set "$profile/background_color" "#$cbg"
+            gconftool-2 --type string --set "$profile/foreground_color" "#$cfg"
             gconftool-2 --type string --set "$profile/palette" "$palette"
             gconftool-2 --type string --set "$profile/cursor_blink_mode" "off"
 
             # Apply theme to xterm
-            cat >"$HOME/.Xresources" <<END
-UXTerm*background: rgb:${__cbg:0:2}/${__cbg:2:2}/${__cbg:4:2}
-UXTerm*foreground: rgb:${__cfg:0:2}/${__cfg:2:2}/${__cfg:4:2}
-UXTerm*color0: rgb:${__c0:0:2}/${__c0:2:2}/${__c0:4:2}
-UXTerm*color1: rgb:${__c1:0:2}/${__c1:2:2}/${__c1:4:2}
-UXTerm*color2: rgb:${__c2:0:2}/${__c2:2:2}/${__c2:4:2}
-UXTerm*color3: rgb:${__c3:0:2}/${__c3:2:2}/${__c3:4:2}
-UXTerm*color4: rgb:${__c4:0:2}/${__c4:2:2}/${__c4:4:2}
-UXTerm*color5: rgb:${__c5:0:2}/${__c5:2:2}/${__c5:4:2}
-UXTerm*color6: rgb:${__c6:0:2}/${__c6:2:2}/${__c6:4:2}
-UXTerm*color7: rgb:${__c7:0:2}/${__c7:2:2}/${__c7:4:2}
-UXTerm*color8: rgb:${__c8:0:2}/${__c8:2:2}/${__c8:4:2}
-UXTerm*color9: rgb:${__c9:0:2}/${__c9:2:2}/${__c9:4:2}
-UXTerm*color10: rgb:${__cA:0:2}/${__cA:2:2}/${__cA:4:2}
-UXTerm*color11: rgb:${__cB:0:2}/${__cB:2:2}/${__cB:4:2}
-UXTerm*color12: rgb:${__cC:0:2}/${__cC:2:2}/${__cC:4:2}
-UXTerm*color13: rgb:${__cD:0:2}/${__cD:2:2}/${__cD:4:2}
-UXTerm*color14: rgb:${__cE:0:2}/${__cE:2:2}/${__cE:4:2}
-UXTerm*color15: rgb:${__cF:0:2}/${__cF:2:2}/${__cF:4:2}
-UXTerm*font: -*-fixed-medium-*-*-*-18-*-*-*-*-*-*-*
-UXTerm*boldFont: -*-fixed-medium-*-*-*-18-*-*-*-*-*-*-*
-UXTerm*boldMode: false
-UXTerm*charClass: 33:48,35:48,37:48,43:48,45-47:48,64:48,95:48,126:48
-UXTerm*scrollBar: false
+            cat >"$HOME/.Xresources.d/color" <<END
+UXTerm*background: rgb:${cbg:0:2}/${cbg:2:2}/${cbg:4:2}
+UXTerm*foreground: rgb:${cfg:0:2}/${cfg:2:2}/${cfg:4:2}
+UXTerm*color0: rgb:${c0:0:2}/${c0:2:2}/${c0:4:2}
+UXTerm*color1: rgb:${c1:0:2}/${c1:2:2}/${c1:4:2}
+UXTerm*color2: rgb:${c2:0:2}/${c2:2:2}/${c2:4:2}
+UXTerm*color3: rgb:${c3:0:2}/${c3:2:2}/${c3:4:2}
+UXTerm*color4: rgb:${c4:0:2}/${c4:2:2}/${c4:4:2}
+UXTerm*color5: rgb:${c5:0:2}/${c5:2:2}/${c5:4:2}
+UXTerm*color6: rgb:${c6:0:2}/${c6:2:2}/${c6:4:2}
+UXTerm*color7: rgb:${c7:0:2}/${c7:2:2}/${c7:4:2}
+UXTerm*color8: rgb:${c8:0:2}/${c8:2:2}/${c8:4:2}
+UXTerm*color9: rgb:${c9:0:2}/${c9:2:2}/${c9:4:2}
+UXTerm*color10: rgb:${cA:0:2}/${cA:2:2}/${cA:4:2}
+UXTerm*color11: rgb:${cB:0:2}/${cB:2:2}/${cB:4:2}
+UXTerm*color12: rgb:${cC:0:2}/${cC:2:2}/${cC:4:2}
+UXTerm*color13: rgb:${cD:0:2}/${cD:2:2}/${cD:4:2}
+UXTerm*color14: rgb:${cE:0:2}/${cE:2:2}/${cE:4:2}
+UXTerm*color15: rgb:${cF:0:2}/${cF:2:2}/${cF:4:2}
 END
             xrdb -merge "$HOME/.Xresources"
 
@@ -114,25 +129,25 @@ END
 [Configuration]
 FontName=Monospace 9
 FontAntiAlias=FALSE
-ColorBackground=#$__c0
-ColorForeground=#$__c7
-ColorCursor=#$__c7
-ColorPalette1=#$__c0
-ColorPalette2=#$__c1
-ColorPalette3=#$__c2
-ColorPalette4=#$__c3
-ColorPalette5=#$__c4
-ColorPalette6=#$__c5
-ColorPalette7=#$__c6
-ColorPalette8=#$__c7
-ColorPalette9=#$__c8
-ColorPalette10=#$__c9
-ColorPalette11=#$__cA
-ColorPalette12=#$__cB
-ColorPalette13=#$__cC
-ColorPalette14=#$__cD
-ColorPalette15=#$__cE
-ColorPalette16=#$__cF
+ColorBackground=#$c0
+ColorForeground=#$c7
+ColorCursor=#$c7
+ColorPalette1=#$c0
+ColorPalette2=#$c1
+ColorPalette3=#$c2
+ColorPalette4=#$c3
+ColorPalette5=#$c4
+ColorPalette6=#$c5
+ColorPalette7=#$c6
+ColorPalette8=#$c7
+ColorPalette9=#$c8
+ColorPalette10=#$c9
+ColorPalette11=#$cA
+ColorPalette12=#$cB
+ColorPalette13=#$cC
+ColorPalette14=#$cD
+ColorPalette15=#$cE
+ColorPalette16=#$cF
 MiscAlwaysShowTabs=FALSE
 MiscBell=FALSE
 MiscBordersDefault=FALSE
@@ -221,6 +236,7 @@ END
 </body>
 </html>
 END
+                ${BROWSER-firefox} ~/.bash/color-preview.html
             else
                 local code="$(
                     for theme in "${__themes[@]}"
