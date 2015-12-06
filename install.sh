@@ -5,6 +5,8 @@ function main() {
     install bash_profile ~/.bash_profile
     install bashrc ~/.bashrc
     install bin ~/bin
+    install gdb ~/.gdb
+    install gdbinit ~/.gdbinit
     install gitconfig ~/.gitconfig
     install gitk ~/.gitk
     install inputrc ~/.inputrc
