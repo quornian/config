@@ -59,12 +59,12 @@ function install() {
 
 function backup() {
     echo "Backing up '$1'..."
-    mkdir backup 2>/dev/null || test -d backup
     if [ -e "backup/$1" ]
     then
         echo "Backup already exists: backup/$1"
         return
     fi
+    mkdir -vp "$(dirname "backup/$1")" 2>/dev/null || test -d backup
     mv -v "$1" "backup/$1"
 }
 
