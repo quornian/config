@@ -16,6 +16,10 @@ function main() {
     install vimrc ~/.vimrc
     install Xresources ~/.Xresources
     install Xresources.d ~/.Xresources.d
+
+    git submodule update --init --recursive
+    [ -e vim/bundle/YouCompleteMe/python/ycm_core.so ] || \
+        ( cd vim/bundle/YouCompleteMe && ./install.sh; )
 }
 
 function install() {
