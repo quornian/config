@@ -1,5 +1,7 @@
-import gdb
+import os
 import subprocess
+
+import gdb
 
 
 def reset_term():
@@ -18,13 +20,35 @@ def current_line():
     return path, line
 
 
+_g_syncing = False
 def sync_to_vim():
+    global _g_syncing
+    if _g_syncing:
+        return
+    _g_syncing = True
+    try:
+        _sync_to_vim()
+    finally:
+        _g_syncing = False
+
+def _sync_to_vim(depth=0):
+    if depth > 20:
+        print("TOO DEEP")
+        return
     # First see if we have a running 'dbg' vim server
     check = subprocess.Popen(["vim", "--serverlist"], stdout=subprocess.PIPE)
     servers = check.communicate()[0].splitlines(False)
     if b"DBG" in servers:
         path, line = current_line()
-        subprocess.call(["vim", "--servername", "DBG", "--remote", "+set cursorline | :%s" % line, path])
+        if not os.path.exists(path):
+            gdb.execute("next")
+            _sync_to_vim(depth=depth + 1)
+            return
+        subprocess.call([
+            "vim",
+            "--servername", "DBG",
+            "--remote", "+set cursorline | :%s" % line,
+            path])
     else:
         print("No DBG vim server running. Start Vim as 'vim --servername DBG' to link up.")
 

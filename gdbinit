@@ -11,6 +11,9 @@ end
 define hookpost-step
 python gdbtools.sync_to_vim()
 end
+define hookpost-finish
+python gdbtools.sync_to_vim()
+end
 define sync
 python gdbtools.sync_to_vim()
 end
