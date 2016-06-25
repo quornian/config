@@ -18,8 +18,13 @@ function main() {
     install Xresources.d ~/.Xresources.d
 
     git submodule update --init --recursive
+
+    # Build YouCompleteMe
     [ -e vim/bundle/YouCompleteMe/python/ycm_core.so ] || \
         ( cd vim/bundle/YouCompleteMe && ./install.sh; )
+    # Build Racer
+    [ -e vim/bundle/vim-racer/target-install ] || \
+        ( cd vim/bundle/vim-racer && cargo install racer; )
 }
 
 function install() {
