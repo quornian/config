@@ -8,6 +8,7 @@ set scrolloff=5     " Keep lines visible at top and bottom of screen
 set background=dark
 set laststatus=2    " Use an extra screen line to keep windows looking good
 set showtabline=2
+set tabpagemax=100
 set history=500
 set shortmess+=I
 
