@@ -93,7 +93,7 @@ set listchars=tab:>-,eol:~
 
 " Right margin
 if v:version >= 703 && ! &diff
-    set colorcolumn=73,74,75,76,77,78,79
+    set colorcolumn=73,74,75,76,77,78,79,100
 endif
 
 " Mappings
@@ -101,6 +101,7 @@ au BufRead,BufNewFile *.sdl,*.jdl set filetype=fcdl
 au BufRead,BufNewFile *.ma set filetype=mel
 au BufRead,BufNewFile *.def set filetype=tcl
 au BufRead,BufNewFile *.sl set filetype=glsl
+au BufRead,BufNewFile *.md set filetype=markdown
 
 " Get rid of toolbar, menu and scrollbars in gvim
 "set guioptions-=T
