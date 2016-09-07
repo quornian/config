@@ -5,6 +5,10 @@ for c in $(seq 0  7); do echo -en "\e[48;5;${c}m$(printf %02x $c)\e[0m"; done
 echo
 for c in $(seq 8 15); do echo -en "\e[48;5;${c}m$(printf %02x $c)\e[0m"; done
 echo
+for c in $(seq 0  7); do echo -en "\e[38;5;${c}m$(printf %02x $c)\e[0m"; done
+echo
+for c in $(seq 8 15); do echo -en "\e[38;5;${c}m$(printf %02x $c)\e[0m"; done
+echo
 echo
 if [ -z "${1-}" ]
 then

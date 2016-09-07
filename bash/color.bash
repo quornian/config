@@ -13,9 +13,9 @@ __themes=(
 "deep2      000000 AF0000 AFD700 FF8700 5F87AF 875F87 008787 AFAFAF \
             5F5F5F D70000 D7FF5F FFAF00 5FAFFF D75FFF 87D7D7 FFFFFF \
             000000 AFAFAF"
-"bright     3A3A3A AF5F5F AFD75F FF8700 00AFD7 D787AF 00AF87 D7D7D7 \
+"bright     111111 AF5F5F AFD75F FF8700 00AFD7 D787AF 00AF87 D7D7D7 \
             5F5F5F D75F5F D7FF5F FFAF00 5FD7FF FF87D7 5FD7AF FFFFFF \
-            3A3A3A D7D7D7"
+            111111 D7D7D7"
 "brighter   444444 AF5F5F AFD75F FF8700 00AFD7 D75FAF 00AF87 D7D7D7 \
             878787 D75F5F D7FF5F FFAF00 5FD7FF FF87D7 5FD7AF FFFFFF \
             444444 D7D7D7"
@@ -49,6 +49,15 @@ __themes=(
 "ambiance   222222 CF7EA9 78CF8A CDA869 AAC6E3 9999CC 24C2C7 777777 \
             333333 CF7EA9 78CF8A CDA869 AAC6E3 9999CC 24C2C7 E6E1DC \
             222222 777777"
+"library    090E16 E74C3C 2ECC71 F1C40F 3498DB E67E22 9B59B6 95A5A6 \
+            34495E E74C3C 2ECC71 F1C40F 3498DB E67E22 9B59B6 ECF0F1 \
+            090E16 ECF0F1"
+"base16     090300 DB2D20 01A252 FDED02 01A0E4 A16A94 B5E4F4 A5A2A2 \
+            5C5855 DB2D20 01A252 FDED02 01A0E4 A16A94 B5E4F4 F7F7F7 \
+            090300 A5A2A2"
+"white      FFFFFF E66046 139726 C78317 1674AC 9547B3 358797 3B4753 \
+            363F48 E66046 139726 C78317 1674AC 9547B3 358797 242934 \
+            FFFFFF 242934"
 )
 
 theme() {
@@ -125,35 +134,33 @@ END
             xrdb -merge "$HOME/.Xresources"
 
             # Apply theme to xfce terminal
-            cat >"$HOME/.terminalrc" <<END
+            cat >"$HOME/.config/xfce4/terminal/terminalrc" <<END
 [Configuration]
 FontName=Monospace 9
 FontAntiAlias=FALSE
 ColorBackground=#$c0
 ColorForeground=#$c7
 ColorCursor=#$c7
-ColorPalette1=#$c0
-ColorPalette2=#$c1
-ColorPalette3=#$c2
-ColorPalette4=#$c3
-ColorPalette5=#$c4
-ColorPalette6=#$c5
-ColorPalette7=#$c6
-ColorPalette8=#$c7
-ColorPalette9=#$c8
-ColorPalette10=#$c9
-ColorPalette11=#$cA
-ColorPalette12=#$cB
-ColorPalette13=#$cC
-ColorPalette14=#$cD
-ColorPalette15=#$cE
-ColorPalette16=#$cF
+ColorPalette=#${c0:0:2}${c0:0:2}${c0:2:2}${c0:2:2}${c0:4:2}${c0:4:2};\
+#${c1:0:2}${c1:0:2}${c1:2:2}${c1:2:2}${c1:4:2}${c1:4:2};\
+#${c2:0:2}${c2:0:2}${c2:2:2}${c2:2:2}${c2:4:2}${c2:4:2};\
+#${c3:0:2}${c3:0:2}${c3:2:2}${c3:2:2}${c3:4:2}${c3:4:2};\
+#${c4:0:2}${c4:0:2}${c4:2:2}${c4:2:2}${c4:4:2}${c4:4:2};\
+#${c5:0:2}${c5:0:2}${c5:2:2}${c5:2:2}${c5:4:2}${c5:4:2};\
+#${c6:0:2}${c6:0:2}${c6:2:2}${c6:2:2}${c6:4:2}${c6:4:2};\
+#${c7:0:2}${c7:0:2}${c7:2:2}${c7:2:2}${c7:4:2}${c7:4:2};\
+#${c8:0:2}${c8:0:2}${c8:2:2}${c8:2:2}${c8:4:2}${c8:4:2};\
+#${c9:0:2}${c9:0:2}${c9:2:2}${c9:2:2}${c9:4:2}${c9:4:2};\
+#${cA:0:2}${cA:0:2}${cA:2:2}${cA:2:2}${cA:4:2}${cA:4:2};\
+#${cB:0:2}${cB:0:2}${cB:2:2}${cB:2:2}${cB:4:2}${cB:4:2};\
+#${cC:0:2}${cC:0:2}${cC:2:2}${cC:2:2}${cC:4:2}${cC:4:2};\
+#${cD:0:2}${cD:0:2}${cD:2:2}${cD:2:2}${cD:4:2}${cD:4:2};\
+#${cE:0:2}${cE:0:2}${cE:2:2}${cE:2:2}${cE:4:2}${cE:4:2};\
+#${cF:0:2}${cF:0:2}${cF:2:2}${cF:2:2}${cF:4:2}${cF:4:2}
 MiscAlwaysShowTabs=FALSE
 MiscBell=FALSE
-MiscBordersDefault=FALSE
 MiscCursorBlinks=FALSE
 MiscCursorShape=TERMINAL_CURSOR_SHAPE_BLOCK
-MiscDefaultGeometry=150x30
 MiscInheritGeometry=FALSE
 MiscMenubarDefault=FALSE
 MiscMouseAutohide=TRUE
@@ -165,6 +172,14 @@ MiscTabCloseMiddleClick=TRUE
 MiscTabPosition=GTK_POS_TOP
 MiscHighlightUrls=TRUE
 END
+            # Record whether we're using a light background
+            if [[ $((16#${cfg:2:2})) > 128 ]]
+            then
+                echo 1 > $HOME/.config/managed/.light-theme
+            else
+                echo 0 > $HOME/.config/managed/.light-theme
+            fi
+
             ;;
         preview)
             shift 1
@@ -280,6 +295,7 @@ END
 # Check if it's the linux framebuffer, otherwise assume we have a
 # 256-colour terminal emulator we can use.
 __cs="$(tput colors 2>/dev/null)"
+export LIGHTBG="$(cat $HOME/.config/managed/.light-theme 2>&- || echo 0)"
 if [[ "$TERM" = "linux" ]]
 then
     source "$HOME/.bash/color-low.bash"

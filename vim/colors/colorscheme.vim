@@ -50,8 +50,6 @@ if version >= 700
     call s:Hi("ColorColumn", 0, 7, "none")
     call s:Hi("MatchParen", 1, "none", "underline,bold")
     
-    call s:Hi("Pmenu", 0, 7, "none")
-    call s:Hi("PmenuSel", 0, 2, "none")
 endif
 
 " General colors
@@ -134,22 +132,43 @@ match WhitespaceError /\S\@<=\s\+$/
 " we rely instead on the terminal palette
 if &term != "linux"
   set t_Co=256
-  call s:Hi("ColorColumn", "none", 233, "none")
-  call s:Hi("VertSplit", 234, "none", "none")
-  call s:Hi("StatusLine", 7, 234, "bold")
-  call s:Hi("StatusLineNC", 0, 234, "bold")
-  call s:Hi("TabLineFill", 7, 234, "none")
-  call s:Hi("TabLine", 0, 234, "bold")
-  call s:Hi("NonText", 0, 234, "none")
-  
-  " Diff
-  call s:Hi("DiffAdd", "none", 236, "none")
-  call s:Hi("DiffDelete", 233, 233, "none")
-  call s:Hi("DiffChange", 245, 235, "none")
-  call s:Hi("DiffText", "none", 234, "none")
-  call s:Hi("Folded", 240, 232, "none")
-  call s:Hi("SignifySignAdd", 2, 234, "none")
-  call s:Hi("SignifySignDelete", 1, 234, "none")
-  call s:Hi("SignifySignChange", 3, 234, "none")
-  "SignifySignChange  SignifySignDelete
+  if $LIGHTBG == "1"
+    call s:Hi("ColorColumn", "none", 255, "none")
+    call s:Hi("VertSplit", 253, "none", "none")
+    call s:Hi("StatusLine", 7, 255, "bold")
+    call s:Hi("StatusLineNC", 0, 255, "bold")
+    call s:Hi("TabLineFill", 7, 254, "none")
+    call s:Hi("TabLine", 0, 254, "bold")
+    call s:Hi("NonText", 0, 254, "none")
+    
+    " Diff
+    call s:Hi("DiffAdd", "none", 156, "none")
+    call s:Hi("DiffDelete", 240, 216, "none")
+    call s:Hi("DiffChange", 240, 228, "none")
+    call s:Hi("DiffText", "none", 227, "none")
+    call s:Hi("Folded", 240, 255, "none")
+    call s:Hi("SignifySignAdd", 2, 156, "none")
+    call s:Hi("SignifySignDelete", 1, 216, "none")
+    call s:Hi("SignifySignChange", 3, 228, "none")
+    "SignifySignChange  SignifySignDelete
+  else
+    call s:Hi("ColorColumn", "none", 233, "none")
+    call s:Hi("VertSplit", 234, "none", "none")
+    call s:Hi("StatusLine", 7, 234, "bold")
+    call s:Hi("StatusLineNC", 0, 234, "bold")
+    call s:Hi("TabLineFill", 7, 234, "none")
+    call s:Hi("TabLine", 0, 234, "bold")
+    call s:Hi("NonText", 0, 234, "none")
+    
+    " Diff
+    call s:Hi("DiffAdd", "none", 236, "none")
+    call s:Hi("DiffDelete", 233, 233, "none")
+    call s:Hi("DiffChange", 245, 235, "none")
+    call s:Hi("DiffText", "none", 234, "none")
+    call s:Hi("Folded", 240, 232, "none")
+    call s:Hi("SignifySignAdd", 2, 234, "none")
+    call s:Hi("SignifySignDelete", 1, 234, "none")
+    call s:Hi("SignifySignChange", 3, 234, "none")
+    "SignifySignChange  SignifySignDelete
+  endif
 endif
