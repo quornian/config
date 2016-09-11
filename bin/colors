@@ -1,73 +1,55 @@
-#!/bin/bash
+#!/usr/bin/env python
 
-# Simple colours
-for c in $(seq 0  7); do echo -en "\e[48;5;${c}m$(printf %02x $c)\e[0m"; done
-echo
-for c in $(seq 8 15); do echo -en "\e[48;5;${c}m$(printf %02x $c)\e[0m"; done
-echo
-for c in $(seq 0  7); do echo -en "\e[38;5;${c}m$(printf %02x $c)\e[0m"; done
-echo
-for c in $(seq 8 15); do echo -en "\e[38;5;${c}m$(printf %02x $c)\e[0m"; done
-echo
-echo
-if [ -z "${1-}" ]
-then
-    exit 0
-fi
+import sys
 
-for c in 16 131 65 137 67 132 74 145
-do echo -en "\e[48;5;${c}m$(printf %3d $c)\e[0m"
-done
-echo
-for c in 59 174 71 222 110 169 117 231
-do echo -en "\e[48;5;${c}m$(printf %3d $c)\e[0m"
-done
-echo
-echo
+write = sys.stderr.write
+r = range
 
-[ "$1" == "16" ] && exit
+def system_colors():
+    write("\n     ")
+    for n in range(8):
+        write("\033[38;5;15;48;5;{0}m{0:3} \033[m".format(n))
+    write("   ")
+    for n in range(8):
+        write("\033[38;5;{0}m{0:3} \033[m".format(n))
+    write("\n     ")
+    for n in range(8, 16):
+        write("\033[38;5;0;48;5;{0}m{0:3} \033[m".format(n))
+    write("   ")
+    for n in range(8, 16):
+        write("\033[38;5;{0}m{0:3} \033[m".format(n))
+    write("\n\n")
 
-# Advanced colours
-for row in $(seq 0 6)
-do
-    for col in $(seq 0 35)
-    do
-        c=$[16 + row * 36 + col]
-        if [[ c -gt 255 ]]
-        then
-            break
-        fi
-        echo -en "\e[48;5;${c}m$(printf %02x $c)\e[0m"
-    done
-    echo
-done
-echo
-echo
+def color_cube():
+    for row in range(6):
+        write(" ")
+        for table in range(3):
+            for index in range(6):
+                n = 16 + row * 6 + table * 72 + index
+                fg = 15 if row < 3 else 0
+                write("\033[38;5;{1};48;5;{0}m{0:3} \033[m".format(n, fg))
+            write(" ")
+        write("\n")
+    for row in range(6):
+        write(" ")
+        for table in range(3):
+            for index in range(6):
+                n = 82 - row * 6 + table * 72 + index
+                fg = 15 if row >= 3 else 0
+                write("\033[38;5;{1};48;5;{0}m{0:3} \033[m".format(n, fg))
+            write(" ")
+        write("\n")
+    write("\n")
 
-# Advanced colours
-for row in $(seq 0 6)
-do
-    for col in $(seq 0 35)
-    do
-        c=$[16 + row * 36 + col]
-        if [[ c -gt 255 ]]
-        then
-            break
-        fi
-        echo -en "\e[48;5;${c}m$(printf %3d $c)\e[0m"
-    done
-    echo
-done
+def greyscale():
+    write("       ")
+    for n in range(232, 244):
+        write("\033[38;5;15;48;5;{0}m{0:4} \033[m".format(n))
+    write("\n       ")
+    for n in range(244, 256):
+        write("\033[38;5;0;48;5;{0}m{0:4} \033[m".format(n))
+    write("\n\n")
 
-for c in {16..231..43}
-do
-    echo -en "\e[48;5;${c}m$(printf "%02x" $c)\e[0m"
-done
-echo
-
-for c in 0 241 245 249 253
-do
-    echo -en "\e[48;5;${c}m$(printf "%02x" $c)\e[0m"
-done
-echo
-
+system_colors()
+color_cube()
+greyscale()
