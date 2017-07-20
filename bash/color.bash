@@ -37,6 +37,9 @@ __themes=(
 "cool-3     090E16 D581A1 7EA578 C0916F 12A5E6 A38FDC 00ACB3 949BAA \
             454B58 D581A1 7EA578 C0916F 12A5E6 A38FDC 00ACB3 B5BCCD \
             090E16 949BAA"
+"chalkboard 1C2C3C EA78A4 81B379 DE935C 02AAF5 A38FDC 18B1B7 D8D8DF \
+            517398 EA78A4 81B379 DE935C 02AAF5 A38FDC 18B1B7 E8E8EF \
+            1C2C3C D8D8DF"
 "solarized  073642 DC322F 859900 B58900 268BD2 D33682 2AA198 EEE8D5 \
             002B36 CB4B16 586E75 657B83 839496 6C71C4 93A1A1 FDF6E3 \
             002B36 839496"
@@ -292,14 +295,30 @@ END
     esac
 }
 
-# Check if it's the linux framebuffer, otherwise assume we have a
-# 256-colour terminal emulator we can use.
 __cs="$(tput colors 2>/dev/null)"
 export LIGHTBG="$(cat $HOME/.config/managed/.light-theme 2>&- || echo 0)"
-if [[ "$TERM" = "linux" ]]
-then
-    source "$HOME/.bash/color-low.bash"
-    sleep 1; tput clear
-else
-    source "$HOME/.bash/color-high.bash"
-fi
+case $TERM in
+    # Use 16 colours for linux framebuffer terminal
+    linux)
+        source "$HOME/.bash/color-low.bash"
+        sleep 1; tput clear
+        ;;
+    # If this is xterm, we'll want 256 colour support
+    xterm)
+        export TERM='xterm-256color'
+        source "$HOME/.bash/color-high.bash"
+        ;;
+    rxvt-unicode)
+        export TERM=rxvt-256color
+        source "$HOME/.bash/color-high.bash"
+        ;;
+    # Similarly for rxvt-unicode
+    rxvt-unicode)
+        export TERM=rxvt-256color
+        source "$HOME/.bash/color-high.bash"
+        ;;
+    # Otherwise, assume we're a terminal that supports 256 colours
+    *)
+        source "$HOME/.bash/color-high.bash"
+        ;;
+esac
